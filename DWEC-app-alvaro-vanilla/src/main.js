@@ -2,23 +2,13 @@ import './style.css'
 import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.js'
+import * as calculator from './calculadora.js';
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+console.log("Esta es la suma que sale de calculadora.js")
+console.log(calculator.sumar(1,2));
 
-setupCounter(document.querySelector('#counter'))
+console.log('Ahora vamos a hacer las demás operaciones'+
+  '\nResta 1-1 = '+ calculator.restar(1,1)+
+  '\nMultiplicación 2 x 2 = ' +calculator.multiplicar(2,2)+
+  '\nDividir 4 % 2 ='+ calculator.dividir(4,2)
+)
