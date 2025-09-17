@@ -3,12 +3,10 @@
 //Ejercicio 1
 export const mesDelAño = (num) => {
     if(isNaN(num)){
-        console.log(`Lo siento, ${num}, no es un número.`);
-        return;
+        return `Lo siento, ${num}, no es un número.`;
     }
     if(num < 1 || num > 12){
-        console.log('Lo siento, el número debe estár entre 1 y 12');
-        return;
+        return 'Lo siento, el número debe estár entre 1 y 12';
     }
     let meses = ["Enero", "Febrero", 'Marzo','Abril','Mayo','Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     for (let i = 0; i < meses.length; i++) {
