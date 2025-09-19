@@ -1,0 +1,8 @@
+.pelicula-container{
+    display: grid;
+    grid-template-columns: 20% auto;
+    grid-template-rows: auto ;
+}
+.pelicula-container img{
+    width: 200px;
+}

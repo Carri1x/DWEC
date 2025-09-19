@@ -12,7 +12,7 @@ function App() {
         <Pelicula 
           title="Matrix"
           director="Lana Wachowski"
-          movieListing="ANd9GcRO2XZWgFloaUDk9aNoxXjL3alCEEB3zJwgrSkqZMN5zcL5hjaOYQT3tMoRFhj1Y8Kn7YeIAV_K18Hv7RFPHOqUFPsUsi_1iB0N10Wh2qdrQQ"
+          movieListing="https://m.media-amazon.com/images/I/71D8+NFLZmL._UF1000,1000_QL80_.jpg"
           >
             <p>
               Representa un futuro distópico en el que la humanidad está atrapada sin saberlo dentro de una realidad 

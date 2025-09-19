@@ -4,10 +4,15 @@
     width: 90%;
     margin: auto;
     border-radius: 20px;
+    display: flex;
 }
 
 .interprete-img{
     width: 150px;
     height: 150px;
     border-radius: 20px;
+}
+.interprete-name-biography{
+    display: flex;
+    justify-content:end;
 }

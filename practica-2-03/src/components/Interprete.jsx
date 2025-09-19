@@ -7,8 +7,10 @@ const Interprete = (props) => {
     <>
         <div className='interprete-container'>
             <img className='interprete-img' src={props.photo} alt={customAlt} />
-            <h6>{props.name}</h6>
-            {props.children}
+            <div className='interprete-name-biography'>
+              <h6>{props.name}</h6>
+              {props.children}
+            </div>
         </div>
     </>
   );
