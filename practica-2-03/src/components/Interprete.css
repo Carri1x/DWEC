@@ -1,0 +1,13 @@
+.interprete-container{
+    background-color: rgb(165, 165, 165);
+    border: 2px solid rgb(87, 87, 87);
+    width: 90%;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.interprete-img{
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+}
