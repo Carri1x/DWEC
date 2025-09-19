@@ -1,8 +1,12 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 .contenedor{
     background-color: rgb(183, 216, 205);
     border: 5px solid;
     border-color:  rgb(84, 84, 84);
     border-radius: 20px;
-    color: gray;
     text-align: center;
 }

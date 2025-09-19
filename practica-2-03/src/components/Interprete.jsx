@@ -8,7 +8,7 @@ const Interprete = (props) => {
         <div className='interprete-container'>
             <img className='interprete-img' src={props.photo} alt={customAlt} />
             <div className='interprete-name-biography'>
-              <h6>{props.name}</h6>
+              <h4>{props.name}</h4>
               {props.children}
             </div>
         </div>

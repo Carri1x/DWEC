@@ -8,12 +8,15 @@ const Pelicula = (props) => {
   return (
     <>
         <div className='pelicula-container'>
-            <h2>{props.title}</h2>
-            <h5>Director: {props.director}</h5>
-            <img src={props.movieListing} alt={alt}></img>
-            <div className='interpretes'>
-                {props.children}
-                <h5>Intérpretes:</h5>
+            <div className='pelicula-caracteristicas'>
+              <h2>{props.title}</h2>
+              <h5>Director: {props.director}</h5>
+              <img src={props.movieListing} alt={alt}></img>
+            </div>
+            <div className='pelicula-interpretes'>
+              <p>{props.summary}</p>
+              <h5>Intérpretes:</h5>
+                {props.children}  
             </div>
         </div>
     </>

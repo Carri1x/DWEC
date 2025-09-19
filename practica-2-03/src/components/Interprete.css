@@ -14,5 +14,5 @@
 }
 .interprete-name-biography{
     display: flex;
-    justify-content:end;
+    flex-direction: column;
 }

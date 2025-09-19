@@ -1,8 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 .pelicula-container{
-    display: grid;
-    grid-template-columns: 20% auto;
-    grid-template-rows: auto ;
+    display: flex;
+    align-items: center;
 }
 .pelicula-container img{
     width: 200px;
+    border-radius: 10px;
+}
+.pelicula-caracteristicas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* o un valor fijo como 300px para probar */
+}
+.pelicula-caracteristicas p{
+    padding-bottom: 15px;
 }
