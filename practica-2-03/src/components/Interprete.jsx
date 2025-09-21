@@ -6,7 +6,7 @@ const Interprete = (props) => {
   return (
     <>
         <div className='interprete-container'>
-            <img className='interprete-img' src={props.photo} alt={customAlt} />
+            <img src={props.photo} alt={customAlt} />
             <div className='interprete-name-biography'>
               <h4>{props.name}</h4>
               {props.children}
