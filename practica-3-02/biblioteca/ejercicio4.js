@@ -1,0 +1,3 @@
+
+//En este caso no se como podría haber hecho la función si no es directamente en el fichero main...
+//Ya que solamente es añadirle un método al objeto ya creado.
