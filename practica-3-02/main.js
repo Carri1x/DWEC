@@ -1,8 +1,9 @@
 "use strict";
 
-import {curseConstructor} from './biblioteca/ejercicio1.js';//Ejercicio1
-import { curseInfo } from './biblioteca/ejercicio2.js';//Ejercicio2
-import { calcularMedia } from './biblioteca/ejercicio3.js';//Ejercicio3
+import {curseConstructor} from './biblioteca/ejercicio1.js';//Ejercicio1.
+import { curseInfo } from './biblioteca/ejercicio2.js';//Ejercicio2.
+import { calcularMedia } from './biblioteca/ejercicio3.js';//Ejercicio3.
+import { printObject } from './biblioteca/ejercicio5.js';//Ejercicio5.
 
 //--------------------------------- Ejercicio 1 ---------------------------------------------
 console.log(`-------------------------- Ejercicio 1 ----------------------------------------`);
@@ -11,7 +12,7 @@ console.log(`Aquí estoy creando el objeto vacío.`)
 let curse = curseConstructor();
 console.log(curse);
 //Parece que crea correctamente el objeto con este tipo de constructor.
-//Voy a probar a manejar los atributos de este
+//Voy a probar a manejar los atributos de este.
 curse.curseName = "2ºDAW";
 curse.addStudent('Álvaro');
 curse.addStudent(['Irene','Rubén']);
@@ -27,7 +28,7 @@ console.log("El curso " + curse.curseName + " tiene " + curse.students.length + 
 //--------------------------------- Ejercicio 2 ---------------------------------------------
 console.log(`-------------------------- Ejercicio 2 ----------------------------------------`);
 
-curseInfo(curse);
+console.log(curseInfo(curse));
 
 //--------------------------------- Ejercicio 3 ---------------------------------------------
 console.log(`-------------------------- Ejercicio 3 ----------------------------------------`);
@@ -44,16 +45,29 @@ let discente = {
     }
 }
 
-const notaMedia = calcularMedia(discente); 
+//Ya tengo la nota media.
+let notaMedia = calcularMedia(discente); 
+//Le quito decimales, los dejo a solamente 2 decimales.
+notaMedia = notaMedia.toFixed(2);
+//Lo paso a String, para reemplazar el punto por la coma.
+notaMedia = notaMedia.toLocaleString("es-ES").replaceAll(".",",");
 
-console.log(`La nota media de ${discente.nombre} ${discente.apellidos} es ${notaMedia.toFixed(2)}`);
+console.log(`La nota media de ${discente.nombre} ${discente.apellidos} es ${notaMedia}`);
 
 
 //--------------------------------- Ejercicio 4 ---------------------------------------------
 console.log(`-------------------------- Ejercicio 4 ----------------------------------------`);
-//En este caso ya había hecho la función "matricular" addStudent() en el objeto directamente, aun así la voy a reutilizar...
+
+//En este caso ya había pensado en la función "matricular" addStudent(), en el objeto directamente, aun así la voy a reutilizar...
+
 curse.matricular = function(persona){
     this.addStudent(persona);
 }
+//Me matriculo.
 curse.matricular(discente);
-console.log(curse);
+
+//--------------------------------- Ejercicio 5 ---------------------------------------------
+console.log(`-------------------------- Ejercicio 5 ----------------------------------------`);
+
+
+printObject(discente);
