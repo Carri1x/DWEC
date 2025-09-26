@@ -22,8 +22,7 @@ export const curseConstructor = () => {
                 return; 
             }
             //Inserto el array antiguo dentro del nuevo array y además el string a insertar.
-            let oldArray = this.students;
-            this.students = [...oldArray, student];
+            this.students = [...this.students, student];
         }
     };
 }
