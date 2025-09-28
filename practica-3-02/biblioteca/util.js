@@ -15,5 +15,5 @@ export const isANumberAndInteger = (num) => {
 }
 
 export const cambiarFormatoEspanya = (numero) =>{
-    return numero.replaceAll(".",",").toLocaleString("es-ES");
+    return numero.toLocaleString("es-ES").replaceAll(".",",");
 }

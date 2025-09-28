@@ -6,7 +6,7 @@ export const calcularMedia = (discente) => {
     let segundaEvaluacion = sumarElementosArray(discente.notas.segunda);
     let terceraEvaluacion = sumarElementosArray(discente.notas.tercera);
     //Hago la función para sacar la media de todas las notas.
-    let total = primeraEvaluacion + segundaEvaluacion + terceraEvaluacion /3;
+    let total = (primeraEvaluacion + segundaEvaluacion + terceraEvaluacion) /3;
     return total;
 }
 
@@ -17,5 +17,6 @@ const sumarElementosArray = (array) => {
     let total = array.reduce((acumulador, valor)=>{
         return acumulador + valor;
     })
-    return total;
+    //Devuelvo la media.
+    return total/array.length;
 }
