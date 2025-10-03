@@ -1,14 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import Listado from './components/Listado'
+import Listado from './Ejercicio1/Listado'
+import ContadorLimite from './Ejercicio2/ContadorLimite';
 
 function App() {
 
   return (
     <>
+      <h1>Ejercicio 1</h1>
       <Listado />
+      <h1>Ejercicio 2</h1>
+      <ContadorLimite />
     </>
   )
 }
