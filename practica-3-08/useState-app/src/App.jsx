@@ -1,6 +1,7 @@
 import './App.css'
 import Listado from './Ejercicio1/Listado'
 import ContadorLimite from './Ejercicio2/ContadorLimite';
+import ContadorLikes from './ejercicio3/ContadorLikes';
 
 function App() {
 
@@ -10,6 +11,8 @@ function App() {
       <Listado />
       <h1>Ejercicio 2</h1>
       <ContadorLimite />
+      <h1>Ejercicio 3</h1>
+      <ContadorLikes />
     </>
   )
 }

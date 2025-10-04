@@ -1,0 +1,16 @@
+.contador-likes-button{
+    margin: 12px;
+}
+
+.likes{
+    background-color: green;
+}
+
+.dislikes{
+    background-color: red;
+}
+
+img{
+    height: 20px;
+    padding: 4px;
+}

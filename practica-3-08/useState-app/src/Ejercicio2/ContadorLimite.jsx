@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+//Realmente no se si es la mejor forma de hacerlo, pero se me ha ocurrido así.
+//He creado dos estados más para controlar los permisos de los botones.
+
 const ContadorLimite = () => {
     const iniciador = 0;
     let [contador, setContador] = useState(iniciador);
@@ -61,7 +64,7 @@ const ContadorLimite = () => {
             <button onClick={() => {
                 incrementar()
             }}
-            disabled={prohibidoIncrementar}
+            disabled={prohibidoIncrementar} //Deshabilitamos el botón si está prohibido incrementar.
             >
                 Incrementar
             </button>
@@ -69,7 +72,7 @@ const ContadorLimite = () => {
             <button onClick={() => {
                 decrementar()
             }}
-            disabled={prohibidoDecrementar}
+            disabled={prohibidoDecrementar} //Deshabilitamos el botón si está prohibido decrementar.
             >
                 Decrementar
             </button>
