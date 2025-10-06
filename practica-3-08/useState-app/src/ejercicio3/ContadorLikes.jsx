@@ -7,11 +7,17 @@ const ContadorLikes = () => {
 
     //He estado probando setLikes(likes++) e igual para dislikes y no funciona muy bien, funciona mejor de esta forma.
 
+    /**
+     * Función para incrementar el número de likes.
+     */
     const incrementarLikes = () => {
         likes += 1;
         setLikes(likes);
     }
 
+    /**
+     * Función para incrementar el número de dislikes.
+     */
     const incrementarDislikes = () => {
         dislikes += 1;
         setDislikes(dislikes);
@@ -21,9 +27,11 @@ const ContadorLikes = () => {
         <>
             <h5>¡¡Dale me gusta si quieres que saque un diez en todo!!</h5>
             <h5>¡¡Dale a NO me gusta para que no suspenda!!, ¡¡JAJAJAJAJ!!</h5>
+            
             <button
                 className="contador-likes-button likes"
                 onClick={() => {
+                    //Llamamos a la función para incrementar los likes.
                     incrementarLikes();
                 }}
             >
@@ -33,6 +41,7 @@ const ContadorLikes = () => {
             <button
                 className="contador-likes-button dislikes"
                 onClick={() => {
+                    //Llamamos a la función para incrementar los dislikes.
                     incrementarDislikes();
                 }}
             >
