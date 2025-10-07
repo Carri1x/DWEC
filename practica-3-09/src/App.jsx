@@ -8,11 +8,7 @@ function App() {
 
   return (
     <>
-
-      <Matricula 
-        alumnos = {discentes}
-      />
-
+      <Matricula alumnos = {discentes}/>
     </>
   )
 }
