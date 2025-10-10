@@ -4,6 +4,7 @@ import DiscentesList from './DiscentesList';
 
 const Matricula = (props) => {
     const todos = props.alumnos.discentes;
+    const [matriculados, setMatriculados] = useState(todos);
     const [discentes, setDiscentes] = useState(todos);
     const [ordenAscendente, setOrdenAscendente] = useState(true);
 
@@ -14,12 +15,12 @@ const Matricula = (props) => {
     const filtrarDiscentes = (condicion) => {
         //Si la condición es 'TODOS' asignamos el valor principal de todos los discentes.
         if(condicion == 'TODOS') {
-            setDiscentes(todos);
+            setDiscentes(matriculados);
         } else {
             //Si no es todos y es otra condición, hacemos el cambio.
             setDiscentes(
                 //Filtramos los discentes desde todos .
-                todos.filter((discente) => {
+                matriculados.filter((discente) => {
                     //Vemos todos los atributos para reutilizar esta misma función 'filtarDiscentes'.
                     for (const atributo in discente) {
                         if (!Object.hasOwn(discente, atributo)) return;
@@ -63,12 +64,9 @@ const Matricula = (props) => {
 
     const desmatricular = (id) => {
         setDiscentes(
-            todos.map((discente) => {
-                if(discente.id !== id){
-                    return discente;
-                }
-            })
+            discentes.filter((discente) => discente.id !== id)
         );
+        setMatriculados( discentes.filter((discente) => discente.id !== id) );
     }
 
     return (
@@ -92,8 +90,6 @@ const Matricula = (props) => {
             <button onClick={() => {
                 ordenar();
             }}>Ordenar</button>
-
-            <button >Desmatricular</button>
 
             <DiscentesList discentes={discentes} funcionDesmatricular = {desmatricular} />
         </>

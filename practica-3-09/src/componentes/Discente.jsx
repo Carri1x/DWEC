@@ -18,9 +18,7 @@ const Discente = (props) => {
                     }
                 </ul>
                 <p>Comida favorita: {comida}</p>
-                <button onClick={() => {
-                    funcionDesmatricular(id);
-                }}>Desmatricular</button>
+                <button onClick={funcionDesmatricular}>Desmatricular</button>
             </div>    
     );
 }

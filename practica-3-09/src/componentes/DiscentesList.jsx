@@ -13,7 +13,7 @@ const DiscentesList = (props) => {
                         return <Discente
                             key={discente.id}
                             alumno={discente}
-                            funcionDesmatricular = {funDesmatricular}
+                            funcionDesmatricular = {() => funDesmatricular(discente.id)}
                         >
                         </Discente>;
                     })
