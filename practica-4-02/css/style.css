@@ -1,4 +1,5 @@
 .censurado{
-    font-style: italic bold;
+    font-style: italic;
+    font-weight: bold;
     color: red;
 }
