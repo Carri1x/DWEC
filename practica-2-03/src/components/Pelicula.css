@@ -11,9 +11,14 @@ h2{
     text-shadow: 2px 2px 4px rgb(0, 0, 0);
 }
 
-.pelicula-container{
+.pelicula-main{
     display: flex;
+    justify-content: center;
     align-items: center;
+}
+
+.pelicula-info{
+    max-width: 600px;
 }
 .pelicula-container img{
     width: 200px;

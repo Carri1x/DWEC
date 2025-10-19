@@ -3,19 +3,19 @@
 //Me he hecho una libreria útil para almacenar las funciones que puedan serme útiles y usarlas solo importando, sin que haga falta duplicar código.
 
 export const isANumberAndInteger = (num) => {
-    if (isNaN(num)) {
+    if(isNaN(num)) {
         console.log("Error. El dato debe ser un número.");
         return false;
     }
-    if (!Number.isInteger(num)) {
+    if(!Number.isInteger(num)) {
         console.log("Error. El dato debe ser un número entero.");
         return false;
     }
     return true;
 }
 
-export const cambiarFormatoEspanya = (numero) => {
-    return numero.toLocaleString("es-ES").replaceAll(".", ",");
+export const cambiarFormatoEspanya = (numero) =>{
+    return numero.toLocaleString("es-ES").replaceAll(".",",");
 }
 
 export const mostrarArray = (array) => {
@@ -28,10 +28,10 @@ export const printObject = (object) => {
     for (const clave in object) {
         //En caso de no tener esa propiedad la obviará.
         if (!object.hasOwnProperty(clave)) continue;
-
+            
         //Obtengo el valor de la clave.
         const valor = object[clave];
-
+        
         if (Array.isArray(valor)) {
             //Pongo directamente que es un array dado que JavaScript lo reconoce como Object y no como Array.
             console.log(`El atributo es: ${clave}, de tipo Array y contiene:`);
@@ -50,31 +50,33 @@ export const printObject = (object) => {
 const printArray = (array) => {
     return array.forEach((element) => {
         //Si dentro del array hay otro array o un objecto seleccionamos que hacer con el.
-        if (Array.isArray(element)) {
+        if(Array.isArray(element)){
             printArray(element);
         }
-        else if (typeof element === 'object' && element !== null) {
+        else if(typeof element === 'object' && element !== null) {
             //En caso de ser un objeto usamos la anterior función.
             printObject(element);
-        } else if (typeof element === 'number') {
+        }else if(typeof element === 'number'){
             //Si es simplemente un elemento lo imprimimos.
             console.log(cambiarFormatoEspanya(element));
-        } else {
+        }else{
             console.log(element);
         }
-
+     
     });
 }
 
-export const esPrimo = (num) => {
-    if (num <= 1) return false;
-    if (num === 2) return true; // 2 es primo
-    if (num % 2 === 0) return false; // pares mayores que 2 no son primos
+export const esPrimo = () => {
+    if (numero <= 1) return false; // 0 y 1 no son primos
+    if (numero === 2) return true; // 2 es el único número par primo
+    if (numero % 2 === 0) return false; // los demás pares no son primos
 
-    // Solo comprobamos hasta la raíz cuadrada del número
-    for (let i = 3; i <= Math.sqrt(num); i += 2) {
-        if (num % i === 0) return false;
+    // Solo verifica hasta la raíz cuadrada del número
+    const limite = Math.sqrt(numero);
+    for (let i = 3; i <= limite; i += 2) {
+        if (numero % i === 0) {
+            return false;
+        }
     }
-
     return true;
 }

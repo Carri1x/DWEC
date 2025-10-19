@@ -16,6 +16,7 @@ function App() {
           summary="Representa un futuro distópico en el que la humanidad está atrapada sin saberlo dentro de una realidad 
               simulada llamada Matrix, que las máquinas inteligentes han creado para distraer a los humanos mientras 
               usan sus cuerpos como fuente de energía en campos de cultivo."
+          dinero={463517383}
           >
            <Interprete 
                     name="Keanu Reeves" 
@@ -47,6 +48,7 @@ function App() {
           summary="Ambientada en el sur de Estados Unidos, dos años antes de la Guerra Civil estadounidense,
               la historia sigue a Django (Jamie Foxx), un esclavo liberado que se asocia con el cazarrecompensas 
               alemán Dr. King Schultz (Christoph Waltz). Schultz, que está buscando a los hermanos Brittle, tres criminales notorios."
+          dinero={425368238}
           >
            <Interprete 
                     name="Jamie Foxx"  
@@ -82,6 +84,7 @@ function App() {
           summary='En 1954, los agentes federales Edward "Teddy" Daniels (Leonardo DiCaprio) y su recientemente asignado compañero Chuck Aule (Mark Ruffalo),
            van al hospital de Ashecliffe para personas dementes en Shutter Island, isla situada en el puerto de Boston para investigar la desaparición de Rachel Solando,
            una paciente que en apariencia se evaporó de una habitación cerrada. El agente Daniels descubrió en la habitación de Solando una nota en la que escribió: "The law of 4; who is 67?"'
+          dinero={294803014}
           >
            
                 <Interprete
