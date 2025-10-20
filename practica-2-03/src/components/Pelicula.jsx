@@ -5,7 +5,7 @@ import Elenco from './Elenco-component/Elenco.jsx';
 
 const Pelicula = (props) => {
     const {title, director,  movieListing, summary, dinero} = props;
-    let alt = `Foto de la pelicula ${title}`;
+    let alt = `Foto de la película ${title}`;
   return (
     <>
         <div className='pelicula-container'>
@@ -17,24 +17,10 @@ const Pelicula = (props) => {
                     <p>{summary}</p>
                 </div>
             </div>
-            <Taquilla cantidad={dinero}/>
-            <Elenco interpretes={props.children}/>
+            <Taquilla  cantidad={dinero}/> 
+            <Elenco  interpretes={props.children}/>
         </div>
     </>
   )
 }
-/*
-<div className='pelicula-container'>
-            <div className='pelicula-caracteristicas'>
-              <h2>{props.title}</h2>
-              <h5>Director: {props.director}</h5>
-              <img src={props.movieListing} alt={alt}></img>
-            </div>
-            <div className='pelicula-interpretes'>
-              <p>{props.summary}</p>
-              <h5>Intérpretes:</h5>
-                {props.children}  
-            </div>
-        </div>
-*/ 
 export default Pelicula;

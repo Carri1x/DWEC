@@ -3,10 +3,11 @@ import { cambiarFormatoEspanya } from "../../librerias/util.js";
 import './Taquilla.css';
 
 const Taquilla = (props) => {
-    const cantidad = props.cantidad;
-    const dineroFormateado = cambiarFormatoEspanya(cantidad);
-    const taquillaRef = useRef(null);
+    const cantidad = props.cantidad; //Obtengo la cantidad de dinero pasada como prop
+    const dineroFormateado = cambiarFormatoEspanya(cantidad); //Formateo el dinero al formato español.
+    const taquillaRef = useRef(null); //Referencia al contenedor de la taquilla.
 
+    //Función para mostrar/ocultar la taquilla.
     const taquillaToggle = () => {
         taquillaRef.current.classList.toggle('invisible');
     }
@@ -14,11 +15,11 @@ const Taquilla = (props) => {
     return (
         <>
             <div id='taquilla-container'>
-                <button id='boton-taquilla' onClick={()=>{
-                    taquillaToggle();
+                <button className="bttn" onClick={()=>{
+                    taquillaToggle(); //Muestro/oculto la taquilla.
                 }}>Taquilla</button>
 
-                <div id='dinero-taquilla' ref={taquillaRef}>{dineroFormateado} €</div>
+                <div className='dinero-taquilla invisible' ref={taquillaRef}>{dineroFormateado} €</div>
             </div>
         </>
     );
