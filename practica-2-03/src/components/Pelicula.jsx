@@ -17,8 +17,10 @@ const Pelicula = (props) => {
                     <p>{summary}</p>
                 </div>
             </div>
-            <Taquilla  cantidad={dinero}/> 
-            <Elenco  interpretes={props.children}/>
+            <div className='pelicula-buttons'>
+                <Taquilla  cantidad={dinero}/> 
+                <Elenco  interpretes={props.children}/>
+            </div>
         </div>
     </>
   )

@@ -1,0 +1,12 @@
+.error-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 555px;
+    height: 370px;
+    color: white;
+    background-image: url('https://media.istockphoto.com/id/626205158/es/foto/retrato-de-hombre-joven-con-el-sentimiento-expresi%C3%B3n-facial.jpg?s=612x612&w=0&k=20&c=1biyfgogDiATcpY-HfYhdlrvXrhio5lBy8oFSvK2DG8=');
+    border: 2px solid black;
+    border-radius: 20px;
+}

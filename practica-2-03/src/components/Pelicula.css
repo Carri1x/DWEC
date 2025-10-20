@@ -18,12 +18,18 @@ h2{
 }
 
 .pelicula-info{
-    max-width: 600px;
+    max-width: 500px;
+    padding: 1px 20px;
 }
+
+.pelicula-info h4{
+    margin-bottom: 30px;
+    color: var(--color-secundario);
+}
+
 .pelicula-container img{
     width: 200px;
     border-radius: 10px;
 }
-
 
 

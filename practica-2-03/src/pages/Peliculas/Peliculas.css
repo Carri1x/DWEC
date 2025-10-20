@@ -1,0 +1,7 @@
+.peliculas-container {
+    display: flex;
+    flex-direction: row; /* ← clave: fila en lugar de columna */
+    flex-wrap: wrap;     /* permite que pasen a otra fila al reducir pantalla */
+    justify-content: center; /* centra las tarjetas */
+    gap: 1rem;           /* espacio entre ellas */
+}
