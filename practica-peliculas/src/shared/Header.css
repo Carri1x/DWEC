@@ -1,0 +1,21 @@
+header{
+    background-color: var(--color-principal);
+    display: flex;
+    align-items: center;
+}
+
+header img{
+    height: 65px;
+    border-radius: 10px;
+}
+
+header a{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+}
+
+header a h3{
+    margin-left: 20px;
+}
