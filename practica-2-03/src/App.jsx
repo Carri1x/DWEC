@@ -4,7 +4,7 @@ import Pelicula from './components/Pelicula.jsx';
 import Interprete from './components/Interprete.jsx';
 
 function App() {
-  let nameAplication = "Práctica 2.03";
+  let nameAplication = "Práctica 4-05";
   return (
     <>
       <h1>{nameAplication}</h1>
