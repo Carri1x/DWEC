@@ -1,21 +1,25 @@
 import './App.css'
-import { Link, Router } from 'react-router-dom';
 import Rutas from './Router/Rutas.jsx';
 import Header from './shared/Header.jsx';
+import Nav from './shared/Nav.jsx';
+import Footer from './shared/Footer.jsx';
 
 function App() {
 
   return (
     <>
       <Header />
-      <nav className='navegacion'>
-        <Link to='/'>Inicio</Link>
-        <Link to='/contacto'>Contacto</Link>
-        <Link to='/peliculas'>Peliculas</Link>
-        <Link to='/acerca-de'>Acerca de</Link>
-      </nav>
+      <div className='contenedor-contenido-nav'>
+        <Nav />
+        <div className='rutas-container'>
+          {/*He tenido que poner este div para que el contenedor-contenido-nav 
+          no afecte el flex que tiene en el contenido de mis rutas,
+          una locura... */}
+          <Rutas /> 
+        </div>
+      </div>
+      <Footer />
 
-      <Rutas />
     </>
   );
 }

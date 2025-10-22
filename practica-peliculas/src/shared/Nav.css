@@ -1,0 +1,16 @@
+.navegacion{
+  width: fit-content;
+  height: 100vh;
+  min-width: fit-content;
+  background-color: var(--color-principal-oscuro);
+  display: flex;
+  flex-direction: column;
+
+}
+
+.navegacion a{
+  text-decoration: none;
+  color: white;
+  padding: 1rem;
+  display: inline-block;
+}

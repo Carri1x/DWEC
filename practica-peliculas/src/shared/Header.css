@@ -2,6 +2,7 @@ header{
     background-color: var(--color-principal);
     display: flex;
     align-items: center;
+    padding: 3px 0;
 }
 
 header img{

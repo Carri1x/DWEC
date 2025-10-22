@@ -1,5 +1,6 @@
 :root{
     --color-principal: rgb(183, 216, 205);
+    --color-principal-oscuro: rgba(183, 216, 205, 0.61);
     --color-secundario: rgb(84, 84, 84);
     --color-complementario: rgb(213, 228, 14);
 }
@@ -27,15 +28,6 @@ p{
   font-size: small;
 }
 
-.navegacion{
-  width: 100%;
-  background-color: var(--color-principal);
-  margin-bottom: 1rem;
-}
-
-.navegacion a{
-  text-decoration: none;
-  color: var(--color-secundario);
-  padding: 1rem;
-  display: inline-block;
+.contenedor-contenido-nav{
+  display: flex;
 }
