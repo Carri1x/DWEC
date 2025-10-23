@@ -31,3 +31,7 @@ p{
 .contenedor-contenido-nav{
   display: flex;
 }
+
+.contenedor-rutas{
+  text-align: center;
+}

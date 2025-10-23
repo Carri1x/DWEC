@@ -11,7 +11,7 @@ function App() {
       <Header />
       <div className='contenedor-contenido-nav'>
         <Nav />
-        <div className='rutas-container'>
+        <div className='contenedor-rutas'>
           {/*He tenido que poner este div para que el contenedor-contenido-nav 
           no afecte el flex que tiene en el contenido de mis rutas,
           una locura... */}
