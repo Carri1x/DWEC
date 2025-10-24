@@ -1,0 +1,20 @@
+.pelicula-main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pelicula-info{
+    max-width: 500px;
+    padding: 1px 20px;
+}
+
+.pelicula-info h4{
+    margin-bottom: 30px;
+    color: var(--color-secundario);
+}
+
+.pelicula-container img{
+    width: 200px;
+    border-radius: 10px;
+}

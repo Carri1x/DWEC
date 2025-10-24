@@ -2,6 +2,7 @@ import React from "react";
 import Contenedor from "../../components/Contenedor.jsx";
 import Pelicula from "../../components/Pelicula.jsx";
 import Interprete from "../../components/Interprete.jsx";
+import PeliculaMiniatura from "../../components/PeliculaDetalle.jsx";
 import './Peliculas.css';
 
 const Peliculas = () => {

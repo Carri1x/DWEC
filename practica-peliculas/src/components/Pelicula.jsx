@@ -1,26 +1,19 @@
-import React from 'react';
 import './Pelicula.css';
-import Taquilla from './Taquilla-component/Taquilla.jsx';
-import Elenco from './Elenco-component/Elenco.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const Pelicula = (props) => {
-    const {title, director,  movieListing, summary, dinero} = props;
+    const {title, director,  movieListing, summary, dinero, fechaCreacion} = props;
     let alt = `Foto de la película ${title}`;
+    let navegar = useNavigate();
+
   return (
     <>
-        <div className='pelicula-container'>
-            <h2>{title}</h2>
-            <div className='pelicula-main'>
-                <img src={movieListing} alt={alt} />
-                <div className='pelicula-info'>
-                    <h4>Director: {director}</h4>
-                    <p>{summary}</p>
-                </div>
-            </div>
-            <div className='pelicula-buttons'>
-                <Taquilla  cantidad={dinero}/> 
-                <Elenco  interpretes={props.children}/>
-            </div>
+        <div className='pelicula-container' onClick={() => {
+            navegar(`/pelicula/${title}`);
+        }}>
+            <img src={movieListing} alt={alt} />
+            <h3>{title}</h3>
+            <p>{fechaCreacion}</p>
         </div>
     </>
   )
