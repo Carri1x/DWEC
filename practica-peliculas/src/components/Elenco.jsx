@@ -1,4 +1,6 @@
 import React, {useRef} from "react";
+import './Elenco.css';
+import Interprete from "./Interprete.jsx";
 
 const Elenco = (props) => {
     //Obtengo los intérpretes pasados como props
@@ -17,7 +19,16 @@ const Elenco = (props) => {
             }}>Elenco</button>
             <div className="elenco-container invisible" ref={elencoRef}>
                 <h5>Intérpretes:</h5>
-                {interpretes}
+                {interpretes.map((interprete, i) => {
+                    return (
+                        <Interprete
+                            nombre={interprete.nombre}
+                            foto={interprete.foto}
+                            >
+                            {interprete.descripcion}
+                        </Interprete>
+                    );
+                })}
             </div>
         </>
     );

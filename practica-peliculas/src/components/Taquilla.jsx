@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import { cambiarFormatoEspanya } from "../../libraries/util.js";
+import { cambiarFormatoEspanya } from "../libraries/util.js";
 import './Taquilla.css';
 
 const Taquilla = (props) => {

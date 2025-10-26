@@ -1,4 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 
+h2{
+    padding-bottom: 15px;
+    text-align: center;
+    font-size: xx-large;
+    color: var(--color-complementario);
+    text-shadow: 2px 2px 4px rgb(0, 0, 0);
+}
 
 .pelicula-main{
     display: flex;
@@ -20,3 +31,5 @@
     width: 200px;
     border-radius: 10px;
 }
+
+

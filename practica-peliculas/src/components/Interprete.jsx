@@ -2,13 +2,13 @@ import React from 'react';
 import './Interprete.css';
 
 const Interprete = (props) => {
-    const customAlt = `Foto de ${props.name}`;
+    const customAlt = `Foto de ${props.nombre}`;
   return (
     <>
         <div className='interprete-container'>
-            <img src={props.photo} alt={customAlt} />
+            <img src={props.foto} alt={customAlt} />
             <div className='interprete-name-biography'>
-              <h3>{props.name}</h3>
+              <h3>{props.nombre}</h3>
               {props.children}
             </div>
         </div>

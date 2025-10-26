@@ -9,8 +9,8 @@ const Interpretes = () => {
             <div className='container-interpretes'>
 
                 <Interprete
-                    name="Keanu Reeves"
-                    photo="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRsex5VNCCLIEXGQ14XLGX1scesp-88zkFoP-NZi0MqIPmtZ69koAx8o4fv494SCvrScUVWENwTPY9CeOtvoWk2BWE3Qq-uYF6ZBwlNQpKf"
+                    nombre="Keanu Reeves"
+                    foto="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRsex5VNCCLIEXGQ14XLGX1scesp-88zkFoP-NZi0MqIPmtZ69koAx8o4fv494SCvrScUVWENwTPY9CeOtvoWk2BWE3Qq-uYF6ZBwlNQpKf"
                 >
                     <p>
                         Keanu Charles Reeves es un actor y músico canadiense.
@@ -20,8 +20,8 @@ const Interpretes = () => {
                     </p>
                 </Interprete>
                 <Interprete
-                    name="Laurence Fishburne"
-                    photo="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRmGP_lgdM7MA6BTtAmn9jxArYTiQ0moLqGer6mZI221lVxk1ILbbfILcOzydp-2CB7c1S25uOonTmwNrNkU9Xye8C-Y0xutc-JZEOhqkdgg"
+                    nombre="Laurence Fishburne"
+                    foto="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRmGP_lgdM7MA6BTtAmn9jxArYTiQ0moLqGer6mZI221lVxk1ILbbfILcOzydp-2CB7c1S25uOonTmwNrNkU9Xye8C-Y0xutc-JZEOhqkdgg"
                 >
                     <p>
                         Laurence John Fishburne III, conocido como Laurence Fishburne, es un actor de cine estadounidense.
@@ -29,8 +29,8 @@ const Interpretes = () => {
                     </p>
                 </Interprete>
                 <Interprete
-                    name="Jamie Foxx"
-                    photo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZzn7jHMgABJ4mHy14D0uMoQnPilhj06WazcylhfuTO526ybsEsDDKENf1ZcU8QwyJxX9QAhjfdoUh7UYl114h_04FvCZmI6fx3htayvttnQ"
+                    nombre="Jamie Foxx"
+                    foto="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZzn7jHMgABJ4mHy14D0uMoQnPilhj06WazcylhfuTO526ybsEsDDKENf1ZcU8QwyJxX9QAhjfdoUh7UYl114h_04FvCZmI6fx3htayvttnQ"
                 >
                     <p>
                         Eric Marlon Bishop, más conocido como Jamie Foxx, es un actor, comediante, productor discográfico y cantante de R&B estadounidense.
@@ -40,8 +40,8 @@ const Interpretes = () => {
                     </p>
                 </Interprete>
                 <Interprete
-                    name="Leonardo DiCaprio"
-                    photo="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQcbqOH4dzt57bdZ0K36CHrRkhqgtGgwIrA7mHoA4M0cc8x239pMR-h28FlqERzrqW0GVMn1-Ok_LD0-KjYHnQCBki8Hqr50uPbUiPTn5UAhNDJa9Mtu-dp2JjcSYYNptQ97eLLy6_0DFEP"
+                    nombre="Leonardo DiCaprio"
+                    foto="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQcbqOH4dzt57bdZ0K36CHrRkhqgtGgwIrA7mHoA4M0cc8x239pMR-h28FlqERzrqW0GVMn1-Ok_LD0-KjYHnQCBki8Hqr50uPbUiPTn5UAhNDJa9Mtu-dp2JjcSYYNptQ97eLLy6_0DFEP"
                 >
                     <p>
                         Leonardo Wilhelm DiCaprio es un actor y productor de cine estadounidense.
@@ -53,8 +53,8 @@ const Interpretes = () => {
                     </p>
                 </Interprete>
                 <Interprete
-                    name="Mark Ruffalo"
-                    photo="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Mark_Ruffalo_%2836201774756%29_%28cropped%29.jpg/250px-Mark_Ruffalo_%2836201774756%29_%28cropped%29.jpg"
+                    nombre="Mark Ruffalo"
+                    foto="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Mark_Ruffalo_%2836201774756%29_%28cropped%29.jpg/250px-Mark_Ruffalo_%2836201774756%29_%28cropped%29.jpg"
                 >
                     <p>
                         Mark Alan Ruffalo es un actor, director, productor y guionista estadounidense.

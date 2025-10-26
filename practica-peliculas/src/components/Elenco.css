@@ -1,0 +1,25 @@
+.invisible{
+    display: none;
+}
+
+.interprete-item{
+    padding: 5px;
+    background-color: rgb(165, 165, 165);
+    border: 2px solid rgb(87, 87, 87);
+    width: 400px;
+    margin: auto;
+    border-radius: 20px;
+    display: flex;
+}
+
+.interprete-item img{
+    padding-left: 10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.interprete-item p{
+    text-align: justify;
+    padding: 0 10px;
+}

@@ -2,32 +2,36 @@ import React from 'react';
 import './PeliculaDetalle.css';
 import db from '../data/peliculas.json';
 import { useParams } from 'react-router-dom';
+import Contenedor from './Contenedor.jsx';
+import Pelicula from './Pelicula.jsx';
 
 const PeliculaDetalle = () => {
-    const {tituloParametro} = useParams();
+    const {titulo} = useParams();
+
+    console.log(titulo);
     return (
         <>
 
-            {db.peliculas.map((pelicula) => {
-                if (pelicula.titulo === tituloParametro) {
+            {db.peliculas.map((pelicula, i, a) => {
+                if (pelicula.titulo === titulo) {
                     return (
-                        <div className='pelicula-detalle-container'>
-                            <h2>{pelicula.titulo}</h2>
-                            <div className='pelicula-main'>
-                                <img src={pelicula.cartel} alt={`Cartel de la película ${pelicula.titulo}`} />
-                                <div className='pelicula-info'>
-                                    <h4>Director: {pelicula.director}</h4>
-                                    <p>{pelicula.resumen}</p>
-                                </div>
-                            </div>
-                            <div className='pelicula-buttons'>
-                                <Taquilla cantidad={pelicula.recaudacion} />
-                                <Elenco interpretes={pelicula.interpretes} />
-                            </div>
+                        <div className='pelicula-container' key={i}>
+                            <Contenedor>
+                                <Pelicula
+                                    titulo = {pelicula.titulo}
+                                    director = {pelicula.director}
+                                    cartel = {pelicula.cartel}
+                                    resumen = {pelicula.resumen}
+                                    dinero = {pelicula.recaudacion}
+                                    año = {pelicula.año}
+                                >
+                                    {pelicula.interpretes}
+                                </Pelicula>
+                            </Contenedor>
                         </div>
                     );
                 }
-            })?? `${tituloParametro}, No se encuentra.`}
+            })?? `${titulo}, No se encuentra.`};
         </>
     )
 }
