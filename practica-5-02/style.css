@@ -4,6 +4,10 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
+h1{
+    text-align: center;
+    margin: 40px 0;
+}
 
 #acordeon{
     width: 300px;
@@ -19,6 +23,57 @@
 .oculto{
     display: none;
 }
-.contenido{
-    margin-bottom: 20px;
+
+
+/* Ejercicio 2 */
+
+.tab{
+    margin: 20px 20px;
+    padding: 30px 30px ;
+    min-width: fit-content;
+    max-width: fit-content;
+    border-radius: 20px;
+    background-color:rgb(166, 166, 166);
+}
+/*.tab > div:first-child > p.seleccionado{
+    border-top-left-radius: 10px;
+    background-color: white;
+    
+}*/
+.tab > div:first-child{
+    min-width: fit-content;
+    max-width: fit-content;
+    display: flex;
+    align-items: center;
+    background-color: rgba(128, 128, 128, 1);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    color: rgb(225, 225, 225);
+    
+}
+.tab > div:first-child p{
+    padding: 10px 10px;
+}
+
+.tab > div:last-child{
+    width: 100%;
+    max-width: fit-content;
+    min-width: 500px;
+    max-height: fit-content;
+    min-height: 300px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;  
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.seleccionado{
+    background-color: white;
+    height: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: rgb(70, 70, 70);
 }
