@@ -1,0 +1,86 @@
+:root {
+    /* --- Paleta de Colores --- */
+    --color-fondo-pagina: #1f2833; /* Gris oscuro/casi negro para el fondo principal */
+    --color-fondo-principal: #ffffff; /* Blanco para el contenedor principal */
+    --color-panel-secundario: #e8e8e8; /* Gris muy claro para el panel de colores */
+    --color-borde-general: #c5c6c7;
+    --sombra-suave: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+}
+
+/* --- Reseteo Básico y Contenedor Principal --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Asegura que padding y border no aumenten el tamaño final */
+}
+
+body {
+    background-color: var(--color-fondo-pagina);
+    min-height: 100vh;
+    display: flex; /* Usamos Flexbox para centrar el .main sin transformaciones */
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* --- Contenedor Principal (.main) --- */
+.main {
+    width: 90vw; /* Utiliza un porcentaje fijo para un mejor control */
+    max-width: 1200px; /* Limita el tamaño en pantallas muy grandes */
+    min-height: 85vh;
+    padding: 20px;
+    background-color: var(--color-fondo-principal);
+    border-radius: 12px;
+    box-shadow: var(--sombra-suave); /* Aplicamos la sombra */
+    
+    display: flex;
+    gap: 30px; /* Espacio más definido entre los paneles */
+}
+
+/* --- Panel de Colores (.colores) --- */
+.colores {
+    flex-shrink: 0; /* Evita que el panel se encoja cuando haya mucho lienzo */
+    width: 200px; /* Anchura fija para la paleta de colores */
+    padding: 15px;
+    border-radius: 8px;
+    background-color: var(--color-panel-secundario);
+    border: 1px solid var(--color-borde-general);
+    /* Puedes añadir estilos específicos para los botones de color aquí */
+}
+
+/* --- Panel de Dibujo/Lienzo (.lienzo) --- */
+.lienzo {
+    flex-grow: 1; /* Permite que el lienzo ocupe todo el espacio restante */
+    display: flex;
+    justify-content: center; /* Centra la tabla de celdas horizontalmente */
+    align-items: center; /* Centra la tabla de celdas verticalmente */
+    
+    /* El fondo del lienzo puede ser blanco o transparente dependiendo del efecto */
+    background-color: var(--color-panel-secundario);
+    border: 2px dashed var(--color-borde-general); /* Borde para delimitar el área de dibujo */
+    border-radius: 8px;
+    overflow: auto; /* Útil si la tabla es más grande que el contenedor */
+}
+
+.colores > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.color{
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.colores > button {
+    padding: 7px 10px;
+    background-color: rgb(215, 0, 0);
+    color: white;
+    border-radius: 10px;
+    border: 2px solid white;
+}
