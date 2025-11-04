@@ -1,0 +1,17 @@
+.arrastable{
+    width: 250px;
+    margin: 5px;
+}
+
+.soltable{
+    height: 470px;
+    width: 780px;
+    background-color: gray;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}

@@ -84,3 +84,15 @@ export const esPrimo = () => {
 export const generarNumeroAleatorio = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export const arrayDeNumerosAleatoriosNoRepetidos = (min, max) => {
+    let array = [];
+    for (let i = min - 1; i < max; i++) {
+        let numRandom = generarNumeroAleatorio(min, max); //Genero un número aleatorio entre las imágenes.
+        while (array.includes(numRandom)) { //Si saca el número ya incluido volvemos a repetirtlo tantas veces como sea necesarias.
+            numRandom = generarNumeroAleatorio(min, max);
+        }
+        array.push(numRandom);
+    }
+    return array;
+}
