@@ -1,5 +1,5 @@
 "use strcit";
-import { haGanado, insertarMensajeDeVictoria } from "./biblioteca/puzzle.js";
+import { aleatorizarImagenes, haGanado, insertarMensajeDeVictoria } from "./biblioteca/puzzle.js";
 import { arrayDeNumerosAleatoriosNoRepetidos } from "./biblioteca/util.js";
 
 window.onload = () => {
@@ -49,9 +49,15 @@ window.onload = () => {
         document.getElementsByClassName('ganador')[0]?.remove(); //Si existe el mensaje de ganador lo eliminamos al recargar la página.
         let imagenes = document.getElementsByClassName('arrastrable'); // Cogemos todas las imágenes.
         let primerDiv = document.getElementsByClassName('soltables')[0]; // Cogemos el div donde queremos depositarlas.
-        for(const imagen of imagenes){
+        //let posicionImagenes = arrayDeNumerosAleatoriosNoRepetidos(0, imagenes.length); //Hacemos un array con números aleatorios para que las imágenes salgan de forma aleatoria (Como al principio).
+        const imagenesAleatorizadas = aleatorizarImagenes(imagenes);
+        console.log(imagenes)
+        console.log("-----------------------")
+        console.log(imagenesAleatorizadas)
+        for(const imagen of imagenesAleatorizadas){
             primerDiv.appendChild(imagen); // Vamos añadiendo las imágenes una a una.
         }
+        
     })
 
 
