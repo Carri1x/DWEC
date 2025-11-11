@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Aplicación web para la colección de discos dentro del localStorage"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>Especificaciones disco</legend>
+
+        <label for="nombre">Nombre: </label>
+        <input type="text" name="nombre" placeholder="Nombre del disco" />
+
+        <label for="caratula">Carátula del disco (URL): </label>
+        <!--Hay type="url" pero voy a poner text para hacer validaciones en javascript no aquí...-->
+        <input
+          type="text"
+          name="caratula"
+          placeholder="Url de la carátula del disco"
+        />
+
+        <label for="grupo-interprete">Grupo o Intérprete: </label>
+        <input
+          type="text"
+          name="grupo-interprete"
+          placeholder="Grupo o intérprete del disco"
+        />
+
+        <label for="año-publicacion">Año de publicación: </label>
+        <input
+          type="text"
+          name="año-publicacion"
+          placeholder="Año de publicación del disco"
+        />
+
+        <label for="genero">Género musical del disco: </label>
+        <select name="genero" id="genero">
+          <option value=""></option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <legend>Ubicación del disco</legend>
+        <label for="localizacion">Localización del disco: </label>
+        <input type="text" name="localizacion" placeholder="Ej: ES-001AA">
+      </fieldset>
+    </form>
+  </body>
+</html>
