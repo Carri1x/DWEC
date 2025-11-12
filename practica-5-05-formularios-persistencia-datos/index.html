@@ -3,52 +3,79 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Aplicación web para la colección de discos dentro del localStorage"
-    />
-    <title>Document</title>
+    <title>Práct 5-05</title>
+    <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
-    <form>
-      <fieldset>
-        <legend>Especificaciones disco</legend>
-
+    <header>
+        <button>Mostrar discos</button>
+    </header>
+    <fieldset>
+      <legend>Añadir disco</legend>
+      <form>
         <label for="nombre">Nombre: </label>
         <input type="text" name="nombre" placeholder="Nombre del disco" />
 
-        <label for="caratula">Carátula del disco (URL): </label>
-        <!--Hay type="url" pero voy a poner text para hacer validaciones en javascript no aquí...-->
+        <label for="caratula">Caratula del disco: </label>
         <input
           type="text"
           name="caratula"
-          placeholder="Url de la carátula del disco"
+          placeholder="Url de la caratula del disco"
         />
 
-        <label for="grupo-interprete">Grupo o Intérprete: </label>
+        <label for="grupo">Grupo o intérprete: </label>
         <input
           type="text"
           name="grupo-interprete"
-          placeholder="Grupo o intérprete del disco"
+          placeholder="Grupo o Intérprete del disco"
         />
 
-        <label for="año-publicacion">Año de publicación: </label>
+        <label for="año">Año de publicación: </label>
         <input
           type="text"
-          name="año-publicacion"
+          name="año"
           placeholder="Año de publicación del disco"
         />
 
-        <label for="genero">Género musical del disco: </label>
-        <select name="genero" id="genero">
-          <option value=""></option>
+        <label for="genero">Género: </label>
+        <select name="genero">
+          <option value="rock">Rock</option>
+          <option value="pop">Pop</option>
+          <option value="jazz">Jazz</option>
+          <option value="blues">Blues</option>
+          <option value="hiphop">Hip-Hop</option>
+          <option value="rap">Rap</option>
+          <option value="reggae">Reggae</option>
+          <option value="salsa">Salsa</option>
+          <option value="cumbia">Cumbia</option>
+          <option value="electronica">Electrónica</option>
+          <option value="metal">Metal</option>
+          <option value="punk">Punk</option>
+          <option value="clasica">Clásica</option>
+          <option value="country">Country</option>
+          <option value="reggaeton">Reggaetón</option>
+          <option value="trap">Trap</option>
+          <option value="folk">Folk</option>
+          <option value="indie">Indie</option>
+          <option value="flamenco">Flamenco</option>
+          <option value="bachata">Bachata</option>
+          <option value="tango">Tango</option>
+          <option value="kpop">K-Pop</option>
+          <option value="rnb">R&B</option>
+          <option value="lofi">Lo-Fi</option>
         </select>
-      </fieldset>
-      <fieldset>
-        <legend>Ubicación del disco</legend>
-        <label for="localizacion">Localización del disco: </label>
-        <input type="text" name="localizacion" placeholder="Ej: ES-001AA">
-      </fieldset>
-    </form>
+
+        <label for="localizacion">Localización: </label>
+        <input type="text" name="localizacion" placeholder="Localización de donde se guardará el disco">
+
+        <div class="checkbox-container">
+            <label for="prestado">Prestado: </label>
+            <input type="checkbox" id="prestado" name="prestado" value="true">
+        </div>
+
+        <button>Guardar</button>
+
+      </form>
+    </fieldset>
   </body>
 </html>

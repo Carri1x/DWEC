@@ -1,0 +1,127 @@
+:root {
+  --color-primary: #0056b3; /* Azul corporativo */
+  --color-secondary: #003a73; /* Azul oscuro para hover/activos */
+  --color-background: #f4f7f6; /* Fondo gris claro */
+  --color-text: #333333; /* Texto oscuro */
+  --color-border: #cccccc; /* Borde de campo */
+  --color-fieldset-border: #a0a0a0; /* Borde de fieldset */
+  --color-legend-bg: #e0e0e0; /* Fondo de legend */
+  --font-family: 'Arial', sans-serif;
+}
+
+/* --- Estilos Generales --- */
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  margin: 0;
+  padding: 20px;
+  /*display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;  Para centrar verticalmente en la página */
+}
+header{
+    background-color: var(--color-background);
+    border-bottom: 2px solid var(--color-background);
+}
+
+/* --- Contenedor Principal (Fieldset) --- */
+fieldset {
+  border: 1px solid var(--color-fieldset-border);
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil para un efecto elevado */
+  background-color: white;
+}
+
+legend {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--color-primary);
+  padding: 0 10px;
+  background-color: white; /* Para que el fondo del legend no se mezcle con el fieldset */
+  border: none;
+}
+
+/* --- Estilos del Formulario --- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espacio entre los grupos de label/input */
+}
+
+/* Estilo para los pares label-input/select */
+label {
+  font-weight: 600;
+  color: var(--color-text);
+  background:none;
+  margin-bottom: 5px; /* Espacio entre label y el campo de entrada */
+  display: block; /* Asegura que la etiqueta tome su propia línea */
+}
+
+/* Estilo para todos los campos de entrada de texto y select */
+input[type="text"],
+input[type="number"], /* Por si se cambia el tipo del año */
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+  font-size: 1em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Efecto al enfocar los campos */
+input[type="text"]:focus,
+select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2); /* Sombra azul suave */
+  outline: none; /* Quitar el contorno predeterminado del navegador */
+}
+
+/* Estilo para el campo de checkbox (Prestado) */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;
+}
+
+label[for="prestado"] {
+    margin-bottom: 0;
+}
+
+input[type="checkbox"] {
+  width: auto; /* Permite que el checkbox tenga su tamaño natural */
+  transform: scale(1.5); /* Agrandar un poco el checkbox */
+  accent-color: var(--color-primary); /* Cambiar el color del check */
+}
+
+/* Estilo para placehoders (texto de ejemplo) */
+::placeholder {
+  color: #a0a0a0;
+  opacity: 1; /* Asegura que el color se muestre bien en diferentes navegadores */
+}
+
+button, input[type="submit"] {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  margin-top: 20px;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: var(--color-secondary);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
