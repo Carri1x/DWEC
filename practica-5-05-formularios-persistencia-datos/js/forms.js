@@ -69,6 +69,13 @@ export const quitarMensajesDeError = () => {
     errores.forEach(e => e.remove());
 }
 
+export const comprobarCompatibilidadLocalStorage = () =>{
+    if(typeof localStorage === 'undefined') {
+            avisarSobreLocalStorage();
+            return; //El navegador no soporta localStorage salimos del evento.
+    }
+}
+
 export const avisarSobreLocalStorage = () => {
     const contenidoOriginal = document.body.innerHTML;
 
@@ -102,15 +109,89 @@ export const crearDisco = (form) =>{
     }
 }
 
+// MÉTODO QUE CREA LA TARJETA DE CADA DISCO CON SU BOTÓN DE BORRADO.
 export const pintarDiscos = (discos) => {
     const aside = document.getElementsByTagName('aside')[0];
+    //Si ya se ha mostrado anteriormente los discos lo borramos por si ha habido algún cambio.
+    aside.replaceChildren();
+    aside.setAttribute('class', 'disco-db');
+    //Título del aside de los discos.
+    const h1 = document.createElement('h1');
+    h1.textContent = 'Discos';
+    aside.appendChild(h1);
+
+    const divContenedorDiscos = document.createElement('div');
+
 
     for (const disco of discos) {
         const div = document.createElement('div');
         div.setAttribute('class', 'disco-card');
-        const h4 = document.createElement('h4');
-        h4.appendChild(disco.nombre.value);
 
-        //Me queda rellenar todo el componente del disco para llevarlo desde la base de datos (localStorage) hasta la pantalla.
+        const titulo = document.createElement('h3');
+        titulo.textContent = disco.nombre;
+        div.appendChild(titulo);
+
+        const img = document.createElement('img');
+        img.src = `${disco.caratula}`;
+        img.alt = `Carátula del disco ${disco.nombre}`;
+        div.appendChild(img);
+
+        const  grupoInterprete = document.createElement('p');
+        grupoInterprete.textContent = disco.grupoInterprete;
+        div.appendChild(grupoInterprete);
+        
+        const año = document.createElement('p');
+        año.textContent = disco.año;
+        div.appendChild(año);
+
+        const genero = document.createElement('p');
+        genero.textContent = disco.genero;
+        div.appendChild(genero);
+
+        if(disco.prestado){
+            const prestado = document.createElement('p');
+            prestado.textContent = `Prestado`;
+            div.appendChild(prestado);
+        }
+
+        const localizacion = document.createElement('strong');
+        localizacion.textContent = disco.localizacion;
+        div.appendChild(localizacion);
+
+        const basura = document.createElement('button');
+        const icono = document.createElement('img');
+        icono.src = `./img/basura.svg`;
+        basura.appendChild(icono);
+        div.appendChild(basura);
+        divContenedorDiscos.appendChild(div);
     }
+
+    aside.appendChild(divContenedorDiscos);
+
+    return aside;
 }
+
+export const limpiarFormulario = (formulario) => {
+    formulario.reset();
+}
+
+export const getAllDiscos = () => {
+    const discosStr = localStorage.getItem('discos'); //Recogemos todos los discos.
+    return JSON.parse(discosStr);
+}
+
+export const removeDiscoByLocalizacion = (localizacion) => {
+    const discosJSON = getAllDiscos();
+
+    const discosFiltrados = discosJSON.filter ((disco) => { //Filtramos los discos.
+        disco.localizacion !== localizacion;
+    });
+
+    localStorage.setItem('discos', JSON.stringify(discosFiltrados)); // Actualizamos los discos.
+}
+
+export const filtrarDiscosPorNombre = (nombreAFiltrar) => {
+    const discosJSON = getAllDiscos();
+
+    return discosJSON.filter(disco => disco.nombre.toLowerCase().includes(nombreAFiltrar.toLowerCase()));
+} 

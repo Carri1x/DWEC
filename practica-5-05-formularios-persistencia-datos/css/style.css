@@ -16,14 +16,30 @@ body {
   color: var(--color-text);
   margin: 0;
   padding: 20px;
-  /*display: flex;
+  /*
+  display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;  Para centrar verticalmente en la página */
+  */
 }
-header{
+
+
+section{
     background-color: var(--color-background);
-    border-bottom: 2px solid var(--color-background);
+    margin-top: 10px;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+}
+
+section .contenedor-filtro{
+  width: fit-content;
+  display: flex;
+  justify-content: space-between;
+  max-height: fit-content;
 }
 
 /* --- Contenedor Principal (Fieldset) --- */
@@ -131,4 +147,21 @@ button:hover, input[type="submit"]:hover {
   border: 1px solid red;
   border-radius: 10px;
   padding: 15px;
+}
+
+.disco-db > div{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.disco-card{
+  border: 1px solid gray;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 10px;
+  min-width: 200px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

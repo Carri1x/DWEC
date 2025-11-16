@@ -8,9 +8,7 @@
     <script type="module" src="./main.js"></script>
   </head>
   <body>
-    <header>
-        <button>Mostrar discos</button>
-    </header>
+    
     <fieldset>
       <legend>Añadir disco</legend>
       <form name="formDiscos">
@@ -81,9 +79,14 @@
 
       </form>
     </fieldset>
-
-    <aside>
-      
-    </aside>
+    <section>
+        <button>Mostrar discos</button>
+        <div class="contenedor-filtro">
+          <input type="text" name="filtro" placeholder="Filtrar por genero" >
+          <button>Filtrar</button>
+          <button>Limpiar filtro</button>
+        </div>
+    </section>
+    <aside></aside>
   </body>
 </html>
