@@ -5,10 +5,10 @@ import Rutas from './routes/Rutas.jsx';
 function App() {
 
   return (
-    <>
+    <div className='contenedor-app'>
       <Header />
       <Rutas />
-    </>
+    </div>
   )
 }
 

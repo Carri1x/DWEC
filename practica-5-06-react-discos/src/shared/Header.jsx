@@ -16,10 +16,11 @@ const Header = () => {
             nombre:'Lista de discos'
         }
         
-]
+    ];
+    
     return (
         <div className="contenedor-header">
-            <h1>Discografica 2ºDAW</h1>
+            <h1>D-libr-iscos 2ºDAW</h1>
             <div className="contenedor-menu">
                 <Menu rutas={rutas}/>
             </div>

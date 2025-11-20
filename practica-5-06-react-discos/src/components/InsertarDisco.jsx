@@ -1,13 +1,50 @@
-
+import './InsertarDisco.css';
 
 const InsertarDisco = () => {
+    const formInicial = {
+        nombre: "",
+        caratula: "",
+        grupoInterprete: "",
+        año: "",
+        genero: "",
+        localizacion: "",
+        prestado: false
+    };
+    const [formulario, setFormulario] = useState(formInicial);
+
+    const validarInput = (evento) => {
+        const {name, value} = evento.target;
+        switch(name){
+            case 'nombre':
+                if(!nombreValido(value)){ //En caso de que el nombre no sea válido. 
+                    
+                }
+                break;
+        }
+    }
+
+    /**
+     * Cambiamos el valor del formulario, de forma que cada cambio en el input está controlado.
+     * @param {Input que ha accionado el evento} evento 
+     */
+    const cambiarEstado = (evento) => {
+        const {name, value} = evento.target;
+        setFormulario({...formulario, [name]:value});
+        validarInput(evento);
+    }
     return (
         <>
             <fieldset>
                 <legend>Añadir disco</legend>
                 <form name="formDiscos">
                     <label htmlFor="nombre">Nombre: </label>
-                    <input id="nombre" type="text" name="nombre" placeholder="Nombre del disco" />
+                    <input 
+                        id="nombre" 
+                        type="text" 
+                        name="nombre" 
+                        placeholder="Nombre del disco"
+                        onChange={cambiarEstado}
+                    />
 
                     <label htmlFor="caratula">Caratula del disco: </label>
                     <input
@@ -15,6 +52,7 @@ const InsertarDisco = () => {
                         type="text"
                         name="caratula"
                         placeholder="Url de la caratula del disco"
+                        onChange={cambiarEstado}
                     />
 
                     <label htmlFor="grupo">Grupo o intérprete: </label>
@@ -23,6 +61,7 @@ const InsertarDisco = () => {
                         type="text"
                         name="grupoInterprete"
                         placeholder="Grupo o Intérprete del disco"
+                        onChange={cambiarEstado}
                     />
 
                     <label htmlFor="año">Año de publicación: </label>
@@ -31,10 +70,11 @@ const InsertarDisco = () => {
                         type="text"
                         name="año"
                         placeholder="Año de publicación del disco"
+                        onChange={cambiarEstado}
                     />
 
                     <label htmlFor="genero">Género: </label>
-                    <select name="genero" id="genero">
+                    <select name="genero" id="genero" onChange={cambiarEstado}>
                         <option value="rock">Rock</option>
                         <option value="pop">Pop</option>
                         <option value="jazz">Jazz</option>
@@ -62,11 +102,22 @@ const InsertarDisco = () => {
                     </select>
 
                     <label htmlFor="localizacion">Localización: </label>
-                    <input type="text" is="localizacion" name="localizacion" placeholder="Localización del disco: ES-001AA" />
+                    <input 
+                        type="text" 
+                        id="localizacion" 
+                        name="localizacion" 
+                        placeholder="Localización del disco: ES-001AA"
+                        onChange={cambiarEstado} 
+                    />
 
                     <div className="checkbox-container">
                         <label htmlFor="prestado">Prestado: </label>
-                        <input type="checkbox" id="prestado" name="prestado" />
+                        <input 
+                            type="checkbox" 
+                            id="prestado" 
+                            name="prestado"
+                            onChange={cambiarEstado} 
+                        />
                     </div>
 
                     <button>Guardar</button>
