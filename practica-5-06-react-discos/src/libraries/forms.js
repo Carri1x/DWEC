@@ -28,7 +28,7 @@ export const validarInput = (evento, errores, setErrores) => {
             }
             break;
         case 'caratula':
-            if(!caratulaValida(value)){
+            if(!caratulaValida(value) ){
                 errorActual = mensajeDeError.caratula;
             }
             break;
@@ -57,70 +57,55 @@ export const validarInput = (evento, errores, setErrores) => {
 
 }
 const nombreValido = (nombre) => {
+    if(nombre === '') return false;
     return !isANumberAndInteger(nombre) && regexMinDeLetras.test(nombre); //Falso si es un numero o un nombre menor de 3 letras.
 }
 
 const grupoInterpreteValido = (grupoInterprete) => {
+    if(grupoInterprete === '') return false;
     return nombreValido(grupoInterprete);
 }
 
 const caratulaValida = (url) => {
+    if(url === "") return true;
     return url.startsWith('https://');
 }
 
 const añoValido = (año) => {
+    if(año === "") return true;
     return año >= añoMinimo && año <= añoMax && regexCuatroDigitos.test(año);
 }
 
 const localizacionValida = (localizacion) => {
+    if(localizacion === "") return true;
     return regexLocalizacion.test(localizacion);
 }
 
-
-export const formularioCompleto = (formulario) => { 
-    for (const atributo in formulario) {
-        if (!Object.hasOwn(formulario, atributo)) continue;
-        if(atributo !== 'prestado'){   //En el caso de prestado quiero excluirlo ya que no es relevante.
-            if(formulario[atributo] === '') { // Si el atributo no tiene valor (cadena vacía), no está completo
-                return false;
-            }
-        }
-    }
-    return true;
+export const validoInputObligatorio = (input) => {
+    return input.required;
 }
 
 export const contieneErrores = (errores) => {
     for (const atributo in errores) {
         if (!Object.hasOwn(errores, atributo)) continue;
-        if(errores[atributo] !== '') { // Si el atributo no tiene valor (cadena vacía), no está completo
-            return true;
-        }
+        if(atributo !== 'prestado'){
+            console.log(atributo+'-->'+errores[atributo])
+            if(errores[atributo] !== '') { // Si el atributo no tiene valor (cadena vacía), tiene un error.
+                return true;
+            }
+        }  
+        
     }
     return false;
 }
 
-export const habilitarBoton = (boton) => {
-    boton.classList.toggle('habilitar');
+export const formularioValido = (formulario, errores) => {
+    //Si el formulario tiene los campos obligatiorios con valores y NO contiene errores habilitamos el botón de guardar disco.
+    if(!contieneErrores(errores)){ // Si el formulario NO contiene errores.
+        return formulario.nombre !== '' && formulario.grupoInterprete !== ''; // Y el formulario tiene los campos obligatorios rellenos.
+    }
 }
 
-
-
-export const mandarMensajeDeError = (clave, valor, form) => {
-    const input = form.elements[clave]; // Me fallaba este apartado y la IA me ha dado esta forma de acceder al input en concreto de esta forma, como si fuera from.children.
-    if (!input) return;
-    if (input.nextElementSibling.classList.contains('mensaje-error')) return;
-
-    const div = document.createElement('div');
-    div.className = 'mensaje-error';
-    div.textContent = valor;
-
-    input.insertAdjacentElement('afterend', div);
-};
-
-export const quitarMensajesDeError = () => {
-    const errores = document.querySelectorAll('.mensaje-error');
-    errores.forEach(e => e.remove());
-}
 
 export const comprobarCompatibilidadLocalStorage = () =>{
     if(typeof localStorage === 'undefined') {
@@ -149,9 +134,12 @@ const crearMensajeDeAviso = () => {
     return div;
 }
 
+
+
 //Verdaderamente esta función solo funciona para este formulario. Habría que hacer un método que sirviera para todos los formularios.
 export const crearDisco = (form) =>{
     return {
+        id: crypto.randomUUID(),
         nombre: form.nombre.value,
         caratula: form.caratula.value,
         grupoInterprete: form.grupoInterprete.value,

@@ -1,6 +1,7 @@
 import './InsertarDisco.css';
-import { useEffect, useState } from 'react';
-import { validarInput, formularioCompleto, contieneErrores } from '../libraries/forms.js';
+import { useEffect, useRef, useState } from 'react';
+import { validarInput, contieneErrores, formularioValido } from '../libraries/forms.js';
+import { printObject } from '../libraries/util.js';
 
 const InsertarDisco = () => {
     const formInicial = {
@@ -14,7 +15,9 @@ const InsertarDisco = () => {
     };
     const [formulario, setFormulario] = useState(formInicial);
     const [errores, setErrores] = useState(formInicial);
-    const [formularioDisabled, setFormularioDisabled] = useState(true);
+    const [disabled, setDisabled] = useState(true);
+    const formRef = useRef(null);
+
     /**
      * Cambiamos el valor del formulario, de forma que cada cambio en el input está controlado.
      * @param {Input que ha accionado el evento} evento 
@@ -25,11 +28,11 @@ const InsertarDisco = () => {
     }
 
     useEffect(() => {
-        //Si el formulario está completo y NO contiene errores habilitamos el botón de guardar disco.
-        if(formularioCompleto(formulario) && !contieneErrores(errores)){ 
-            setFormularioDisabled(false); // Cambiamos el estado a habilitado para enviar.
+        //Si el formulario tiene los campos obligatiorios con valores y NO contiene errores habilitamos el botón de guardar disco.
+        if(formularioValido(formulario, errores)){
+            setDisabled(false); // Cambiamos el estado a habilitado para guardar los datos del disco.
         } else {
-            setFormularioDisabled(true); // Cambiamos el estado a deshabilitado para enviar.
+            setDisabled(true); // Cambiamos el estado a deshabilitado para guardar los datos del disco.
         }
     },[formulario,errores]); //Dependemos de los cambios en el objeto formulario y de errores 
 
@@ -39,7 +42,7 @@ const InsertarDisco = () => {
                 <legend>Añadir disco</legend>
                 {/*He investigado sobre este evento onBlur y me parece majestuoso, en cuanto un input ha sido tocado y cambia el usuario el foco donde estaba interactuando se activa este evento.*/}
                 {/*Entonces cuando se ha cambiado el foco, llamo a la función validar input.*/}
-                <form name="formDiscos">
+                <form name="formDiscos" ref={formRef} >
                     <label htmlFor="nombre">Nombre: </label>
                     <input
                         id="nombre"
@@ -50,6 +53,7 @@ const InsertarDisco = () => {
                         onBlur={(evento) => {
                             validarInput(evento, errores, setErrores); //Vamos al fichero forms.js
                         }}
+                        required
                     />
                     { //En caso de que en el estado errores haya errores los mostramos.
                         errores.nombre && (
@@ -88,6 +92,7 @@ const InsertarDisco = () => {
                         onBlur={(evento) => {
                             validarInput(evento, errores, setErrores); //Vamos al fichero forms.js
                         }}
+                        required
                     />
                     { //En caso de que en el estado errores haya errores los mostramos.
                         errores.grupoInterprete && (
@@ -173,7 +178,13 @@ const InsertarDisco = () => {
                         />
                     </div>
                     
-                    <button type='button' disabled={formularioDisabled}>Guardar</button>
+                    <button 
+                        type='button' 
+                        disabled={disabled}
+                        
+                    >
+                        Guardar
+                    </button>
 
                 </form>
             </fieldset>
