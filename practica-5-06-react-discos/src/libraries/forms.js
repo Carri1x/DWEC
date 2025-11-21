@@ -8,30 +8,54 @@ const añoMinimo = 1700;
 const añoMax = 2025;
 const regexCuatroDigitos = /^\d{4}$/;
 const regexLocalizacion = /ES-[0-9]{3}[A-Z]{2}/;
-
-export const validarFormulario = (form) => {
-    let errores = false;
-    if(!nombreValido(form.nombre.value)){ //Si el nombre no es válido.
-        errores = {nombre:`Debe ser un nombre de ${minDeLetras} o más letras.`}; //Añadimos que ha fallado.
-    }
-    if(!grupoInterpreteValido(form.grupoInterprete.value)){
-        errores = {...errores, grupoInterprete: `El nombre del grupo u interprete debe tener ${minDeLetras} o más letras.`}
-    }
-    if(!caratulaValida(form.caratula.value)){
-        errores = {...errores, caratula: 'La url de la caratula no es vália, debe empezar por https://'};
-    }
-    if(!añoValido(form.año.value)){
-        errores = {...errores, año: `${
-            form.año.value === ''? 'no definido' : form.año.value
-        }, no es un año válido.`}
-    }
-    if(!localizacionValida(form.localizacion.value)){
-        errores = {...errores, localizacion: `El formato de localización es ES-001AA (ES-, 3 números y 2 letras mayúsculas).`}
-    }
-    
-    return errores; //Si no ha habido errores devuelve falso;
+const mensajeDeError = {
+    nombre: `Debe ser un nombre de ${minDeLetras} o más letras.`,
+    caratula: `La url de la caratula no es vália, debe empezar por https://`,
+    grupoInterprete: `El nombre del grupo u interprete debe tener ${minDeLetras} o más letras.`,
+    año: `No es un año válido`,
+    localizacion: `El formato de localización es ES-001AA (ES-, 3 números y 2 letras mayúsculas).`
 }
 
+export const validarInput = (evento, errores, setErrores) => {
+    if(evento.target.tagName !== 'INPUT') return; //Si no es un input volvemos a la función.
+    const {name, value} = evento.target;
+    let errorActual = '';
+
+    switch(name){ //Decidimos en caso de que el nombre del input sea diferente hacemos la validación adecuada.
+        case 'nombre':
+            if(!nombreValido(value)){
+                errorActual = mensajeDeError.nombre;
+            }
+            break;
+        case 'caratula':
+            if(!caratulaValida(value)){
+                errorActual = mensajeDeError.caratula;
+            }
+            break;
+        case 'grupoInterprete':
+            if(!grupoInterpreteValido(value)){
+                errorActual = mensajeDeError.grupoInterprete;
+            }
+            break;
+        case 'año':
+            if(!añoValido(value)){
+                errorActual = mensajeDeError.año;
+            }
+            break;
+        case 'localizacion':
+            if(!localizacionValida(value)){
+                errorActual = mensajeDeError.localizacion;
+            }
+            break;
+    }
+
+    if(errorActual){ //Si hay error actual procedemos a insertarlo en el estado de errores.
+        setErrores({...errores, [name]: errorActual});
+    } else { //Si no hay error y alomejor antes lo había procedemos a quitarlo.
+        setErrores({...errores, [name]: ''});
+    }
+
+}
 const nombreValido = (nombre) => {
     return !isANumberAndInteger(nombre) && regexMinDeLetras.test(nombre); //Falso si es un numero o un nombre menor de 3 letras.
 }
@@ -51,6 +75,35 @@ const añoValido = (año) => {
 const localizacionValida = (localizacion) => {
     return regexLocalizacion.test(localizacion);
 }
+
+
+export const formularioCompleto = (formulario) => { 
+    for (const atributo in formulario) {
+        if (!Object.hasOwn(formulario, atributo)) continue;
+        if(atributo !== 'prestado'){   //En el caso de prestado quiero excluirlo ya que no es relevante.
+            if(formulario[atributo] === '') { // Si el atributo no tiene valor (cadena vacía), no está completo
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+export const contieneErrores = (errores) => {
+    for (const atributo in errores) {
+        if (!Object.hasOwn(errores, atributo)) continue;
+        if(errores[atributo] !== '') { // Si el atributo no tiene valor (cadena vacía), no está completo
+            return true;
+        }
+    }
+    return false;
+}
+
+export const habilitarBoton = (boton) => {
+    boton.classList.toggle('habilitar');
+}
+
+
 
 export const mandarMensajeDeError = (clave, valor, form) => {
     const input = form.elements[clave]; // Me fallaba este apartado y la IA me ha dado esta forma de acceder al input en concreto de esta forma, como si fuera from.children.
