@@ -1,4 +1,14 @@
-.contenedor-app{
+.contenedor-app {
     width: 100dvw;
     height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor-rutas {
+    flex: 1; /* Que ocupe todo el espacio restante bajo el header */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Un poco de aire */
 }

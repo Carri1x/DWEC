@@ -1,0 +1,67 @@
+.container-disco {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 20px;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    margin: 5px;
+}
+
+/* Hover elegante */
+.container-disco:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+}
+
+/* Título */
+.container-disco h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--color-white);
+    text-align: center;
+}
+
+/* Carátula */
+.container-disco img {
+    width: 100%;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    object-fit: cover;
+    max-height: 250px;
+}
+
+/* Texto general */
+.container-disco p {
+    margin: 0;
+    font-size: 15px;
+    color: #ddd;
+}
+
+/* Género y prestado */
+.container-disco strong {
+    font-size: 14px;
+    color: #fff;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* Año */
+.container-disco small {
+    font-size: 13px;
+    color: #aaa;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 600px) {
+    .container-disco {
+        width: 100%;
+    }
+}

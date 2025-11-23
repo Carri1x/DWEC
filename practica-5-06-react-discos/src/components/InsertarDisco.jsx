@@ -1,7 +1,7 @@
 import './InsertarDisco.css';
 import { useEffect, useRef, useState } from 'react';
-import { validarInput, contieneErrores, formularioValido } from '../libraries/forms.js';
-import { printObject } from '../libraries/util.js';
+import { validarInput, contieneErrores, formularioValido, guardarDisco } from '../libraries/forms.js';
+import MensajeFlotante from './MensajeFlotante.jsx';
 
 const InsertarDisco = () => {
     const formInicial = {
@@ -13,10 +13,19 @@ const InsertarDisco = () => {
         localizacion: "",
         prestado: false
     };
+    //Estado del formulario.
     const [formulario, setFormulario] = useState(formInicial);
+    //Estado de los errores del formulario.
     const [errores, setErrores] = useState(formInicial);
+    //Variable para controlar el estado del botón de guardar disco.
     const [disabled, setDisabled] = useState(true);
+    //Variable para controlar la visibilidad del mensaje flotante.
+    const [esVisible, setEsVisible] = useState(false);
+    //Referencia al formulario para resetearlo y limpiar sus inputs.
     const formRef = useRef(null);
+    //Variables para el mensaje de disco guardado en la base de datos.
+    const [mensaje, setMensaje] = useState(''); //Es el mensaje que se le va a mostrar al usuario.
+    const [estado, setEstado] = useState('') //Es estado de className que se la va implementar dentro
 
     /**
      * Cambiamos el valor del formulario, de forma que cada cambio en el input está controlado.
@@ -25,6 +34,37 @@ const InsertarDisco = () => {
     const cambiarEstado = (evento) => {
         const { name, value } = evento.target;
         setFormulario({ ...formulario, [name]: value });
+    }
+
+    const guardarDiscoBD = () => {
+        // Si el formulario es válido lo guardamos.
+        if(formularioValido(formulario, errores)){
+            const discoGuardado = guardarDisco(formulario);
+
+            // Mostramos mensaje de éxito.
+            setMensaje(`El disco ${discoGuardado.nombre}, se ha guardado correctamente. `);
+            setEstado('disco-guardado');
+            setEsVisible(true);
+            setTimeout(() => {
+                setEsVisible(false);
+            }, 3000);
+
+            // Reseteamos el formulario.
+            setFormulario(formInicial);
+            formRef.current.reset();
+            return;
+        } else {
+            //En caso de que no se haya podido guardar en la base de datos notificamos al usuario.
+            // Mostramos el mensaje de error.
+            setMensaje(`El disco ${discoGuardado.nombre}, no se ha podido guardar en la base de datos, revisa las credenciales. `);
+            setEstado(`disco-no-guardado`);
+            setEsVisible(true);
+            setTimeout(() => {
+                setEsVisible(false);
+            }, 3000);
+
+
+        }
     }
 
     useEffect(() => {
@@ -38,6 +78,7 @@ const InsertarDisco = () => {
 
     return (
         <>
+            {esVisible && (<MensajeFlotante mensaje={mensaje} estado={estado}/>)}
             <fieldset>
                 <legend>Añadir disco</legend>
                 {/*He investigado sobre este evento onBlur y me parece majestuoso, en cuanto un input ha sido tocado y cambia el usuario el foco donde estaba interactuando se activa este evento.*/}
@@ -181,7 +222,9 @@ const InsertarDisco = () => {
                     <button 
                         type='button' 
                         disabled={disabled}
-                        
+                        onClick={() => {
+                            guardarDiscoBD();
+                        }}
                     >
                         Guardar
                     </button>

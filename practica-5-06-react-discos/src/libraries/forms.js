@@ -13,7 +13,15 @@ const mensajeDeError = {
     caratula: `La url de la caratula no es vália, debe empezar por https://`,
     grupoInterprete: `El nombre del grupo u interprete debe tener ${minDeLetras} o más letras.`,
     año: `No es un año válido`,
-    localizacion: `El formato de localización es ES-001AA (ES-, 3 números y 2 letras mayúsculas).`
+    localizacion: `El formato de localización es ES-001AA (ES-, 3 números y 2 letras mayúsculas).` 
+}
+
+
+export const formularioValido = (formulario, errores) => {
+    //Si el formulario tiene los campos obligatiorios con valores y NO contiene errores habilitamos el botón de guardar disco.
+    if(!contieneErrores(errores)){ // Si el formulario NO contiene errores.
+        return formulario.nombre !== '' && formulario.grupoInterprete !== ''; // Y el formulario tiene los campos obligatorios rellenos.
+    }
 }
 
 export const validarInput = (evento, errores, setErrores) => {
@@ -45,6 +53,9 @@ export const validarInput = (evento, errores, setErrores) => {
         case 'localizacion':
             if(!localizacionValida(value)){
                 errorActual = mensajeDeError.localizacion;
+            }
+            if(existeLocalizacion(value)){
+                errorActual = `La localización ${value}, ya existe en la base de datos`;
             }
             break;
     }
@@ -81,6 +92,15 @@ const localizacionValida = (localizacion) => {
     return regexLocalizacion.test(localizacion);
 }
 
+const existeLocalizacion = (localizacion) => {
+    const localizaciones = getAllLocalizaciones();
+    if(localizaciones.find(localizacion)){
+        return true;
+    } else {
+        return false; // Hago esto porque si no lo encuentra devuelve undefined, prefiero trabajar con booleanos.
+    }
+}
+
 export const validoInputObligatorio = (input) => {
     return input.required;
 }
@@ -89,7 +109,6 @@ export const contieneErrores = (errores) => {
     for (const atributo in errores) {
         if (!Object.hasOwn(errores, atributo)) continue;
         if(atributo !== 'prestado'){
-            console.log(atributo+'-->'+errores[atributo])
             if(errores[atributo] !== '') { // Si el atributo no tiene valor (cadena vacía), tiene un error.
                 return true;
             }
@@ -98,14 +117,6 @@ export const contieneErrores = (errores) => {
     }
     return false;
 }
-
-export const formularioValido = (formulario, errores) => {
-    //Si el formulario tiene los campos obligatiorios con valores y NO contiene errores habilitamos el botón de guardar disco.
-    if(!contieneErrores(errores)){ // Si el formulario NO contiene errores.
-        return formulario.nombre !== '' && formulario.grupoInterprete !== ''; // Y el formulario tiene los campos obligatorios rellenos.
-    }
-}
-
 
 export const comprobarCompatibilidadLocalStorage = () =>{
     if(typeof localStorage === 'undefined') {
@@ -139,14 +150,14 @@ const crearMensajeDeAviso = () => {
 //Verdaderamente esta función solo funciona para este formulario. Habría que hacer un método que sirviera para todos los formularios.
 export const crearDisco = (form) =>{
     return {
-        id: crypto.randomUUID(),
-        nombre: form.nombre.value,
-        caratula: form.caratula.value,
-        grupoInterprete: form.grupoInterprete.value,
-        año: form.año.value,
-        genero: form.genero.value,
-        localizacion: form.localizacion.value,
-        prestado: form.prestado.checked
+        uuid: crypto.randomUUID(),
+        nombre: form.nombre,
+        caratula: form.caratula,
+        grupoInterprete: form.grupoInterprete,
+        año: form.año,
+        genero: form.genero,
+        localizacion: form.localizacion,
+        prestado: form.prestado
     }
 }
 
@@ -216,9 +227,20 @@ export const limpiarFormulario = (formulario) => {
     formulario.reset();
 }
 
+//-------------------- MANEJO EN BASE DE DATOS ----------------------------
+
 export const getAllDiscos = () => {
     const discosStr = localStorage.getItem('discos'); //Recogemos todos los discos.
+    console.log(discosStr)
     return JSON.parse(discosStr);
+}
+
+export const getAllLocalizaciones = () => {
+    const discosALocalizaciones = getAllDiscos();
+    return discosALocalizaciones.map(disco => {
+        if(disco.localizacion === '') return;
+        return disco.localizacion;
+    });
 }
 
 export const removeDiscoByLocalizacion = (localizacion) => {
@@ -236,3 +258,25 @@ export const filtrarDiscosPorNombre = (nombreAFiltrar) => {
 
     return discosJSON.filter(disco => disco.nombre.toLowerCase().includes(nombreAFiltrar.toLowerCase()));
 } 
+
+/**
+ * Función para guardar un disco en la base de datos.
+ * @param {formulario} formulario 
+ * @returns El disco que se ha guardado en la base de datos
+ */
+export const guardarDisco = (formulario) => {
+    //Creamos el disco.
+    let disco = crearDisco(formulario);
+
+    let discos = getAllDiscos(); //Recogemos todos los discos de la base de datos.
+
+    if(!discos){ // Si no hay discos en la base de datos.                                                                                                                   
+        localStorage.setItem('discos', JSON.stringify([disco])); // Si no hay discos creamos el array con el primer disco.
+    } else {
+        //En cambio si ya hay discos en la base de datos.
+        discos = [...discos, disco]; //Añadimos el disco en el array de discos.
+        localStorage.setItem('discos', JSON.stringify(discos)); // Lo guardamos dentro de la base de datos.
+    }
+    return disco; 
+}   
+

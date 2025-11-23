@@ -7,7 +7,9 @@ function App() {
   return (
     <div className='contenedor-app'>
       <Header />
-      <Rutas />
+      <div className='contenedor-rutas'>
+        <Rutas />
+      </div>
     </div>
   )
 }
