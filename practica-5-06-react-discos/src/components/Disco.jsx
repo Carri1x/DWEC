@@ -1,6 +1,7 @@
 import './Disco.css';
 
 const Disco = (props) => {
+    const {borrarDisco} = props;
     const {nombre, caratula, grupoInterprete, año, genero, localizacion, prestado} = props.disco;
     return(
         <div className='container-disco'>
@@ -11,7 +12,7 @@ const Disco = (props) => {
             {localizacion && <p>{localizacion}</p>}
             {prestado && <strong>{prestado}</strong>}
             {año && <small>{año}</small>}
-            <button className='boton-borrar-disco'>Borrar Disco</button>
+            <button onClick={borrarDisco}>Borrar Disco</button>
         </div>
     );
 }

@@ -5,8 +5,6 @@ const MensajeFlotante = (props) => {
     const {mensaje, estado} = props;
     const maxProgreso = 3000;
     const [progreso, setProgreso] = useState(maxProgreso);
-
-    console.log('El estado de mensaje flotante: '+estado)
     // Hacemos un intervalo para la barra progreso.
     // Se empieza a hacer cuando el componente se monta.
     useEffect(() => {

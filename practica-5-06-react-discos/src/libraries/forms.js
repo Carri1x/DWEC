@@ -31,30 +31,30 @@ export const validarInput = (evento, errores, setErrores) => {
 
     switch(name){ //Decidimos en caso de que el nombre del input sea diferente hacemos la validación adecuada.
         case 'nombre':
-            if(!nombreValido(value)){
+            if(!nombreValido(value)){ //Si el nombre no es válido insertamos un mensaje de error.
                 errorActual = mensajeDeError.nombre;
             }
             break;
         case 'caratula':
-            if(!caratulaValida(value) ){
+            if(!caratulaValida(value) ){ //Si la carátula no es válida insertamos un mensaje de error.
                 errorActual = mensajeDeError.caratula;
             }
             break;
         case 'grupoInterprete':
-            if(!grupoInterpreteValido(value)){
+            if(!grupoInterpreteValido(value)){ //Si el grupo o intérprete no es válido insertamos un mensaje de error.
                 errorActual = mensajeDeError.grupoInterprete;
             }
             break;
         case 'año':
-            if(!añoValido(value)){
+            if(!añoValido(value)){ //Si el año no es válido insertamos un mensaje de error.
                 errorActual = mensajeDeError.año;
             }
             break;
         case 'localizacion':
-            if(!localizacionValida(value)){
+            if(!localizacionValida(value)){//Si la localización no es válida insertamos un mensaje de error.
                 errorActual = mensajeDeError.localizacion;
             }
-            if(existeLocalizacion(value)){
+            if(existeLocalizacion(value)){ //Si la localización existe insertamos un mensaje de error.
                 errorActual = `La localización ${value}, ya existe en la base de datos`;
             }
             break;
@@ -138,14 +138,6 @@ export const avisarSobreLocalStorage = () => {
 };
 
 
-const crearMensajeDeAviso = () => {
-    const div = document.createElement('div');
-    div.setAttribute('class', 'mensaje-error');
-    div.textContent = 'Actualize la versión del navegador. No soporta nuestras recurrencias.';
-    return div;
-}
-
-
 
 //Verdaderamente esta función solo funciona para este formulario. Habría que hacer un método que sirviera para todos los formularios.
 export const crearDisco = (form) =>{
@@ -161,77 +153,28 @@ export const crearDisco = (form) =>{
     }
 }
 
-// MÉTODO QUE CREA LA TARJETA DE CADA DISCO CON SU BOTÓN DE BORRADO.
-export const pintarDiscos = (discos) => {
-    const aside = document.getElementsByTagName('aside')[0];
-    //Si ya se ha mostrado anteriormente los discos lo borramos por si ha habido algún cambio.
-    aside.replaceChildren();
-    aside.setAttribute('class', 'disco-db');
-    //Título del aside de los discos.
-    const h1 = document.createElement('h1');
-    h1.textContent = 'Discos';
-    aside.appendChild(h1);
-
-    const divContenedorDiscos = document.createElement('div');
-
-
-    for (const disco of discos) {
-        const div = document.createElement('div');
-        div.setAttribute('class', 'disco-card');
-
-        const titulo = document.createElement('h3');
-        titulo.textContent = disco.nombre;
-        div.appendChild(titulo);
-
-        const img = document.createElement('img');
-        img.src = `${disco.caratula}`;
-        img.alt = `Carátula del disco ${disco.nombre}`;
-        div.appendChild(img);
-
-        const  grupoInterprete = document.createElement('p');
-        grupoInterprete.textContent = disco.grupoInterprete;
-        div.appendChild(grupoInterprete);
-        
-        const año = document.createElement('p');
-        año.textContent = disco.año;
-        div.appendChild(año);
-
-        const genero = document.createElement('p');
-        genero.textContent = disco.genero;
-        div.appendChild(genero);
-
-        if(disco.prestado){
-            const prestado = document.createElement('p');
-            prestado.textContent = `Prestado`;
-            div.appendChild(prestado);
-        }
-
-        const localizacion = document.createElement('strong');
-        localizacion.textContent = disco.localizacion;
-        div.appendChild(localizacion);
-
-        const basura = document.createElement('button');
-        const icono = document.createElement('img');
-        icono.src = `./img/basura.svg`;
-        basura.appendChild(icono);
-        div.appendChild(basura);
-        divContenedorDiscos.appendChild(div);
+/**
+ * Función que devuelve true en caso de que alguno de los atributos coincida con el filtro
+ * que ha elegido el usuario. Si devuelve false es que no ha coincidido el filtro con el valor de los atributos del disco. 
+ * @param {Disco a comprobar} disco 
+ * @param {Filtro introducido por el usuario} caracteristicaParaFiltrar 
+ */
+export const filtroDiscos = (disco , caracteristicaParaFiltrar) =>{
+    for (const atributo in disco) {
+        if (!Object.hasOwn(disco, atributo)) continue;
+        if (typeof disco[atributo] !== "string" || disco[atributo] === '') continue;
+        if (atributo === 'uuid')continue; 
+        const valor = disco[atributo].toLowerCase();
+        if(valor.includes(caracteristicaParaFiltrar.toLowerCase())) return true;
     }
-
-    aside.appendChild(divContenedorDiscos);
-
-    return aside;
+    return false;
 }
 
-export const limpiarFormulario = (formulario) => {
-    formulario.reset();
-}
 
 //-------------------- MANEJO EN BASE DE DATOS ----------------------------
 
 export const getAllDiscos = () => {
     const discosStr = localStorage.getItem('discos'); //Recogemos todos los discos.
-    console.log(discosStr)
     return JSON.parse(discosStr);
 }
 
@@ -279,4 +222,16 @@ export const guardarDisco = (formulario) => {
     }
     return disco; 
 }   
+
+/**
+ * Función para eliminar un disco en la base de datos.
+ * @param {El uuid del disco que quiere eliminarse} uuid 
+ * @returns Array sin el disco que se ha querido eliminar.
+ */
+export const removeDiscoByUuid = (uuid) => {
+    let discos = getAllDiscos(); //Recogemos todos los discos de la base de datos.
+    discos = discos.filter(disco => disco.uuid !== uuid); // Eliminamos el disco con el uuid pasado por parámetro.
+    localStorage.setItem('discos', JSON.stringify(discos));
+    return discos;
+}
 
