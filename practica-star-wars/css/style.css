@@ -1,9 +1,9 @@
 /* --- CONTENEDOR GENERAL --- */
 *{
     margin: 0;
+    font-family: sans-serif;
 }
 body {
-    font-family: Arial, sans-serif;
     background: #fff;
 }
 
@@ -17,24 +17,19 @@ body {
     justify-content: center;
 }
 
-#titulo-peliculas,
-#detalle-peliculas {
-    border: 2px solid #000;
-}
 
 /* --- MAQUETACIÓN PRINCIPAL --- */
 #titulo-peliculas {
     min-width: 200px;
-    width: 250px;               /* Columna izquierda fija */
-    min-height: 100vh;          /* Altura visual parecida al ejemplo */
-    border-color: gray;       /* Borde morado */
+    width: 250px;               
+    min-height: 100vh;
+    border-right: 3px dotted black;
     padding: 10px;
 }
 
 #detalle-peliculas {
-    flex-grow: 1;               /* Que ocupe todo el espacio restante */
-    min-height: 500px;
-    border-color: gray;       /* Borde naranja exterior */
+    flex-grow: 1;           
+    min-height: 500px;     
     margin-left: 10px;
     padding: 20px;
 }
