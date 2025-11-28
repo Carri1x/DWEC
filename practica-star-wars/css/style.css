@@ -1,0 +1,76 @@
+/* --- CONTENEDOR GENERAL --- */
+*{
+    margin: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+}
+
+.container {
+    box-sizing: border-box;
+}
+
+/* Contenedor principal simulado */
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#titulo-peliculas,
+#detalle-peliculas {
+    border: 2px solid #000;
+}
+
+/* --- MAQUETACIÓN PRINCIPAL --- */
+#titulo-peliculas {
+    min-width: 200px;
+    width: 250px;               /* Columna izquierda fija */
+    min-height: 100vh;          /* Altura visual parecida al ejemplo */
+    border-color: gray;       /* Borde morado */
+    padding: 10px;
+}
+
+#detalle-peliculas {
+    flex-grow: 1;               /* Que ocupe todo el espacio restante */
+    min-height: 500px;
+    border-color: gray;       /* Borde naranja exterior */
+    margin-left: 10px;
+    padding: 20px;
+}
+
+.titulo-pelicula {
+    padding: 10px;
+    border-bottom: 1px solid green;
+}
+
+.titulo-pelicula:hover{
+    background-color: rgba(35, 195, 35, 0.679);
+}
+
+.titulo-pelicula:active{
+    background-color: rgba(23, 124, 23, 0.736);
+}
+
+.pelicula{
+    min-height: 500px;
+}
+
+.pelicula > h1{
+    margin-bottom: 10px;
+}
+.sinopsis > h4{
+    margin-bottom: 5px;
+}
+.sinopsis > p {
+    max-width: 900px;
+}
+.pelicula > .sinopsis{
+    padding: 20px;
+    background-color: rgba(128, 128, 128, 0.28);
+    border-radius: 20px;
+}
+
+.cargando{
+    width: 60px;
+}
