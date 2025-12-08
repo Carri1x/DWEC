@@ -1,0 +1,45 @@
+.contenedor-pelicula {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contenedor-pelicula:hover {
+    background: #222;
+    transform: translateY(-3px);
+}
+
+.titulo-pelicula {
+    margin: 0;
+    color: #ffe81f;
+    font-size: 1.8rem;
+    text-shadow: 0 0 6px rgba(255, 232, 31, 0.7);
+}
+
+.detalles-pelicula {
+    margin-top: 1rem;
+    background: #111;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.detalles-pelicula h3 {
+    margin: 0;
+    color: #ffd000;
+}
+
+.detalles-pelicula p {
+    margin: 0.3rem 0;
+    color: #ddd;
+    line-height: 1.4;
+}
+
+.detalles-pelicula small {
+    color: #aaa;
+}
