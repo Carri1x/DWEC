@@ -30,9 +30,9 @@ const ProveedorPeliculas = ({children}) => {
     },[]);
 
     return(
-        <contextoPeliculas value={peliculas}> 
+        <contextoPeliculas.Provider value={peliculas}> 
             {children}
-        </contextoPeliculas>
+        </contextoPeliculas.Provider>
     );
 }
 

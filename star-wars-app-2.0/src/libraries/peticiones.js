@@ -10,7 +10,7 @@ export const traerPeliculas = async (urls) => {
 
         //Recogemos la primera petición que se haya hecho.
         const respuesta = await Promise.any(peticiones);
-
+        
         //Compruebo que los datos recibidos estén en el objeto results. 
         if(respuesta.results){
             return respuesta.results;
