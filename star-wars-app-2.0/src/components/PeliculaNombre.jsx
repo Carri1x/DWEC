@@ -1,9 +1,9 @@
 import './PeliculaNombre.css'
 
 const PeliculaNombre = (props) => {
-    const {title} = props;
+    const {title, idPelicula} = props;
     return (
-        <div id={title} className='contenedor-pelicula-nombre'>
+        <div id={idPelicula} className='contenedor-pelicula-nombre'>
             {title}
         </div>
     );
