@@ -1,0 +1,9 @@
+{
+  "usuarios": [
+    { "id": 1, "nombre": "Luke Skywalker" },
+    { "id": 2, "nombre": "Leia Organa" }
+  ],
+  "peliculas": [
+    { "id": 1, "titulo": "Una Nueva Esperanza", "año": 1977 }
+  ]
+}

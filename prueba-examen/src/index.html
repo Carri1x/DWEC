@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/estilo.css" />
+    <title>prueba-examen</title>
+  </head>
+  <body>
+    <div>
+      <h2>Prueba de lanzamiento de la infraestructura para el examen.</h2>
+      <p>Comando en el terminal para lanzar el servidor:</p>
+      <p class="codigo">npm run servidor</p>
+      <p>Se dispondrá de los siguientes endpoint:</p>
+      <p class="codigo">http://localhost:3000/usuarios</p>
+      <p class="codigo">http://localhost:3000/peliculas</p>
+      <p>Para acceder a los datos de una entrada:</p>
+      <p class="codigo">http://localhost:3000/usuarios/1</p>
+      <p class="codigo">http://localhost:3000/peliculas/1</p>
+      <p>
+        A partir de aquí, boton derecho sobre el fichero
+        <span class="codigo">index.html -> Open with Live Server</span>
+      </p>
+    </div>
+    <form >
+      <label for="tituloPelicula">Nombre película:</label>
+      <input type="text" name="tituloPelicula">
+      <label for="añoPelicula">Año de la Película:</label>
+      <input type="text">
+      <button>Guardar Pelicula</button>
+    </form>
+    <button>Mostrar Películas</button>
+    <div></div>
+    <br>
+    <br>
+    <br>
+    <form>
+      <label for="nombrePersonaje">Nombre del Personaje</label>
+      <input type="text">
+      <button>Guardar Personaje</button>
+    </form>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
