@@ -6,7 +6,7 @@ const Cargando = (props) => {
 
     return (
         <div className="contenedor-cargando">
-            <img src={gifCargando} alt="Gif de Cargando" />
+            <img src={gifCargando} alt="Gif de Cargando"/>
             <p>Cargando {contexto}</p>
         </div>
     );

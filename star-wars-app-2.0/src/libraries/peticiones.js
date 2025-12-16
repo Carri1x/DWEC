@@ -22,3 +22,21 @@ export const traerPeliculas = async (urls) => {
     }
     
 }
+
+export const traerPersonajes = async (urlPersonajes) => {
+    console.log(urlPersonajes);
+    try{
+        const peticiones = urlPersonajes.map((url) => {
+            return traerDatos(url);
+        })
+        const respuesta = await Promise.allSettled(peticiones);
+
+        if(respuesta.value){
+            return respuesta.value;
+        } else {
+            return respuesta;
+        }
+    } catch (error){
+        throw error;
+    }
+}

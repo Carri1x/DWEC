@@ -10,7 +10,8 @@ const ProveedorPeliculas = ({children}) => {
         "https://swapi.info/api/films",
         "https://swapi.dev/api/films/"
     ]
-    const [peliculas, setPeliculas] = useState([]);
+    const [peliculasCntxt, setPeliculasCntxt] = useState([]);
+    const [error, setError] = useState('');
 
     /**
      * Función que busca las películas en las urls pasadas por parámetro.
@@ -21,8 +22,18 @@ const ProveedorPeliculas = ({children}) => {
      * @param {String[]} urls La dirección donde se van a pedir los datos para recoger las películas.
      */
     const cargarPeliculas = async (urls) => {
-        const peliculasDB = await traerPeliculas(urls);
-        setPeliculas(peliculasDB);
+        try{
+            const peliculasDB = await traerPeliculas(urls);
+            setPeliculasCntxt(peliculasDB);
+        }catch(error){
+            setError(error.message);
+        }
+        
+    }
+
+    const cosasParaExportar = {
+        peliculasCntxt,
+        error
     }
 
     useEffect(() => {
@@ -30,7 +41,7 @@ const ProveedorPeliculas = ({children}) => {
     },[]);
 
     return(
-        <contextoPeliculas.Provider value={peliculas}> 
+        <contextoPeliculas.Provider value={cosasParaExportar}> 
             {children}
         </contextoPeliculas.Provider>
     );
