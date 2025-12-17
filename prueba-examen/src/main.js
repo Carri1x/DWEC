@@ -1,50 +1,79 @@
 "use strict";
 
-import { eliminarErrores, guardarPelicula, mostrarErrores, pintarPeliculas, validarFormularioPelicula, getAllPeliculas} from "./js/forms.js";
-
+import { traerPeliculas } from "./js/peticiones.js";
+import { cargarPeliculasLocalStorage,eliminarUsuariosPeliculas, mostrarErrorDataBase, traerUsuarios, eliminarErrores, guardarPeliculas, mostrarErrores, pintarPeliculas, validarFormularioUsuarios, guardarUsuarios , guardarUsuario, pintarUsuarios, cargarUsuariosLocalStorage} from "./js/forms.js";
 
 window.onload = () => {
+    if (typeof localStorage === "undefined") {
+        document.body.innerHTML = "<p>Tiene que actualizar el navegador, local storage no está disponible...</p>"
+        return;
+    }
 
-    const formulario = document.forms[0];
-
-    formulario.addEventListener('click', (evento) => {
-        if(evento.target.tagName === 'BUTTON'){
-            evento.preventDefault();
-            const errores = validarFormularioPelicula(formulario);
-
-            //Si hay errores
-            if(Object.keys(errores).length > 0){
-                eliminarErrores();
-                mostrarErrores(errores);
-            } else {
-                //Si no hay errores
-                eliminarErrores();
-                guardarPelicula(formulario);
+    localStorage.clear();
+    const cargarUsuariosDB = async () => {
+        try {
+            const usuarios = await traerUsuarios('http://localhost:3000/usuarios');
+            if (usuarios) {
+                guardarUsuarios(usuarios);
             }
+        } catch (error) {
+            eliminarUsuariosPeliculas();
+            mostrarErrorDataBase(error);
+        }
+    }
+    const cargarPeliculasDB = async () => {
+        try {
+            const peliculas = await traerPeliculas('http://localhost:3000/peliculas');
+            if (peliculas) {
+                guardarPeliculas(peliculas);
+            }
+        } catch (error) {
+            eliminarUsuariosPeliculas();
+            mostrarErrorDataBase(error);
+        }
+
+    }
+    cargarUsuariosDB();
+    cargarPeliculasDB();
+
+    const divMostrarPeliculas = document.getElementsByClassName('mostrar-peliculas')[0];
+
+    divMostrarPeliculas.addEventListener('click', async (evento) => {
+        //MostrarPeliculas
+        if (evento.target.tagName === 'BUTTON' && evento.target.nextElementSibling.tagName === 'BUTTON') {
+            const peliculas = await cargarPeliculasLocalStorage();
+            const divParaPintarPeliculas = evento.target.nextElementSibling.nextElementSibling;
+            pintarPeliculas(peliculas, divParaPintarPeliculas);
+        }
+
+        //Mostrar Usuarios
+        if(evento.target.tagName === 'BUTTON' && evento.target.nextElementSibling.tagName === 'DIV'){
+            const usuarios = cargarUsuariosLocalStorage();
+            const divParaPintarUsuarios = evento.target.nextElementSibling.nextElementSibling;
+            pintarUsuarios(usuarios,divParaPintarUsuarios);
         }
     });
 
+    const formularios = document.getElementsByTagName('form');
 
-    let botones = document.getElementsByTagName('button');
-    let botonMostrarPeliculas = null;
+    //FORMULARIO USUARIOS
+    const formularioUsuarios = formularios[0];
+    formularioUsuarios.addEventListener('click', (evento) => {
+        if (evento.target.tagName === 'BUTTON') {
+            evento.preventDefault();
+            const errores = validarFormularioUsuarios(formularioUsuarios);
 
-    for (const boton of botones) {
-        if(boton.textContent === 'Mostrar Películas'){
-            botonMostrarPeliculas = boton;
-        }
-    }
+            if (Object.keys(errores).length > 0) {
+                eliminarErrores()
+                mostrarErrores(errores, formularioUsuarios);
+            } else {
+                eliminarErrores()
 
-    botonMostrarPeliculas.addEventListener('click', (evento) => {
-        const contenedorDestino = evento.target.nextElementSibling;
-        const peliculas = getAllPeliculas();
-        if(peliculas) {
-            if(contenedorDestino.hasChildNodes){
-                contenedorDestino.innerHTML = ''
+                guardarUsuario(formularioUsuarios);
             }
-            pintarPeliculas(peliculas, contenedorDestino);
-        } else {
-            contenedorDestino.innerHTML = `<p>No hay peliculas en la base de datos.</p>`
         }
     })
 
-} //FIN DEL WINDOW ON LOAD
+
+
+} //fin del window onload

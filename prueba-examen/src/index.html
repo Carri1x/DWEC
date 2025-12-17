@@ -22,23 +22,69 @@
         <span class="codigo">index.html -> Open with Live Server</span>
       </p>
     </div>
-    <form >
-      <label for="tituloPelicula">Nombre película:</label>
-      <input type="text" name="tituloPelicula">
-      <label for="añoPelicula">Año de la Película:</label>
-      <input type="text">
-      <button>Guardar Pelicula</button>
+    <form
+      id="form-usuarios"
+      style="
+        border: 1px solid #ccc;
+        padding: 15px;
+        width: 300px;
+        margin-bottom: 20px;
+        font-family: Arial;
+      "
+    >
+      <h3 style="margin-top: 0">Añadir usuario</h3>
+
+      <label style="display: block; margin-bottom: 5px"> Nombre: </label>
+      <input
+        type="text"
+        id="nombreUsuario"
+        placeholder="Ej: Luke Skywalker"
+        style="width: 100%; padding: 6px; margin-bottom: 10px"
+      />
+
+      <button type="submit" style="padding: 6px 12px; cursor: pointer">
+        Guardar usuario
+      </button>
     </form>
-    <button>Mostrar Películas</button>
-    <div></div>
-    <br>
-    <br>
-    <br>
-    <form>
-      <label for="nombrePersonaje">Nombre del Personaje</label>
-      <input type="text">
-      <button>Guardar Personaje</button>
+
+    <form
+      id="form-planetas"
+      style="
+        border: 1px solid #ccc;
+        padding: 15px;
+        width: 300px;
+        font-family: Arial;
+      "
+    >
+      <h3 style="margin-top: 0">Añadir planeta</h3>
+
+      <label style="display: block; margin-bottom: 5px"> Nombre: </label>
+      <input
+        type="text"
+        id="nombrePlaneta"
+        placeholder="Ej: Tatooine"
+        style="width: 100%; padding: 6px; margin-bottom: 10px"
+      />
+
+      <label style="display: block; margin-bottom: 5px"> Clima: </label>
+      <input
+        type="text"
+        id="climaPlaneta"
+        placeholder="Ej: Desértico"
+        style="width: 100%; padding: 6px; margin-bottom: 10px"
+      />
+
+      <button type="submit" style="padding: 6px 12px; cursor: pointer">
+        Guardar planeta
+      </button>
     </form>
+
+    <div class="mostrar-peliculas">
+      <button>Mostrar Peliculas</button>
+      <button>Mostrar Usuarios</button>
+      <div></div>
+      <div></div>
+    </div>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

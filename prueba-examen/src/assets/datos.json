@@ -1,9 +1,19 @@
 {
   "usuarios": [
     { "id": 1, "nombre": "Luke Skywalker" },
-    { "id": 2, "nombre": "Leia Organa" }
+    { "id": 2, "nombre": "Leia Organa" },
+    { "id": 3, "nombre": "Han Solo" },
+    { "id": 4, "nombre": "Obi-Wan Kenobi" },
+    { "id": 5, "nombre": "Darth Vader" },
+    { "id": 6, "nombre": "Yoda" },
+    { "id": 7, "nombre": "Anakin Skywalker" }
   ],
   "peliculas": [
-    { "id": 1, "titulo": "Una Nueva Esperanza", "año": 1977 }
+    { "id": 1, "titulo": "Una Nueva Esperanza", "año": 1977 },
+    { "id": 2, "titulo": "El Imperio Contraataca", "año": 1980 },
+    { "id": 3, "titulo": "El Retorno del Jedi", "año": 1983 },
+    { "id": 4, "titulo": "La Amenaza Fantasma", "año": 1999 },
+    { "id": 5, "titulo": "El Ataque de los Clones", "año": 2002 },
+    { "id": 6, "titulo": "La Venganza de los Sith", "año": 2005 }
   ]
 }
