@@ -4,6 +4,7 @@ import { contextoPeliculas } from '../context/ProveedorPeliculas.jsx';
 import ProveedorPersonajes from '../context/ProveedorPersonajes.jsx';
 import { cambiarFechaFormatoEspanya } from '../libraries/util.js';
 import ListaPersonajes from './ListaPersonajes.jsx';
+import DetallesPersonaje from './DetallesPersonaje.jsx';
 
 const Pelicula = (props) => {
     const { idPeliculaSeleccionada } = props;
@@ -39,12 +40,15 @@ const Pelicula = (props) => {
             <p>{pelicula.opening_crawl}</p>
             <h3>Director: <strong>{pelicula.director}</strong></h3>
             <small>Fecha de lanzamiento: <strong>{cambiarFechaFormatoEspanya(pelicula.release_date)}</strong></small>
-            <h3>Personajes: </h3>
-            {   
+            <div className='contenedor-main-personajes'>
+                {   
                 <ProveedorPersonajes urlPersonajes={pelicula.characters}>
                     <ListaPersonajes />
+                    <DetallesPersonaje />
                 </ProveedorPersonajes>
             }
+            </div>
+            
         </div>
     );
 

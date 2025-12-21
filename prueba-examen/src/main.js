@@ -2,6 +2,7 @@
 
 import { traerPeliculas } from "./js/peticiones.js";
 import { cargarPeliculasLocalStorage,eliminarUsuariosPeliculas, mostrarErrorDataBase, traerUsuarios, eliminarErrores, guardarPeliculas, mostrarErrores, pintarPeliculas, validarFormularioUsuarios, guardarUsuarios , guardarUsuario, pintarUsuarios, cargarUsuariosLocalStorage} from "./js/forms.js";
+import { validarFormularioPeliculas, guardarPelicula } from "./js/biblioteca.js";
 
 window.onload = () => {
     if (typeof localStorage === "undefined") {
@@ -74,6 +75,25 @@ window.onload = () => {
         }
     })
 
+    const formularioPeliculas = formularios[1];
 
+    formularioPeliculas.addEventListener('click', (evento) => {
+        if(evento.target.tagName === 'BUTTON'){
+            evento.preventDefault();
+
+            const errores = validarFormularioPeliculas(formularioPeliculas);
+
+            if(Object.keys(errores).length > 0){
+                //Hay errores
+                eliminarErrores();
+                mostrarErrores(errores, formularioPeliculas);
+            } else {
+                eliminarErrores()
+
+                guardarPelicula(formularioPeliculas);
+            }
+
+        }
+    })
 
 } //fin del window onload

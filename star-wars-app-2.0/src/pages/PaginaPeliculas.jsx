@@ -1,3 +1,4 @@
+import './PaginaPeliculas.css'
 import { useState } from "react";
 import ProveedorPeliculas from "../context/ProveedorPeliculas.jsx";
 import Pelicula from '../components/Pelicula.jsx';
@@ -18,13 +19,17 @@ const PaginaPeliculas = () => {
     return (
         <div className="contenedor-pagina-peliculas" onClick={mostrarDetallesPelicula}>
             <ProveedorPeliculas>
-                <ListaPeliculas />
-                {
-                    //Si ha sido seleccionado el id mostramos la película entera, en caso contrario un mensaje ofreciendo la opción de ver una película.
-                    idPelicula !== 0 ? 
-                        <Pelicula idPeliculaSeleccionada={idPelicula} /> :
-                            <p>Selecciona una película para ver sus detalles</p>
-                }
+                <aside className='columna-peliculas'>
+                    <ListaPeliculas peliculaSeleccionada={idPelicula} />
+                </aside>
+                <main className='columna-informacion'>
+                    {
+                        //Si ha sido seleccionado el id mostramos la película entera, en caso contrario un mensaje ofreciendo la opción de ver una película.
+                        idPelicula !== 0 ? 
+                            <Pelicula idPeliculaSeleccionada={idPelicula} /> :
+                                <p>Selecciona una película para ver sus detalles</p>
+                    }
+                </main>
             </ProveedorPeliculas>
         </div>
     );

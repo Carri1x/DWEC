@@ -65,7 +65,7 @@ export const mostrarErrores = (errores, formulario) => {
         <div class="mensaje-error">${errores.nombre}</div>
     `;
 
-    formulario[0].insertAdjacentHTML('afterend', plantilla)
+    formulario[1].insertAdjacentHTML('afterend', plantilla)
 }
 
 export const eliminarErrores = () => {

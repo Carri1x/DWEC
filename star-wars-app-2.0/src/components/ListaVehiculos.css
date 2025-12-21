@@ -1,0 +1,14 @@
+.contenedor-lista-vehiculos {
+    margin-top: 20px;
+    padding: 16px;
+    background-color: #0f1115;
+    border-radius: 14px;
+}
+
+.contenedor-lista-vehiculos h4 {
+    margin-bottom: 14px;
+    color: #f5c518;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 0.95rem;
+}

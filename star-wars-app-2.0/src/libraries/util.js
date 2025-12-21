@@ -3,11 +3,11 @@
 //Me he hecho una libreria útil para almacenar las funciones que puedan serme útiles y usarlas solo importando, sin que haga falta duplicar código.
 
 export const isANumberAndInteger = (num) => {
-    if(isNaN(num)) {
+    if (isNaN(num)) {
         console.log("Error. El dato debe ser un número.");
         return false;
     }
-    if(!Number.isInteger(num)) {
+    if (!Number.isInteger(num)) {
         console.log("Error. El dato debe ser un número entero.");
         return false;
     }
@@ -20,13 +20,38 @@ export const isANumberAndInteger = (num) => {
  * @returns Retorna la fecha de forma deseada. en este caso (DD/MM/YYYY)
  */
 export const cambiarFechaFormatoEspanya = (strFecha) => {
-    if(!strFecha) return 'No definida';
+    if (!strFecha) return 'No definida';
     const fechaPartida = strFecha.split('-');
     return `${fechaPartida[2]}/${fechaPartida[1]}/${fechaPartida[0]}`;
 }
 
-export const cambiarFormatoEspanya = (numero) =>{
-    return numero.toLocaleString("es-ES").replaceAll(".",",");
+export const cambiarFormatoEspanya = (numero) => {
+    return numero.toLocaleString("es-ES").replaceAll(".", ",");
+}
+
+export const cambiarGeneroEspanya = (genero) => {
+    switch (genero.toLowerCase()) {
+        case 'male':
+            return 'Hombre';
+        case 'female':
+            return 'Mujer';
+        case 'n/a':
+            return 'No identificado';
+        case 'none':
+            return 'Sin género';
+        default:
+            return 'Género desconocido';
+    }
+}
+
+export const cambiarFormatoFechaNacimiento = (fecha) => {
+    if (fecha.endsWith("BBY")) {
+        return fecha.replace("BBY", " Años después de la Batalla de Yavin");
+    } else if (fecha.endsWith("ABY")) {
+        return fecha.replace("ABY", " Años antes de la Batalla de Yavin");
+    } else {
+        return fecha;
+    }
 }
 
 export const mostrarArray = (array) => {
@@ -39,10 +64,10 @@ export const printObject = (object) => {
     for (const clave in object) {
         //En caso de no tener esa propiedad la obviará.
         if (!object.hasOwnProperty(clave)) continue;
-            
+
         //Obtengo el valor de la clave.
         const valor = object[clave];
-        
+
         if (Array.isArray(valor)) {
             //Pongo directamente que es un array dado que JavaScript lo reconoce como Object y no como Array.
             console.log(`El atributo es: ${clave}, de tipo Array y contiene:`);
@@ -61,19 +86,19 @@ export const printObject = (object) => {
 const printArray = (array) => {
     return array.forEach((element) => {
         //Si dentro del array hay otro array o un objecto seleccionamos que hacer con el.
-        if(Array.isArray(element)){
+        if (Array.isArray(element)) {
             printArray(element);
         }
-        else if(typeof element === 'object' && element !== null) {
+        else if (typeof element === 'object' && element !== null) {
             //En caso de ser un objeto usamos la anterior función.
             printObject(element);
-        }else if(typeof element === 'number'){
+        } else if (typeof element === 'number') {
             //Si es simplemente un elemento lo imprimimos.
             console.log(cambiarFormatoEspanya(element));
-        }else{
+        } else {
             console.log(element);
         }
-     
+
     });
 }
 
@@ -96,17 +121,3 @@ export const generarNumeroAleatorio = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const cambiarGeneroEspanya = (genero) =>{
-    switch(genero.toLowerCase()){
-        case 'male':
-            return 'Hombre';
-        case 'female':
-            return 'Mujer';
-        case 'n/a':
-            return 'No identificado';
-        case 'none':
-            return 'Sin género';
-        default:
-            return 'Género desconocido';
-    }
-}

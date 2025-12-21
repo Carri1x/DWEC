@@ -23,19 +23,36 @@ export const traerPeliculas = async (urls) => {
     
 }
 
-export const traerPersonajes = async (urlPersonajes) => {
-    console.log(urlPersonajes);
+export const traerPersonajes = async (urlsPersonajes) => {
     try{
-        const peticiones = urlPersonajes.map((url) => {
+        if(!urlsPersonajes) return;
+        const peticiones = urlsPersonajes.map((url) => {
             return traerDatos(url);
         })
         const respuesta = await Promise.allSettled(peticiones);
+        const personajes = respuesta.map((res) => {
+            return res.value;
+        });
+        return personajes;
+    } catch (error){
+        throw error;
+    }
+}
 
-        if(respuesta.value){
-            return respuesta.value;
-        } else {
-            return respuesta;
-        }
+export const traerVehiculos = async (urlsVehiculos) => {
+    try{
+        if(!urlsVehiculos) return;
+        const peticiones = urlsVehiculos.map((url) => {
+            return traerDatos(url);
+        });
+
+        const respuesta = await Promise.allSettled(peticiones);
+
+        const vehiculos = respuesta.map((res) => {
+            return res.value;
+        });
+
+        return vehiculos;
     } catch (error){
         throw error;
     }

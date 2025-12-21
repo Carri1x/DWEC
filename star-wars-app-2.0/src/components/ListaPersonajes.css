@@ -1,0 +1,27 @@
+
+.contenedor-lista-personajes div {
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.contenedor-lista-personajes div:hover {
+    background-color: rgba(245, 197, 24, 0.15);
+}
+.contenedor-lista-personajes {
+    border-right: 1px dashed rgba(245,197,24,0.3);
+    padding-right: 12px;
+    max-width: fit-content;
+}
+
+.contenedor-personaje-nombre {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.contenedor-personaje-nombre:hover {
+    background-color: rgba(245,197,24,0.15);
+}

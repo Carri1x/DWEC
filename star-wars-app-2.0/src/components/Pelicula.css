@@ -1,0 +1,39 @@
+.contenedor-pelicula {
+    background-color: #0f1115;
+    border: 1px solid rgba(245,197,24,0.2);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.titulo-pelicula {
+    color: #f5c518;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(245,197,24,0.4);
+    padding-bottom: 10px;
+}
+
+.datos-pelicula {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 24px;
+}
+
+.bloque-resumen {
+    background-color: #171a21;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.bloque-elenco {
+    background-color: #171a21;
+    border-radius: 12px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 16px;
+}
+.contenedor-main-personajes{
+    display: flex;
+}

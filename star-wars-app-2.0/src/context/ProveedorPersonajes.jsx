@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { traerPersonajes } from "../libraries/peticiones.js";
+import { traerPersonajes, traerVehiculos } from "../libraries/peticiones.js";
 
 /**
  * No se hasta que punto esta forma es la más adecuada para hacer un contexto y proveedor.
@@ -16,25 +16,68 @@ import { traerPersonajes } from "../libraries/peticiones.js";
 const contextoPersonajes = createContext();
 
 const ProveedorPersonajes = (props) => {
-    const {urlPersonajes} = props;
-    const [personajes, setPersonajes] = useState([]);
+    const { urlPersonajes } = props;
+    const [personajesCntxt, setPersonajesCntxt] = useState([]);
+    const [personajeSeleccionado, setPersonajeSeleccionado] = useState(null);
+    const [vehiculosPersonaje, setVehiculosPersonaje] = useState([]);
+    const [navesPersonaje, setNavesPersonaje] = useState([]);
+
 
     const cargarPersonajes = async (urls) => {
-        console.log(urls)
-        const personajesDB = await traerPersonajes(urls);
-        setPersonajes(personajesDB);
+        try {
+            const personajesDB = await traerPersonajes(urls);
+            setPersonajesCntxt(personajesDB);
+        } catch (error) {
+            console.log(`Error ProveedorPersonajes: ${error}`)
+        }
+
+    }
+    const cambiarPersonajeSeleccionado = (nombrePersonaje) => {
+        const personaje = personajesCntxt.find((personaje) => personaje.name === nombrePersonaje);
+        setPersonajeSeleccionado(personaje);
     }
 
+    const cargarVehiculosPersonaje = async (urls) => {
+        try{
+            const vehiculosPersonaje = await traerVehiculos(urls);
+            setVehiculosPersonaje(vehiculosPersonaje);
+        } catch (error) {
+            console.log(`Error vehículos: ${error}`);
+        }
+    }
 
-    useEffect(()=>{
-        //Me estaba devolviendo undefined...
-        if(!urlPersonajes) return;
+    const cargarNavesPersonaje = async (urls) => {
+        try{
+            const navesPersonaje = await traerVehiculos(urls);
+            setNavesPersonaje(navesPersonaje);
+        }catch (error) {
+            console.log(`Error naves: ${error}`)
+        }
+    }
+
+    const vaciarVehiculosPersonaje = () => {
+        setVehiculosPersonaje([]);
+        setNavesPersonaje([]);
+    }
+
+    const cosasParaExportar = {
+        personajesCntxt,
+        personajeSeleccionado,
+        cambiarPersonajeSeleccionado,
+        vehiculosPersonaje,
+        cargarVehiculosPersonaje,
+        vaciarVehiculosPersonaje,
+        navesPersonaje,
+        cargarNavesPersonaje
+    }
+
+    useEffect(() => {
         cargarPersonajes(urlPersonajes);
-    },[urlPersonajes]);
+    }, [urlPersonajes]);
 
     return (
         <>
-            <contextoPersonajes.Provider value={personajes}>
+            <contextoPersonajes.Provider value={cosasParaExportar}>
                 {props.children}
             </contextoPersonajes.Provider>
         </>
@@ -42,4 +85,4 @@ const ProveedorPersonajes = (props) => {
 }
 
 export default ProveedorPersonajes;
-export {contextoPersonajes};
+export { contextoPersonajes };

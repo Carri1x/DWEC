@@ -1,0 +1,19 @@
+.contenedor-pagina-peliculas {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+    background-color: #0f1115;
+    color: #e6e6e6;
+}
+
+.columna-peliculas {
+    border-right: 2px solid rgba(245,197,24,0.3);
+    padding: 16px;
+    background-color: #12141a;
+}
+
+.columna-informacion {
+    padding: 24px;
+}
