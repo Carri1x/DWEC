@@ -8,13 +8,12 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "servidor": "concurrently \"vite\" \"npm run servidorDiscos\"",
-    "servidorDiscos": "json-server --watch src/assets/discos.json"
+    "servidor": "currently \"vite\" \"npm run servidorDiscos\"",
+    "servidorDiscos": "json-server --watch ./src/assests/objetos/discos.json"
   },
   "dependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.12.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
