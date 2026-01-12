@@ -1,0 +1,48 @@
+/* Contenedor principal */
+.container-lista-discos {
+    width: 90%;
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+/* Título */
+.container-lista-discos h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--color-white);
+}
+
+/* Contenedor de tarjetas */
+.container-discos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+
+    width: 100%;
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Mensaje "no hay discos" */
+.container-discos > div {
+    font-size: 18px;
+    color: #ccc;
+    text-align: center;
+    grid-column: 1 / -1; /* Que ocupe toda la fila */
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.container-filtro{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
