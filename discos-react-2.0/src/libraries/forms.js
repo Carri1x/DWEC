@@ -67,6 +67,7 @@ export const validarInput = (evento, errores, setErrores) => {
     }
 
 }
+
 const nombreValido = (nombre) => {
     if(nombre === '') return false;
     return !isANumberAndInteger(nombre) && regexMinDeLetras.test(nombre); //Falso si es un numero o un nombre menor de 3 letras.
@@ -119,10 +120,15 @@ export const contieneErrores = (errores) => {
 }
 
 export const formularioVacio = (formulario) => {
-    for (let i = 0; i < formulario.length; i++) {
-        const input = formulario[i];
-        if(input.type !== 'checkbox'){ //En caso de que sea el checkbox no queremos controlarlo
-            if(input.value !== '') return false;
+
+    for (const atributo in formulario) {
+        if (!Object.hasOwn(formulario, atributo)) continue;
+        const valor = formulario[atributo];
+        //Pasamos olímpicamente del checkbox, lo queremos controlar de otra forma.
+        //Solo vamos a controlar aquí los inputs tipo text.
+        if (typeof valor !== 'boolean' && valor !== "") {
+            // Si encontramos algo escrito, devolvemos false (NO está vacío).
+            return false; 
         }
     }
 

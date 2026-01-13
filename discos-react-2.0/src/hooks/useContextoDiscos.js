@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import { contextoDiscos } from "../context/ProveedorDiscos.jsx";
 
 
-const useDiscos = () => {
+const useContextoDiscos = () => {
 
     const contexto = useContext(contextoDiscos);
 
@@ -13,4 +13,4 @@ const useDiscos = () => {
     return contexto;
 }
 
-export default useDiscos;
+export default useContextoDiscos;
