@@ -13,7 +13,7 @@ const Disco = (props) => {
             <p>{grupoInterprete}</p>
             {genero && <strong>{genero}</strong>}
             {localizacion && <p>{localizacion}</p>}
-            {prestado && <strong>{prestado}</strong>}
+            {prestado && <strong>Prestado</strong>}
             {año && <small>{año}</small>}
             <div>
                 <button className='borrar-disco' data-id={id} >Borrar Disco</button>

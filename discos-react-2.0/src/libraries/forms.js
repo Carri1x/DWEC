@@ -118,6 +118,17 @@ export const contieneErrores = (errores) => {
     return false;
 }
 
+export const formularioVacio = (formulario) => {
+    for (let i = 0; i < formulario.length; i++) {
+        const input = formulario[i];
+        if(input.type !== 'checkbox'){ //En caso de que sea el checkbox no queremos controlarlo
+            if(input.value !== '') return false;
+        }
+    }
+
+    return true;
+}
+
 export const comprobarCompatibilidadLocalStorage = () =>{
     if(typeof localStorage === 'undefined') {
             avisarSobreLocalStorage();

@@ -8,8 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "servidor": "currently \"vite\" \"npm run servidorDiscos\"",
-    "servidorDiscos": "json-server --watch ./src/assests/objetos/discos.json"
+    "servidor": "concurrently \"vite\" \"npm run servidorDiscos\"",
+    "servidorDiscos": "json-server --watch ./src/assets/discos.json"
   },
   "dependencies": {
     "react": "^19.2.0",

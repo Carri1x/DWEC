@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { createRef, useContext, useEffect, useState } from "react";
-import { contextoDiscos } from '../context/ProveedorDiscos.jsx';
-import { formularioValido, validarInput } from "../libraries/forms.js";
+import { createRef, useEffect, useState } from "react";
+import { contieneErrores, formularioVacio, validarInput } from "../libraries/forms.js";
 import Cargando from "../components/Cargando.jsx";
 import './EditarDisco.css';
+import useDiscos from "../hooks/useDiscos.js";
 
 const EditarDisco = () => {
     const formInicial = {
@@ -16,12 +16,14 @@ const EditarDisco = () => {
         prestado: false
     };
     const { id } = useParams();
-    const { buscarDiscoPorId } = useContext(contextoDiscos);
+    const { buscarDiscoPorId } = useDiscos();
     const [discoEditar, setDiscoEditar] = useState({});
     const [formulario, setFormulario] = useState(formInicial);
     const formRef = createRef();
     const [errores, setErrores] = useState({});
     const [disabled, setDisabled] = useState(true);
+
+
     const cambiarEstado = (evento) => {
         const { name, value } = evento.target;
         setFormulario({ ...formulario, [name]: value });
@@ -38,19 +40,80 @@ const EditarDisco = () => {
         }
     }
 
+    const editarDisco = () => {
+
+    }
+
     useEffect(() => {
         buscarDisco();
     }, []);
 
-    useEffect(() => {
-        //Si el formulario tiene los campos obligatiorios con valores y NO contiene errores habilitamos el botón de guardar disco.
-        
-        if (formularioValido(formulario, errores)) {
-            setDisabled(false); // Cambiamos el estado a habilitado para guardar los datos del disco.
+    /*useEffect(() => {
+        /*************************** IMPORTANTE ***************************
+            Hay que explicar bien estas líneas. Esta condición (LÍNEA 79) es un poco compleja.
+
+            - SOLO PODRÁS ACCIONAR EL BOTÓN DE ACTUALIZAR EL DISCO, SI -> 
+            1.- SI EL FORMULARIO NO TIENE ERRORES.
+            2.- SI EL FORMULARIO NO ESTÁ VACIO. 
+                    (PERO SI EL FORMULARIO ESTÁ VACÍO Y A CAMBIADO EL ESTADO DE DISCO PRESTADO 
+                        A OTRO VALOR ¡"¡ESTO SE VERÁ COMO UNA MODIFICACIÓN DE ESTE DISCO!"! POR LO TANTO PODRÁ ACTUALIZARSE ESTE DISCO).
+
+            EJEMPLO 1: 
+            (TRUE && (FALSE || TRUE)) 
+                1.- (TRUE) NO HAY ERRORES.
+                2.- (FALSE) ESTÁ VACÍO EL FORMULARIO (NO HA ESCRITO NADA).
+                3.- (TRUE) EL USUARIO HA CAMBIADO EL ESTADO DE PRESTADO.
+                POR LO TANTO EL BOTÓN DE ACTUALIZAR DISCO SE HABILITA.
+            EJEMPLO 2:
+            (TRUE && (TRUE || FALSE)) 
+                1.- (TRUE) NO HAY ERRORES.
+                2.- (TRUE) EL FORMULARIO NO ESTÁ VACÍO (HA ESCRITO ALGO).
+                3.- (FALSE) EL USUARIO NO HA CAMBIADO EL ESTADO DE PRESTADO.
+                POR LO TANTO EL BOTÓN DE ACTUALIZAR DISCO SE HABILITA.
+
+            PD: PODRÁ DECIRSE QUE EL PARÉNTESIS DESPUÉS DEL OPERADOR && ES UNA CONDICIÓN QUE HABLA SOBRE EL CAMBIO DEL ESTADO DEL FORMULARIO.
+        *********************************************************************
+       
+        const prestadoModificado = formulario.prestado !== discoEditar.prestado; //¿¿HA CAMBIADO EL VALOR DE SI EL DISCO ES PRESTADO??
+        //Si el formulario NO contiene errores habilitamos el botón de actualizar disco.
+        if (!contieneErrores(errores) && (!formularioVacio(formulario) || prestadoModificado)) {
+            console.log("algo")
+            setDisabled(false); // Cambiamos el estado a habilitado para actualizar los datos del disco.
         } else {
-            setDisabled(true); // Cambiamos el estado a deshabilitado para guardar los datos del disco.
+            setDisabled(true); // Cambiamos el estado a deshabilitado para actualizar los datos del disco.
         }
-    }, [formulario, errores]); //Dependemos de los cambios en el objeto formulario y de errores 
+    }, [formulario, errores]); //Dependemos de los cambios en el objeto formulario y de errores */
+    useEffect(() => {
+        /***************************
+          Objetivo:
+          Habilitar el botón de "Actualizar disco" solo si:
+            1. No hay errores en el formulario.
+            2. El usuario ha modificado algún campo del formulario
+               - Esto incluye cambios en textos (titulo, grupo, etc.)
+               - O cambios en el checkbox "prestado"
+        ***************************/
+
+        // 1️ Comprobamos si el formulario de texto está vacío
+        // Solo consideramos los campos que NO son booleanos
+        const camposTextoVacios = Object.keys(formulario)
+            .filter(key => typeof formulario[key] !== 'boolean') // ignoramos checkbox
+            .every(key => formulario[key].trim() === ''); // true si todos los textos están vacíos
+
+        // 2️ Comprobamos si el checkbox "prestado" ha cambiado
+        const prestadoModificado = formulario.prestado !== discoEditar.prestado;
+
+        // 3️ Determinamos si el formulario se ha modificado
+        // Se considera modificado si hay texto escrito o si se cambió el checkbox
+        const formularioModificado = !camposTextoVacios || prestadoModificado;
+
+        // 4️ Habilitamos o deshabilitamos el botón
+        if (!contieneErrores(errores) && formularioModificado) {
+            setDisabled(false); // habilitamos botón
+        } else {
+            setDisabled(true);  // deshabilitamos botón
+        }
+
+    }, [formulario, errores, discoEditar]); // dependencias necesarias
 
     return (
         <div>
@@ -192,7 +255,7 @@ const EditarDisco = () => {
                                 type="checkbox"
                                 id="prestado"
                                 name="prestado"
-                                value={discoEditar.prestado}
+                                checked={discoEditar.prestado}
                                 onChange={cambiarEstado}
                             />
                         </div>
@@ -201,7 +264,7 @@ const EditarDisco = () => {
                             type='button'
                             disabled={disabled}
                             onClick={() => {
-                                guardarDiscoBD();
+                                editarDisco();
                             }}
                         >
                             Guardar
@@ -212,14 +275,14 @@ const EditarDisco = () => {
                 {
                     !discoEditar ? <Cargando /> : (
                         <div className='container-disco'>
-                            <h2>Valores del disco</h2>
+                            <h2>Valores del disco sin editar</h2>
                             <h3>Nombre: {discoEditar.nombre}</h3>
                             {discoEditar.caratula && <p>Carátula:</p>}
                             {discoEditar.caratula && (<img src={discoEditar.caratula} alt={`Caratula del disco ${discoEditar.nombre}`} />)}
                             <p>Grupo/Intérprete: {discoEditar.grupoInterprete}</p>
                             {discoEditar.genero && <strong>Género: {discoEditar.genero}</strong>}
                             {discoEditar.localizacion && <p>Localización: {discoEditar.localizacion}</p>}
-                            {discoEditar.prestado && <strong>Prestado: {discoEditar.prestado}</strong>}
+                            {discoEditar.prestado && <strong>Prestado</strong>}
                             {discoEditar.año && <small>Año: {discoEditar.año}</small>}
 
                         </div>
