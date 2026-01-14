@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { traerDiscos } from "../libraries/services.js";
+import useAPI from "../hooks/useAPI.js";
 
 
 const contextoDiscos = createContext();
@@ -8,20 +8,15 @@ const ProveedorDiscos = ({ children }) => {
 
     const urlBase = "http://localhost:3000/discos";
     const [discos, setDiscos] = useState([]);
-
+    const { obtener, guardar } = useAPI();
 
     const cargarDiscos = async () => {
         try {
-            const discosDB = await traerDiscos();
-
-            if (discosDB.length < 0) throw Error('No hay discos insertados en la base de datos...');
-
-            //Si han llegado correctamente los discos de la base de datos actualizamos el estado discos.
+            const discosDB = await obtener(urlBase);
             setDiscos(discosDB);
         } catch (error) {
-            //Aquí informaremos al usuario de que la petición no ha salido correctamente...
+            throw error;
         }
-
     }
 
     /*************************************************** DUDA *******************************************
@@ -31,13 +26,8 @@ const ProveedorDiscos = ({ children }) => {
      */
     const guardarDisco = async (disco) => {
         try {
-            const respuesta = await fetch(urlBase, {
-                method: "post",
-                body: JSON.stringify(disco)
-            });
-            if (!respuesta.ok) throw Error('Guardar Disco: No se ha podido guardar el disco.');
-
-            return disco;
+            await guardar(urlBase, disco);
+            cargarDiscos();
         } catch (error) {
             throw error;
         }
@@ -45,14 +35,31 @@ const ProveedorDiscos = ({ children }) => {
 
     const buscarDiscoPorId = async (id) => {
         try {
-            const respuesta = await fetch(`${urlBase}/${id}`);
-            if (!respuesta.ok) throw new Error("No se encontró el disco");
-            const disco = await respuesta.json();
+            const disco = obtener(`${urlBase}/${id}`);
             return disco;
         } catch (error) {
             throw error;
         }
     }
+
+    const editarDiscoCompleto = async (disco) => {
+        try {
+            await editar(`${urlBase}/${disco.id}`, disco);
+            cargarDiscos();
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    const editarDiscoParcial = async (id, camposActualizar) => {
+        try {
+            await editarPATCH(`${urlBase}/${id}`, camposActualizar);
+            cargarDiscos();
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
     const cosasAExportar = {
         discos,

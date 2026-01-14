@@ -2,3 +2,15 @@
     display: flex;
     gap: 20px;
 }
+
+.vista-previa-editar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.caratula-editar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
