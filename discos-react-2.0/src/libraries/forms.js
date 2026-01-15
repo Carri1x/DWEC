@@ -54,9 +54,6 @@ export const validarInput = (evento, errores, setErrores) => {
             if(!localizacionValida(value)){//Si la localización no es válida insertamos un mensaje de error.
                 errorActual = mensajeDeError.localizacion;
             }
-            if(existeLocalizacion(value)){ //Si la localización existe insertamos un mensaje de error.
-                errorActual = `La localización ${value}, ya existe en la base de datos`;
-            }
             break;
     }
 
@@ -93,14 +90,6 @@ const localizacionValida = (localizacion) => {
     return regexLocalizacion.test(localizacion);
 }
 
-const existeLocalizacion = (localizacion) => {
-    const localizaciones = getAllLocalizaciones();
-    if(localizaciones.find(localizacion)){
-        return true;
-    } else {
-        return false; // Hago esto porque si no lo encuentra devuelve undefined, prefiero trabajar con booleanos.
-    }
-}
 
 export const validoInputObligatorio = (input) => {
     return input.required;
@@ -133,6 +122,21 @@ export const formularioVacio = (formulario) => {
     }
 
     return true;
+}
+
+export const camposEditados = (original, formulario) => {
+    const camposNuevos = {};
+
+    for (const atributo in formulario) {
+        if (!Object.hasOwn(formulario, atributo)) continue;
+        //Si los valores son diferentes es que se ha editado el disco.
+        if(original[atributo] !== formulario[atributo]) {
+            //Si hay cambios añadimos el valor en el objeto para editar.
+            camposNuevos[atributo] = formulario[atributo];
+        }
+    }
+
+    return camposNuevos;
 }
 
 export const comprobarCompatibilidadLocalStorage = () =>{
@@ -188,67 +192,8 @@ export const filtroDiscos = (disco , caracteristicaParaFiltrar) =>{
 }
 
 
-//-------------------- MANEJO EN BASE DE DATOS ----------------------------
-
-export const getAllDiscos = () => {
-    const discosStr = localStorage.getItem('discos'); //Recogemos todos los discos.
-    return JSON.parse(discosStr);
-}
-
-export const getAllLocalizaciones = () => {
-    const discosALocalizaciones = getAllDiscos();
-    return discosALocalizaciones.map(disco => {
-        if(disco.localizacion === '') return;
-        return disco.localizacion;
-    });
-}
-
-export const removeDiscoByLocalizacion = (localizacion) => {
-    const discosJSON = getAllDiscos();
-
-    const discosFiltrados = discosJSON.filter ((disco) => { //Filtramos los discos.
-        disco.localizacion !== localizacion;
-    });
-
-    localStorage.setItem('discos', JSON.stringify(discosFiltrados)); // Actualizamos los discos.
-}
-
 export const filtrarDiscosPorNombre = (nombreAFiltrar) => {
     const discosJSON = getAllDiscos();
 
     return discosJSON.filter(disco => disco.nombre.toLowerCase().includes(nombreAFiltrar.toLowerCase()));
 } 
-
-/**
- * Función para guardar un disco en la base de datos.
- * @param {formulario} formulario 
- * @returns El disco que se ha guardado en la base de datos
- */
-export const guardarDiscoLocalStorage = (formulario) => {
-    //Creamos el disco.
-    let disco = crearDisco(formulario);
-
-    let discos = getAllDiscos(); //Recogemos todos los discos de la base de datos.
-
-    if(!discos){ // Si no hay discos en la base de datos.                                                                                                                   
-        localStorage.setItem('discos', JSON.stringify([disco])); // Si no hay discos creamos el array con el primer disco.
-    } else {
-        //En cambio si ya hay discos en la base de datos.
-        discos = [...discos, disco]; //Añadimos el disco en el array de discos.
-        localStorage.setItem('discos', JSON.stringify(discos)); // Lo guardamos dentro de la base de datos.
-    }
-    return disco; 
-}   
-
-/**
- * Función para eliminar un disco en la base de datos.
- * @param {El uuid del disco que quiere eliminarse} uuid 
- * @returns Array sin el disco que se ha querido eliminar.
- */
-export const removeDiscoByUuid = (uuid) => {
-    let discos = getAllDiscos(); //Recogemos todos los discos de la base de datos.
-    discos = discos.filter(disco => disco.uuid !== uuid); // Eliminamos el disco con el uuid pasado por parámetro.
-    localStorage.setItem('discos', JSON.stringify(discos));
-    return discos;
-}
-

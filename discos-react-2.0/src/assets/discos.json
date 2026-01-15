@@ -2,9 +2,9 @@
   "discos": [
     {
       "id": "a3f1c2b4-8d7e-4c1a-9f6e-12b9a7e4d301",
-      "nombre": "Ecos del Silencio",
+      "nombre": "Ecos del Silencio editado333",
       "caratula": "https://example.com/caratulas/ecos-silencio.jpg",
-      "grupoInterprete": "Sombras Urbanas",
+      "grupoInterprete": "Sombras Urbanaseditado3332",
       "año": 2018,
       "genero": "rock",
       "localizacion": "ES-001AA",
@@ -132,9 +132,9 @@
     },
     {
       "id": "f2751e93-34ac-4809-b708-574b3dae4377",
-      "nombre": "aaaaaaaa",
+      "nombre": "aaaaaa2",
       "caratula": "",
-      "grupoInterprete": "aaaaaaaaaaa",
+      "grupoInterprete": "aaaaaaa2",
       "año": "",
       "genero": "",
       "localizacion": "",

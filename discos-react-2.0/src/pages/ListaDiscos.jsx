@@ -1,9 +1,6 @@
 import { useEffect, useState,useContext, use } from "react";
 import {
-  comprobarCompatibilidadLocalStorage,
   filtroDiscos,
-  getAllDiscos,
-  removeDiscoByUuid,
 } from "../libraries/forms.js";
 import Disco from "../components/Disco.jsx";
 import MensajeFlotante from "../components/MensajeFlotante.jsx";
