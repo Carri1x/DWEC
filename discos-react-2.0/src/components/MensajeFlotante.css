@@ -12,13 +12,13 @@
     text-align: center;
 }
 /*Estas clases se añadirán en el className del componente , dependiendo del estado que sea el mensaje.*/ 
-.disco-guardado{
+.success{
     background-color: rgb(0, 193, 0);
     border: 2px solid rgb(0, 225, 0);
     border-radius: 20px;
 }
 
-.disco-no-guardado{
+.warning{
     background-color: rgb(193, 10, 0);
     border: 2px solid rgb(255, 0, 0);
     border-radius: 20px;

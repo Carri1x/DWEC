@@ -42,6 +42,7 @@ const useAPI = () => {
     }
 
     const guardar = (url, body) => {
+        console.log(body)
         return solicitud(url,{
             method : "POST",
             body: JSON.stringify(body)

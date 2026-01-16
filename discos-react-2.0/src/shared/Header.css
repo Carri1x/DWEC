@@ -1,27 +1,54 @@
-.contenedor-header{
+/* Contenedor principal del Header */
+.contenedor-header {
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content:space-between;
-    
+    justify-content: space-between;
+    padding: 20px 0;
+    color: white;
 }
 
 .contenedor-header h1 {
-    margin-left: 10px;
-    font-size: 2.5rem;
+    margin-left: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: -1px;
 }
 
-.contenedor-menu{
+/* Contenedor del menú (los Links) */
+.contenedor-menu {
     display: flex;
     flex-direction: row;
-    gap: 35px;
+    gap: 15px; /* Reducido un poco para que no se separen tanto */
     margin-right: 40px;
+    align-items: center;
 }
 
-.contenedor-menu a{
-    padding: 10px 20px;
-    border: 1px solid var(--color-black);
-    border-radius: 20px;
+/* Estilo para los enlaces (Link de react-router-dom se renderiza como <a>) */
+.contenedor-menu a {
+    text-decoration: none; /* Quitamos el subrayado */
+    color: #e0e0e0;
+    padding: 10px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+    border-radius: 50px; /* Bordes redondeados tipo cápsula */
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease; /* Transición suave para todos los cambios */
+    background-color: transparent;
+}
+
+/* Efecto al pasar el ratón */
+.contenedor-menu a:hover {
+    background-color: #6366f1; /* Fondo blanco al hacer hover */
+    color: #ffffff; /* Texto oscuro para contraste */
+    border-color: #ffffff;
+    transform: translateY(-2px); /* Pequeño salto hacia arriba */
+    box-shadow: 0 4px 9px #ffffff; /* Sombra brillante */
+}
+
+/* Efecto cuando se hace click */
+.contenedor-menu a:active {
+    transform: translateY(0);
 }
 

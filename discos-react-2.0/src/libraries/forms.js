@@ -3,7 +3,7 @@
 import { isANumberAndInteger } from "./util.js";
 
 const minDeLetras = 5;
-const regexMinDeLetras = /[a-zA-Z]{5}/;
+const regexMinDeLetras =new RegExp(`^[a-zA-Z\\s]{${minDeLetras},}$`);
 const añoMinimo = 1700;
 const añoMax = 2025;
 const regexCuatroDigitos = /^\d{4}$/;
@@ -139,12 +139,6 @@ export const camposEditados = (original, formulario) => {
     return camposNuevos;
 }
 
-export const comprobarCompatibilidadLocalStorage = () =>{
-    if(typeof localStorage === 'undefined') {
-            avisarSobreLocalStorage();
-            return; //El navegador no soporta localStorage salimos del evento.
-    }
-}
 
 export const avisarSobreLocalStorage = () => {
     const contenidoOriginal = document.body.innerHTML;
@@ -163,7 +157,7 @@ export const avisarSobreLocalStorage = () => {
 //Verdaderamente esta función solo funciona para este formulario. Habría que hacer un método que sirviera para todos los formularios.
 export const crearDisco = (form) =>{
     return {
-        uuid: crypto.randomUUID(),
+        id: crypto.randomUUID(),
         nombre: form.nombre,
         caratula: form.caratula,
         grupoInterprete: form.grupoInterprete,

@@ -1,22 +1,23 @@
-import { useEffect, useState,useContext, use } from "react";
+import { useEffect, useState, useContext, use } from "react";
 import {
   filtroDiscos,
 } from "../libraries/forms.js";
 import Disco from "../components/Disco.jsx";
 import MensajeFlotante from "../components/MensajeFlotante.jsx";
 import './ListaDiscos.css';
-import {contextoDiscos} from '../context/ProveedorDiscos.jsx';
+import { contextoDiscos } from '../context/ProveedorDiscos.jsx';
 import { useNavigate } from "react-router-dom";
+import Cargando from "../components/Cargando.jsx";
 
 
 const ListaDiscos = () => {
-  const {discos, borrarDisco} = useContext(contextoDiscos);
+  const { discos, borrarDiscoPorID } = useContext(contextoDiscos);
   const [discosTemp, setDiscosTemp] = useState([]);
   const [discosFiltrados, setDiscosFiltrados] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [esVisible, setEsVisible] = useState(false);
   const [mensaje, setMensaje] = useState("");
-  const estado = "disco-no-guardado";
+  const [estado, setEstado] = useState("");
   const navegar = useNavigate();
 
   const cambiarEstado = (evento) => {
@@ -29,13 +30,37 @@ const ListaDiscos = () => {
   const filtarDiscos = () => {
     const discosFilt = discos.filter((disco) => filtroDiscos(disco, filtro))
     setDiscosFiltrados(discosFilt);
-    
+
   };
 
   const limpiarFiltro = () => {
     setFiltro('');
     setDiscosFiltrados([])
   };
+  //Función para mostrar mensajes flotantes.
+  const mostrarMensaje = (mensaje, estadoAccion) => {
+    let estado = 'warning';
+    if (estadoAccion) {
+      estado = 'success';
+    }
+    //Mostramos el mensaje pasado como parámetro durante 3 segundos.
+    setEstado(estado);
+    setMensaje(mensaje);
+    setEsVisible(true);
+    setTimeout(() => {
+      setEsVisible(false);
+    }, 3000);
+  }
+
+  const borrarDisco = async (id) => {
+    try {
+      await borrarDiscoPorID(id);
+      mostrarMensaje(`Disco borrado correctamente`, true);
+    } catch (error) {
+      console.log(error)
+      mostrarMensaje(`Error al borrar el disco`, false);
+    }
+  }
 
   useEffect(() => {
     setDiscosTemp(discos);
@@ -59,37 +84,43 @@ const ListaDiscos = () => {
 
       <div className="container-discos" onClick={async (evento) => {
         //Delegación de eventos para borrar y editar discos.
-        if(evento.target.classList.contains('editar-disco') ){
+        if (evento.target.classList.contains('editar-disco')) {
           //Si se ha hecho click en el botón de editar disco navegamos a la ruta de editar disco.
           navegar(`/editar-disco/${evento.target.dataset.id}`);
         }
-        if(evento.target.classList.contains('borrar-disco')){
+        if (evento.target.classList.contains('borrar-disco')) {
           //Si se ha hecho click en el botón de borrar disco procedemos a borrar el disco.
           await borrarDisco(evento.target.dataset.id);
         }
       }}>
 
         {
-          //Si hay discos filtrados lo sustituimos por todos los discos.
-          discosFiltrados.length > 0 ? (
-            discosFiltrados.map((disco) => (
-              <Disco
-                key={disco.id}
-                disco={disco}
-              />
-            ))
-          ) : //Si no hay discos filtrados, enseñamos todos los discos del State general.
-          discosTemp ? (
-            discosTemp.map((disco) => (
-              <Disco
-                key={disco.id}
-                disco={disco}
-              />
-            ))
-          ) : (
-            //En cambio si no hay ningún disco guardado, procedemos a avisar al usuario con este div.
-            <div>No hay discos guardados por ahora.</div>
-          )
+          !discos ? <Cargando contexto={"la lista de discos"}/> :
+            (
+              //Si hay discos filtrados lo sustituimos por todos los discos.
+              discosFiltrados.length > 0 ? 
+              (
+                discosFiltrados.map((disco) => (
+                  <Disco
+                    key={disco.id}
+                    disco={disco}
+                  />
+                ))
+              ) : //Si no hay discos filtrados, enseñamos todos los discos del State general.
+                discosTemp ? 
+                (
+                  discosTemp.map((disco) => (
+                    <Disco
+                      key={disco.id}
+                      disco={disco}
+                    />
+                  ))
+                ) : 
+                (
+                  //En cambio si no hay ningún disco guardado, procedemos a avisar al usuario con este div.
+                  <div>No hay discos guardados por ahora.</div>
+                )
+            )
         }
       </div>
     </div>

@@ -8,7 +8,7 @@ const ProveedorDiscos = ({ children }) => {
 
     const urlBase = "http://localhost:3000/discos";
     const [discos, setDiscos] = useState([]);
-    const { obtener, guardar, editarPUT, editarPATCH } = useAPI();
+    const { obtener, guardar, editarPUT, editarPATCH, borrar } = useAPI();
 
     const cargarDiscos = async () => {
         try {
@@ -60,13 +60,23 @@ const ProveedorDiscos = ({ children }) => {
         }
     }
 
+    const borrarDiscoPorID = async (id) => {
+        try{
+            await borrar(`${urlBase}/${id}`);
+            cargarDiscos();
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
     const cosasAExportar = {
         discos,
         guardarDisco,
         buscarDiscoPorId,
         editarDiscoCompleto,
-        editarDiscoParcial
+        editarDiscoParcial,
+        borrarDiscoPorID
     }
 
     useEffect(() => { //INICIALMENTE CARGAMOS LOS DISCOS QUE 

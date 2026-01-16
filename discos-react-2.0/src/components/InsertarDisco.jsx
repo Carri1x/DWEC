@@ -34,9 +34,9 @@ const InsertarDisco = () => {
 
     const mostrarMensaje = (mensaje, guardado) => {
         //Si se ha guardado el disco añadiremos el estado de este como guardado o no guardado (COLOR DEL MENSAJE)
-        let exitoDeGuardado = 'disco-no-guardado'
+        let exitoDeGuardado = 'warning';
         if (guardado) {
-            exitoDeGuardado = 'disco-guardado';
+            exitoDeGuardado = 'success';
         }
 
         setMensaje(mensaje);
@@ -52,8 +52,8 @@ const InsertarDisco = () => {
      * @param {Input que ha accionado el evento} evento 
      */
     const cambiarEstado = (evento) => {
-        const { name, value } = evento.target;
-        setFormulario({ ...formulario, [name]: value });
+        const { name, value, type, checked } = evento.target;
+        setFormulario({ ...formulario, [name]: type === 'checkbox'? checked: value });
     }
 
     const guardarDiscoBD = async () => {
@@ -61,16 +61,16 @@ const InsertarDisco = () => {
         if (formularioValido(formulario, errores)) {
             const discoTemp = crearDisco(formulario);
             try {
-                const discoGuardado = await guardarDisco(discoTemp);
+                await guardarDisco(discoTemp);
                 // Mostramos mensaje de éxito. TRUE SI HA SIDO GUARDADO.
-                mostrarMensaje(`El disco ${discoGuardado.nombre}, se ha guardado correctamente.`, true)
+                mostrarMensaje(`El disco ${formulario.nombre}, se ha guardado correctamente.`, true)
 
                 // Reseteamos el formulario.
                 setFormulario(formInicial);
                 formRef.current.reset();
                 return;
             } catch (error) {
-                mostrarMensaje(`${error.message}`, false);
+                mostrarMensaje(`Error GuardarDisco: ${error.message}`, false);
             }
         } else {
             //En caso de que no se haya podido guardar en la base de datos notificamos al usuario.

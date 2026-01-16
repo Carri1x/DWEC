@@ -270,7 +270,7 @@ const EditarDisco = () => {
                                         type="checkbox"
                                         id="prestado"
                                         name="prestado"
-                                        checked={formulario.prestado || ''}
+                                        checked={formulario.prestado || ""}
                                         onChange={cambiarEstado}
                                     />
                                 </div>
