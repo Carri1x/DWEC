@@ -1,6 +1,6 @@
 import "./EditarDisco.css";
 import { useParams } from "react-router-dom";
-import { createRef, use, useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import {
     camposEditados,
     contieneErrores,
@@ -77,6 +77,8 @@ const EditarDisco = () => {
             } else {
                 editarDiscoCompleto(id, cambios);
             }
+            setMensaje('El disco se ha modificado correctamente.');
+            setMensajeEsVisible(true);
             navegar('/lista-discos');
         } catch (error) {
             setMensajeEsVisible(true);
@@ -98,11 +100,6 @@ const EditarDisco = () => {
         setFormulario({ ...discoEditar });
     }, [discoEditar]);
 
-
-
-    /**
-     * HAY QUE CAMBIAR LO DE QUE SEA REQUERIDO EL NOMBRE Y EL GRUPO INTERPRETE
-     */
     useEffect(() => {
         if (!formulario || !discoEditar) return;
 

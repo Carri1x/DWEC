@@ -1,26 +1,6 @@
 {
   "discos": [
     {
-      "id": "b7d9e0f2-1c3a-4e8b-a6f4-9d2c1e5a8b47",
-      "nombre": "Horizonte Azul",
-      "caratula": "https://example.com/caratulas/horizonte-azul.jpg",
-      "grupoInterprete": "Mar Abierto",
-      "año": 2020,
-      "genero": "pop",
-      "localizacion": "ES-023BC",
-      "prestado": false
-    },
-    {
-      "id": "c2a8f6d1-5e4b-49c7-8a3f-7d1e9b0c4a26",
-      "nombre": "Noches de Jazz",
-      "caratula": "https://example.com/caratulas/noches-jazz.jpg",
-      "grupoInterprete": "Blue Quartet",
-      "año": 2015,
-      "genero": "jazz",
-      "localizacion": "ES-145JD",
-      "prestado": true
-    },
-    {
       "id": "d9e3a5b1-7c6f-4a28-9e0d-b4f2c8a1e357",
       "nombre": "Raíces",
       "caratula": "https://example.com/caratulas/raices.jpg",
@@ -32,13 +12,23 @@
     },
     {
       "id": "f6a3c8e1-4b9d-4f72-a05e-7c1d2b9a83e4",
-      "nombre": "Versos Callejeros",
+      "nombre": "Versos ",
       "caratula": "https://example.com/caratulas/versos-callejeros.jpg",
       "grupoInterprete": "Rima Directa",
       "año": 2019,
       "genero": "rap",
       "localizacion": "ES-087RT",
       "prestado": false
+    },
+    {
+      "id": "7b99ccc9-caf9-4ec8-b707-ae388292e9ab",
+      "nombre": "Nuevo disco editado asdfasdf",
+      "caratula": "",
+      "grupoInterprete": "Otro nuevo discoooo",
+      "año": "2020",
+      "genero": "tango",
+      "localizacion": "ES-002VV",
+      "prestado": true
     }
   ]
 }

@@ -8,6 +8,7 @@ import './ListaDiscos.css';
 import { contextoDiscos } from '../context/ProveedorDiscos.jsx';
 import { useNavigate } from "react-router-dom";
 import Cargando from "../components/Cargando.jsx";
+import MensajeAceptarCancelar from "../components/MensajeAceptarCancelar.jsx";
 
 
 const ListaDiscos = () => {
@@ -15,9 +16,20 @@ const ListaDiscos = () => {
   const [discosTemp, setDiscosTemp] = useState([]);
   const [discosFiltrados, setDiscosFiltrados] = useState([]);
   const [filtro, setFiltro] = useState("");
+
+  //VARIABLES DE MENSAJE FLOTANTE.
+  //Estado que cambia si es visible o no el componente MENSAJEFLOTANTE...
   const [esVisible, setEsVisible] = useState(false);
+  //Estado que cambia el mensaje del componente MENSAJEFLOTANTE...
   const [mensaje, setMensaje] = useState("");
+  //Estado que cambia el color del componente MENSAJEFLOTANTE... 
   const [estado, setEstado] = useState("");
+
+  //VARIABLES DE MENSAJE ACEPTAR CANCELAR.
+  //Estado que enseña el mensaje si quiere eliminar o no el disco que se ha seleccionado
+  const [aceptaEliminarDisco, setAceptaEliminarDisco] = useState(false);
+  //ID del disco que se va a querer eliminar.
+  const [idDiscoEliminar, setIdDiscoEliminar] = useState('');
   const navegar = useNavigate();
 
   const cambiarEstado = (evento) => {
@@ -52,9 +64,9 @@ const ListaDiscos = () => {
     }, 3000);
   }
 
-  const borrarDisco = async (id) => {
+  const borrarDisco = async () => {
     try {
-      await borrarDiscoPorID(id);
+      await borrarDiscoPorID(idDiscoEliminar);
       mostrarMensaje(`Disco borrado correctamente`, true);
     } catch (error) {
       console.log(error)
@@ -70,6 +82,18 @@ const ListaDiscos = () => {
     <div className="container-lista-discos">
       <h1>Lista de discos</h1>
       {esVisible && <MensajeFlotante mensaje={mensaje} estado={estado} />}
+      {
+        aceptaEliminarDisco && <MensajeAceptarCancelar mensaje={"¿Quieres eliminar el disco?"} 
+        botonIzq={() => {
+          borrarDisco();
+          //Quitamos el componente <MensajeAceptarCancelar /> para que no se quede estático en la pantalla...
+          setAceptaEliminarDisco(false);
+          }
+        } 
+        botonDer={() => {setAceptaEliminarDisco(false)}}/>
+      }
+
+
       <div className="container-filtro">
         <span>Filtrar por: </span>
         <input
@@ -89,8 +113,10 @@ const ListaDiscos = () => {
           navegar(`/editar-disco/${evento.target.dataset.id}`);
         }
         if (evento.target.classList.contains('borrar-disco')) {
-          //Si se ha hecho click en el botón de borrar disco procedemos a borrar el disco.
-          await borrarDisco(evento.target.dataset.id);
+          //EN EL COMPONENTE <MensajeAceptarEliminar/> estarán las funciones de eliminar o no eliminar.
+          setAceptaEliminarDisco(true);
+          //Cambiamos el id del disco que se va a querer eliminar. Este id lo usa la función de borrarDisco().
+          setIdDiscoEliminar(evento.target.dataset.id);
         }
       }}>
 
