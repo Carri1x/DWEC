@@ -1,0 +1,42 @@
+
+.btn-link {
+    background-color: var(--color-link);
+    padding: 20px;
+    color: var(--color-negro-principal);
+    border-radius: 20px;
+}
+
+.btn-link:hover {
+    background-color: var(--color-link-hover);
+    color: var(--color-blanco-principal)
+}
+
+.contenedor-inicio {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 2rem;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.contenedor-inicio h1 {
+    color: var(--color-link);
+    margin-bottom: 0.5rem;
+}
+
+.contenedor-inicio h3 {
+    font-weight: 300;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+}
+
+.contenedor-iniciar-registrar-sesion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
