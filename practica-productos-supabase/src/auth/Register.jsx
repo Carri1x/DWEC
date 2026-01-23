@@ -1,35 +1,26 @@
 import './Register.css';
 import useContextoSesion from '../hooks/useContextoSesion.js';
-import {useState} from 'react';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
-    const {registrar, actualizarEstadoSesion, mensajeSesion} = useContextoSesion();
-
-    const formularioInicial = {
-        email: "",
-        password: ""
-    }
-    
-    const [formulario, setFormulario] = useState(formularioInicial)
-
-
-    const actualizarFormulario = (evento) => {
-        const { name, value } = evento.target;
-        setFormulario({...formulario, [name]: value});
-    }
-
-    const ejecutarRegistro = () => {
-
-    }
+    const {registrar, actualizarEstadoSesion} = useContextoSesion();
 
     return (
         <div className='contenedor-registrar'>
+            <small><Link to={'/login'}>Ya tengo una cuenta</Link></small>
             <h2>Regístrate</h2>
+
+            <label htmlFor="nombre">Nombre: </label>
+            <input type="text" name="nombre" id="nombre" placeholder='Tu nombre'
+                onChange={(evento) => {
+                    actualizarEstadoSesion(evento)
+                }}
+            />
+
             <label htmlFor="email">Email: </label>
             <input type="text" name="email" id="email" placeholder='Tu email'
                 onChange={(evento) => {
                     actualizarEstadoSesion(evento);
-                    actualizarFormulario(evento);
                 }}
             />
 
@@ -37,7 +28,6 @@ const Register = () => {
             <input type="password" name="password" id="password" placeholder='Contraseña'
                 onChange={(evento) => {
                     actualizarEstadoSesion(evento);
-                    actualizarFormulario(evento);
                 }}
             />
 

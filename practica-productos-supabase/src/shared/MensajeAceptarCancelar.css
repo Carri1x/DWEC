@@ -1,0 +1,80 @@
+/* Contenedor que oscurece y bloquea todo el fondo */
+.overlay-confirmacion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    backdrop-filter: blur(4px); /* Efecto de desenfoque opcional */
+}
+
+/* La tarjeta del mensaje */
+.contenedor-mensaje-aceptar-cancelar {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    animation: aparecer 0.3s ease-out; /* Animación de entrada */
+}
+
+.mensaje-texto {
+    font-family: sans-serif;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* Contenedor de botones */
+.contenedor-botones-mensaje {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Estilo de botones */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-confirmar {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-confirmar:hover {
+    background-color: #0056b3;
+}
+
+.btn-cancelar {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.btn-cancelar:hover {
+    background-color: #dee2e6;
+}
+
+/* Animación para que el mensaje "salte" un poco al aparecer */
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

@@ -7,6 +7,7 @@ const contextoSesion = createContext();
 
 const ProveedorSesion = ({ children }) => {
     const datosSesionIniciales = {
+        nombre: "",
         email: "",
         password: ""
     }
@@ -25,14 +26,16 @@ const ProveedorSesion = ({ children }) => {
     }
 
     const registrar = async () => {
-        console.log(datosSesion)
         try {
             const { data, error } = await supabaseConexion.auth.signUp({
                 email: datosSesion.email,
-                password: datosSesion.password
+                password: datosSesion.password,
+                options: {
+                    data: {
+                        display_name: datosSesion.nombre
+                    }
+                }
             });
-            console.log(data)
-            console.log(error)
 
             if(error) {
                 throw error;
@@ -76,11 +79,9 @@ const ProveedorSesion = ({ children }) => {
     const obtenerUsuario = async() => {
         try {
             const {data, error} = await supabaseConexion.auth.getUser();
-            
             if(error) {
                 throw error;
             }
-
             setUsuario(data.user);
             setMensajeSesion(mensajeInicial);
         } catch (error) {
@@ -99,9 +100,8 @@ const ProveedorSesion = ({ children }) => {
                 (event, session) => {
                     if(session) {
                         //NAVEGAREMOS AL LISTADO DE LA COMPRA
-                        navegar('/listado-productos');
+                        navegar('/listado-productos')
                         setSesionIniciada(true);
-                        obtenerUsuario();
                     } else {
                         navegar('/');
                         setSesionIniciada(false);
@@ -109,7 +109,7 @@ const ProveedorSesion = ({ children }) => {
                 }
             );
         } catch (error) {
-            
+            setMensajeSesion(error.message);
         }
     }, []);
 
@@ -130,6 +130,7 @@ const ProveedorSesion = ({ children }) => {
             {children}
         </contextoSesion.Provider>
     );
+                  
 }
 
 export default ProveedorSesion;

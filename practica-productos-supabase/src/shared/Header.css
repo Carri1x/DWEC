@@ -1,0 +1,12 @@
+.contenedor-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.contenedor-header img{
+    width: 70px;
+}
+
+.contenedor-header button{
+    margin: 0;
+}

@@ -1,5 +1,6 @@
 import './Login.css';
 import useContextoSesion from '../hooks/useContextoSesion.js';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -25,6 +26,7 @@ const Login = () => {
             <button onClick={() => {
                 logear();
             }}>Iniciar sesión</button>
+            <small><Link to={'/register'}>No tengo ninguna cuenta creada</Link></small>
         </div>
     );
 }

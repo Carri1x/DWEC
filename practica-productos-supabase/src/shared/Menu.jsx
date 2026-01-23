@@ -1,10 +1,16 @@
+import useContextoSesion from '../hooks/useContextoSesion.js';
 import './Menu.css';
+import {Link} from 'react-router-dom';
 
 const Menu = () => {
 
+    const { sesionIniciada } = useContextoSesion();
+
     return (
-        <>
-        </>
+        <div className='contenedor-menu'>
+            <Link to={'/'}>Inicio</Link>
+            { sesionIniciada && <Link to={'/listado-productos'}>Listado Productos</Link> }
+        </div>
     );
 }
 
