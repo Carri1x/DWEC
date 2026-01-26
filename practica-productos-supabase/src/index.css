@@ -1,9 +1,15 @@
 :root {
   --color-blanco-principal: rgba(255, 255, 255, 0.87);
   --color-negro-principal: #242424;
+  --color-negro-logo: #6b6772;
   --color-link: #646cff;
   --color-link-hover: #535bf2;
   --max-width: 1200px; /* Ancho máximo opcional para que no se vea "estirado" en pantallas gigantes */
+}
+
+@font-face {
+  font-family: MiFuente;
+  src: url(./assets/ClimateCrisis-Regular-VariableFont_YEAR.ttf) format('woff2');
 }
 
 /* Reseteo y Altura completa */
