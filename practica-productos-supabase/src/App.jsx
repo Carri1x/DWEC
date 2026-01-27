@@ -7,8 +7,7 @@ import MensajeFlotante from "./shared/MensajeFlotante.jsx";
 import Menu from "./shared/Menu.jsx";
 
 function App() {
-  const { sesionIniciada, mensajeSesion, eliminarMensajeSesion } =
-    useContextoSesion();
+  const { sesionIniciada, mensajeSesion, eliminarMensajeSesion } = useContextoSesion();
 
   return (
     <>
@@ -19,7 +18,7 @@ function App() {
         />
       )}
       <Header />
-      {sesionIniciada && <Menu />}
+      <Menu />
       <main className="rutas-container">
         <Rutas />
       </main>

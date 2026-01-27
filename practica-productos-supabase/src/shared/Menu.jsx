@@ -9,7 +9,7 @@ const Menu = () => {
     return (
         <div className='contenedor-menu'>
             <Link to={'/'}>Inicio</Link>
-            { sesionIniciada && <Link to={'/listado-productos'}>Listado Productos</Link> }
+            <Link to={'/sup/listado-productos'}>Listado Productos</Link> 
         </div>
     );
 }

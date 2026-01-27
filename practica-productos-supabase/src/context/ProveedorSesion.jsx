@@ -100,7 +100,7 @@ const ProveedorSesion = ({ children }) => {
                 (event, session) => {
                     if(session) {
                         //NAVEGAREMOS AL LISTADO DE LA COMPRA
-                        navegar('/listado-productos')
+                        navegar('/sup/listado-productos')
                         setSesionIniciada(true);
                     } else {
                         navegar('/');

@@ -1,4 +1,4 @@
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import useProductosAPI from "../hooks/useProductosAPI.js";
 
 const contextoProductos = createContext();
@@ -6,26 +6,54 @@ const ProveedorProductos = ({children}) => {
     const errorInicial = '';
 
     const [productos, setProductos] = useState([]);
+    const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [mensaje, setMensaje] = useState(errorInicial);
-    const { traerProductos } = useProductosAPI();
+    const [cargando, setCargando] = useState(false);
+    const { traerProductos, filtroProductos } = useProductosAPI();
 
     const cargarProductos = async() => {
         try {
+            setCargando(true);
             const productosAPI =  await traerProductos();
-            
             setProductos(productosAPI);
 
         } catch (error) {  
             setMensaje(error.message);
+        } finally {
+            setCargando(false);
         }
     }
+
+    const filtrarProductos = async(filtro, option = 'nombre') => {
+        try {
+            setCargando(true);
+            const productosAPI = await filtroProductos(filtro, option);
+            setProductosFiltrados(productosAPI);
+        } catch (error) {
+            setMensaje(error.message);
+        } finally {
+            setCargando(false);
+        }
+    }
+
+    const borrarFiltroProductos = () => {
+        setProductosFiltrados([])
+    }
+
+    useEffect(() => {
+        cargarProductos();
+    }, []);
 
     
 
     const datosAExportar = {
-        mensaje,
         productos,
+        cargando,
+        mensaje,
         cargarProductos,
+        productosFiltrados,
+        filtrarProductos,
+        borrarFiltroProductos
     }
 
     return (
@@ -35,3 +63,4 @@ const ProveedorProductos = ({children}) => {
     );
 };
 export default ProveedorProductos;
+export {contextoProductos};

@@ -6,21 +6,32 @@ const useProductosAPI = () => {
 
     const traerProductos = async() => {
         try {
-            const {data: productos, error} = await supabaseConexion.from('Productos').select('*'); 
-
+            const {data, error} = await supabaseConexion.from('Productos').select('*'); 
             if(error) {
                 throw error;
             }
-
-            return productos;
+            return data;
 
         } catch (error) {
             throw error;
         }
     }
 
+    const filtroProductos = async(filtro = '', option = 'nombre') => {
+        try {
+            const {data, error} = await supabaseConexion.from('Productos').select('*').eq(option, filtro);
+            if(error) {
+                throw error;
+            }
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     return {
-        traerProductos
+        traerProductos,
+        filtroProductos
     }
 };
 export default useProductosAPI;
