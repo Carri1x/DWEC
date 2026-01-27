@@ -1,0 +1,94 @@
+/* Contenedor general para los filtros y el ordenado */
+.controles-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.control-group {
+    background-color: #2d2d2d; /* Gris de las tarjetas */
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.control-group h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #a5a5a5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Estilos para Selects e Inputs */
+.input-custom {
+    background-color: #3d3d3d;
+    border: 1px solid #4d4d4d;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+}
+
+.input-custom:focus {
+    border-color: #5d5fef;
+}
+
+/* Contenedor horizontal para elementos dentro del grupo */
+.flex-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Botones */
+.btn-primary {
+    background-color: #5d5fef;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background 0.3s, transform 0.1s;
+}
+
+.btn-primary:hover {
+    background-color: #4a4cdb;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-secondary {
+    background-color: #444;
+    color: #ccc;
+    border: 1px solid #555;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid #5d5fef;
+    color: #5d5fef;
+}
+
+.status-label {
+    font-size: 0.8rem;
+    color: #888;
+}

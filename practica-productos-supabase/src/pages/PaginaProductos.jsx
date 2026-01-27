@@ -1,15 +1,22 @@
 import ProveedorProductos from "../context/ProovedorProductos";
 import { Outlet } from "react-router-dom";
-import MenuProductos from "../shared/MenuProductos.jsx";
+import FiltrarProductos from '../components/FiltrarProductos.jsx';
+import OrdenarProductos from "../components/OrdenarProductos.jsx";
+import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const PaginaProductos = () => {
-
-
+  const {sesionIniciada} = useContextoSesion();
   return (
     <>
-      <MenuProductos />
         <ProveedorProductos>
-            <Outlet/>
+          {
+            sesionIniciada && (
+            <div className="controles-container">
+              <FiltrarProductos />
+              <OrdenarProductos />
+            </div>)
+          }
+          <Outlet/>
         </ProveedorProductos>
     </>
   );

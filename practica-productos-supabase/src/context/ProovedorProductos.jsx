@@ -9,11 +9,11 @@ const ProveedorProductos = ({children}) => {
     const [productosFiltrados, setProductosFiltrados] = useState([]);
     const [mensaje, setMensaje] = useState(errorInicial);
     const [cargando, setCargando] = useState(false);
-    const { traerProductos, filtroProductos } = useProductosAPI();
+    const { traerProductos, filtroProductos, ordenaProductos } = useProductosAPI();
 
     const cargarProductos = async() => {
+        setCargando(true);
         try {
-            setCargando(true);
             const productosAPI =  await traerProductos();
             setProductos(productosAPI);
 
@@ -25,8 +25,8 @@ const ProveedorProductos = ({children}) => {
     }
 
     const filtrarProductos = async(filtro, option = 'nombre') => {
+        setCargando(true);
         try {
-            setCargando(true);
             const productosAPI = await filtroProductos(filtro, option);
             setProductosFiltrados(productosAPI);
         } catch (error) {
@@ -38,6 +38,18 @@ const ProveedorProductos = ({children}) => {
 
     const borrarFiltroProductos = () => {
         setProductosFiltrados([])
+    }
+
+    const ordenarProductos = async(columna, orden) => {
+        setCargando(true);
+        try {
+            const productosAPI = await ordenaProductos(columna, orden);
+            setProductos(productosAPI);
+        } catch (error) {
+            setMensaje(error.message);
+        } finally {
+            setCargando(false);
+        }
     }
 
     useEffect(() => {
@@ -53,7 +65,8 @@ const ProveedorProductos = ({children}) => {
         cargarProductos,
         productosFiltrados,
         filtrarProductos,
-        borrarFiltroProductos
+        borrarFiltroProductos,
+        ordenarProductos
     }
 
     return (
