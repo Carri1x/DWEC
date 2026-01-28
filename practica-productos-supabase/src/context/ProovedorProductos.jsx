@@ -7,7 +7,7 @@ const ProveedorProductos = ({children}) => {
 
     const [productos, setProductos] = useState([]);
     const [productosFiltrados, setProductosFiltrados] = useState([]);
-    const [mensaje, setMensaje] = useState(errorInicial);
+    const [mensajeProductos, setMensajeProductos] = useState(errorInicial);
     const [cargando, setCargando] = useState(false);
     const { traerProductos, filtroProductos, ordenaProductos } = useProductosAPI();
 
@@ -18,7 +18,7 @@ const ProveedorProductos = ({children}) => {
             setProductos(productosAPI);
 
         } catch (error) {  
-            setMensaje(error.message);
+            setMensajeProductos(error.message);
         } finally {
             setCargando(false);
         }
@@ -28,9 +28,12 @@ const ProveedorProductos = ({children}) => {
         setCargando(true);
         try {
             const productosAPI = await filtroProductos(filtro, option);
+            if(productosAPI.length === 0) {
+                throw Error('No se han encontrado productos con ese filtro.');
+            }
             setProductosFiltrados(productosAPI);
         } catch (error) {
-            setMensaje(error.message);
+            setMensajeProductos(error.message);
         } finally {
             setCargando(false);
         }
@@ -46,10 +49,14 @@ const ProveedorProductos = ({children}) => {
             const productosAPI = await ordenaProductos(columna, orden);
             setProductos(productosAPI);
         } catch (error) {
-            setMensaje(error.message);
+            setMensajeProductos(error.message);
         } finally {
             setCargando(false);
         }
+    }
+
+    const eliminarMensajeProductos = () => {
+        setMensajeProductos(errorInicial);
     }
 
     useEffect(() => {
@@ -61,12 +68,13 @@ const ProveedorProductos = ({children}) => {
     const datosAExportar = {
         productos,
         cargando,
-        mensaje,
+        mensajeProductos,
+        eliminarMensajeProductos,
         cargarProductos,
         productosFiltrados,
         filtrarProductos,
         borrarFiltroProductos,
-        ordenarProductos
+        ordenarProductos,
     }
 
     return (

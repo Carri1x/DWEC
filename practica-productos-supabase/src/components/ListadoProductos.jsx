@@ -19,8 +19,7 @@ const ListadoProductos = () => {
 
     } else {
         setTotalProductos(productos?.length || 0);
-        setCosteTotal(
-        productos?.reduce((acumulador, producto) => acumulador + (Number(producto.precio) || 0),0,) || 0,);
+        setCosteTotal(productos?.reduce((acumulador, producto) => acumulador + (Number(producto.precio) || 0),0,) || 0,);
     }
   }, [productos, productosFiltrados]);
 
