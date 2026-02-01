@@ -11,3 +11,4 @@ export const filtrarObjeto = (objeto, caracteristicaParaFiltrar) => {
     }
     return false;
 }
+

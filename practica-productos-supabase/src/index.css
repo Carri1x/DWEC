@@ -39,3 +39,8 @@ body {
 button{
   border-radius: 8px;
 }
+
+a{
+  color: var(--color-blanco-principal) !important;
+  
+}

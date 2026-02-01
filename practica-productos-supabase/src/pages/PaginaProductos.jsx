@@ -16,12 +16,6 @@ const PaginaProductos = () => {
           funcion={eliminarMensajeProductos}
         />
       )}
-      {sesionIniciada && (
-        <div className="controles-container">
-          <FiltrarProductos />
-          <OrdenarProductos />
-        </div>)
-      }
       <Outlet />
     </>
   );

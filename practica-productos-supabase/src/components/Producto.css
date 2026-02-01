@@ -22,3 +22,8 @@
     border-radius: 8px;
     margin-bottom: 10px;
 }
+
+small{
+    font-size: 0.67em;
+    color: var(--color-link);
+}

@@ -10,6 +10,9 @@ const Menu = () => {
         <div className='contenedor-menu'>
             <Link to={'/'}>Inicio</Link>
             <Link to={'/sup/listado-productos'}>Listado Productos</Link> 
+            { sesionIniciada &&
+            <Link to={'/sup/crear-producto'}>Crear Producto</Link>
+            }
         </div>
     );
 }
