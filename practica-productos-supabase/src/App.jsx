@@ -6,6 +6,7 @@ import Header from "./shared/Header.jsx";
 import MensajeFlotante from "./shared/MensajeFlotante.jsx";
 import Menu from "./shared/Menu.jsx";
 import ProveedorProductos from "./context/ProovedorProductos";
+import ProveedorListaCompra from "./context/ProveedorListaCompra.jsx";
 
 function App() {
   const { mensajeSesion, eliminarMensajeSesion } = useContextoSesion();
@@ -22,7 +23,9 @@ function App() {
       <Menu />
       <main className="rutas-container">
         <ProveedorProductos>
-          <Rutas />
+          <ProveedorListaCompra>
+            <Rutas />
+          </ProveedorListaCompra>
         </ProveedorProductos>
       </main>
       <Footer />

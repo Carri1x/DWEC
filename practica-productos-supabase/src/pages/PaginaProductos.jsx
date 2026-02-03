@@ -1,9 +1,8 @@
 import { Outlet } from "react-router-dom";
-import FiltrarProductos from '../components/FiltrarProductos.jsx';
-import OrdenarProductos from "../components/OrdenarProductos.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import MensajeFlotante from "../shared/MensajeFlotante.jsx";
 import useContextoProductos from "../hooks/useContextoProductos.js";
+import ListasCompra from "../components/ListasCompra.jsx";
 
 const PaginaProductos = () => {
   const { sesionIniciada } = useContextoSesion();
@@ -16,6 +15,7 @@ const PaginaProductos = () => {
           funcion={eliminarMensajeProductos}
         />
       )}
+      { sesionIniciada && <ListasCompra />}
       <Outlet />
     </>
   );
