@@ -1,22 +1,28 @@
 import { createContext, useEffect, useState } from "react";
 import { supabaseConexion } from "../supabase/Supabase.js";
 import { useNavigate } from 'react-router-dom';
+import useContextoMensajes from "../hooks/useContextoMensajes.js";
 
 
 const contextoSesion = createContext();
 
 const ProveedorSesion = ({ children }) => {
+
+    const {
+        tiposDeMensaje,
+        lanzarMensaje,
+        quitarMensaje,
+    } = useContextoMensajes();
+
     const datosSesionIniciales = {
         nombre: "",
         email: "",
         password: ""
     }
-    const mensajeInicial = "";
 
     const [datosSesion, setDatosSesion] = useState(datosSesionIniciales);
     const [usuario, setUsuario] = useState({});
     const [sesionIniciada, setSesionIniciada] = useState(false);
-    const [mensajeSesion, setMensajeSesion] = useState(mensajeInicial);
 
     const navegar = useNavigate();
 
@@ -40,10 +46,10 @@ const ProveedorSesion = ({ children }) => {
             if(error) {
                 throw error;
             } else {
-                setMensajeSesion(`Verifica la cuenta a través del correo proporcionado: ${datosSesion.email}`);
+                lanzarMensaje(`Verifica la cuenta a través del correo proporcionado: ${datosSesion.email}`, tiposDeMensaje.info);
             }
         } catch (error) {
-            setMensajeSesion(`Error al registrarse: ${error.message}`);
+            lanzarMensaje(`Error al registrarse: ${error.message}`, tiposDeMensaje.error);
         }
     }
 
@@ -62,17 +68,17 @@ const ProveedorSesion = ({ children }) => {
             }
 
         } catch (error) {
-            setMensajeSesion(`Error al logearse: ${error.message}`)
+            lanzarMensaje(`Error al logearse: ${error.message}`, tiposDeMensaje.error);
         }
     }
 
     const cerrarSesion = async() => {
         try {
             await supabaseConexion.auth.signOut();
-            setMensajeSesion(mensajeInicial);
+            quitarMensaje();
             navegar('/');
         } catch (error) {
-            setMensajeSesion(`Error al cerrar sesión: ${error.message}`);
+            lanzarMensaje(`Error al cerrar sesión: ${error.message}`, tiposDeMensaje.error);
         }
     }
 
@@ -83,14 +89,10 @@ const ProveedorSesion = ({ children }) => {
                 throw error;
             }
             setUsuario(data.user);
-            setMensajeSesion(mensajeInicial);
+            quitarMensaje();
         } catch (error) {
-            setMensajeSesion(`Error al obtener el usuario: ${error.message}`);
+            lanzarMensaje(`Error al obtener el usuario: ${error.message}`, tiposDeMensaje.error);
         }
-    }
-
-    const eliminarMensajeSesion = () => {
-        setMensajeSesion(mensajeInicial);
     }
 
     useEffect(() => {
@@ -109,7 +111,7 @@ const ProveedorSesion = ({ children }) => {
                 }
             );
         } catch (error) {
-            setMensajeSesion(error.message);
+            lanzarMensaje(error.message, tiposDeMensaje.error);
         }
     }, []);
 
@@ -121,8 +123,6 @@ const ProveedorSesion = ({ children }) => {
         obtenerUsuario,
         sesionIniciada,
         usuario,
-        mensajeSesion,
-        eliminarMensajeSesion
     }
 
     return (

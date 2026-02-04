@@ -1,8 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import useProductosAPI from "../hooks/useProductosAPI.js";
+import useContextoMensajes from "../hooks/useContextoMensajes.js";
 
 const contextoProductos = createContext();
 const ProveedorProductos = ({children}) => {
+    const {
+        lanzarMensaje,
+        tiposDeMensaje
+    } = useContextoMensajes();
     const errorInicial = '';
     const nuevoProductoInicial = {
         nombre: "",
@@ -22,7 +27,6 @@ const ProveedorProductos = ({children}) => {
 
     const [productos, setProductos] = useState([]); //Estos son todos los productos principales que se hacen en la primera petición cuando se crea este Proovedor.
     const [productosFiltrados, setProductosFiltrados] = useState([]); //Estos son los productos que ha decidido filtrar el usuario, si los ha usado...
-    const [mensajeProductos, setMensajeProductos] = useState(errorInicial); // Mensaje de error para toda la sección productos.
     const [cargando, setCargando] = useState(false); //El control de cargado, cuanto tiempo está haciendose cualquiera de las peticiones que se han hecho aquí.
     const [nuevoProducto, setNuevoProducto] = useState(nuevoProductoInicial); //Estado que controla el nuevo producto que va a querer insertar el usuario.
 
@@ -33,7 +37,7 @@ const ProveedorProductos = ({children}) => {
             setProductos(productosAPI);
 
         } catch (error) {  
-            setMensajeProductos(error.message);
+            lanzarMensaje(error.message, tiposDeMensaje.error);
         } finally {
             setCargando(false);
         }
@@ -48,7 +52,7 @@ const ProveedorProductos = ({children}) => {
             }
             setProductosFiltrados(productosAPI);
         } catch (error) {
-            setMensajeProductos(error.message);
+            lanzarMensaje(error.message, tiposDeMensaje.error);
         } finally {
             setCargando(false);
         }
@@ -64,14 +68,10 @@ const ProveedorProductos = ({children}) => {
             const productosAPI = await ordenaProductosAPI(columna, orden);
             setProductos(productosAPI);
         } catch (error) {
-            setMensajeProductos(error.message);
+            lanzarMensaje(error.message, tiposDeMensaje.error);
         } finally {
             setCargando(false);
         }
-    }
-
-    const eliminarMensajeProductos = () => {
-        setMensajeProductos(errorInicial);
     }
 
     const cambiarEstadoNuevoProducto = (evento) => {
@@ -88,11 +88,10 @@ const ProveedorProductos = ({children}) => {
         setCargando(true);
         try {
             await insertarProductoAPI(nuevoProducto);
-            setMensajeProductos(`Producto ${nuevoProducto.nombre} creado correctamente.`);
+            lanzarMensaje(`Producto ${nuevoProducto.nombre} creado correctamente.`);
             cargarProductos();
         } catch (error) {
-            setMensajeProductos(error.message)
-            console.log(error)
+            lanzarMensaje(error.message, tiposDeMensaje.error)
         } finally {
             setCargando(false);
         }
@@ -103,10 +102,10 @@ const ProveedorProductos = ({children}) => {
         try {
             //Llamada a la API para eliminar el producto.
             await eliminarProductoAPI(id);
-            setMensajeProductos('Producto eliminado correctamente.');
+            lanzarMensaje('Producto eliminado correctamente');
             cargarProductos();
         } catch (error) {
-            setMensajeProductos(error.message);
+            lanzarMensaje(error.message, tiposDeMensaje.error);
         } finally {
             setCargando(false);
         } 
@@ -117,10 +116,10 @@ const ProveedorProductos = ({children}) => {
         try {
             //Llamada a la API para editar el producto.
             await editarProductoAPI(productoEditado);
-            setMensajeProductos('Producto editado correctamente.');
+            lanzarMensaje('Producto editado correctamente.');
             cargarProductos();
         } catch (error) {
-            setMensajeProductos(error.message);
+            lanzarMensaje(error.message, tiposDeMensaje.error);
         } finally {
             setCargando(false);
         }
@@ -134,8 +133,6 @@ const ProveedorProductos = ({children}) => {
     const datosAExportar = {
         productos,
         cargando,
-        mensajeProductos,
-        eliminarMensajeProductos,
         cargarProductos,
         productosFiltrados,
         filtrarProductos,

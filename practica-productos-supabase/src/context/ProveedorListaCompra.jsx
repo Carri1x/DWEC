@@ -1,9 +1,14 @@
 import { createContext, useEffect, useState } from "react"
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import useListaCompraAPI from "../hooks/useListaCompraAPI.js";
+import useContextoMensajes from "../hooks/useContextoMensajes.js";
 
 const contextoListaCompra = createContext();
 const ProveedorListaCompra = ({children}) => {
+    const {
+        lanzarMensaje,
+        tiposDeMensaje
+    } = useContextoMensajes();
     const {
         usuario,
         obtenerUsuario,
@@ -16,18 +21,16 @@ const ProveedorListaCompra = ({children}) => {
     } = useListaCompraAPI();
 
     const [listasCompra, setListasCompra] = useState('');
-    const [mensaje, setMensaje] = useState('');
-    const eliminarMensaje = () => {
-        setMensaje('')
-    }
 
     const cargarListasCompra = async() => {
+        console.log(usuario.id)
+        /*
         try {
             const listas = await traerListasAPI(usuario.id);
             setListasCompra(listas);
         } catch (error) {
-            setMensaje(`CargarListasCompra: ${error.message}`)
-        }
+            lanzarMensaje(`CargarListasCompra: ${error.message}`, tiposDeMensaje.error)
+        }*/
 
     }
 
@@ -37,7 +40,7 @@ const ProveedorListaCompra = ({children}) => {
             console.log(data);
             cargarListasCompra();
         } catch (error) {
-            setMensaje(`CrearListaCompra: ${error.message}`);
+            lanzarMensaje(`CrearListaCompra: ${error.message}`,tiposDeMensaje.error);
         }
     }
 
@@ -52,13 +55,14 @@ const ProveedorListaCompra = ({children}) => {
      * Tenemos que primero esperar que el usuario exista.
      */
     useEffect(() => {
-        cargarListasCompra();
+        //Si no hay usuario es porque no se ha logeado
+        if(usuario){
+            cargarListasCompra();
+        }
     },[usuario]);
 
     const cosasExportar = {
         cargando,
-        mensaje,
-        eliminarMensaje,
         listasCompra,
         crearListaCompra,
     }

@@ -1,24 +1,22 @@
 import { useState, useEffect } from "react";
 import './MensajeFlotante.css';
+import useContextoMensajes from "../hooks/useContextoMensajes";
 
-const MensajeFlotante = (props) => {
-    const {mensaje, estado, funcion} = props;
-    const maxProgreso = 3000;
-    const [progreso, setProgreso] = useState(maxProgreso);
+const MensajeFlotante = () => {
+    const {
+        mensaje,
+        tiempoActivo,
+        tipoMensaje,
+        quitarMensaje,
+    } = useContextoMensajes();
+    const [progreso, setProgreso] = useState(tiempoActivo);
     // Hacemos un intervalo para la barra progreso.
     // Se empieza a hacer cuando el componente se monta.
     useEffect(() => {
         const intervalo = setInterval(() => {
-            /*
-            Aquí me estaba funcionando mal porque usaba progreso (en vez de NUM) y cada vez me lo reseteaba a 3000 o no hacía bien el cálculo de la resta,
-                era algo parecido a lo asíncrono, hacía la operación cuando le daba la gana.
-            Lo que he descubierto es que si pasas por parámetro una variable coge el valor del estado (progreso en este caso).
-            Permíte de esta forma operar bien y que hagas la operación que necesites controladamente. 
-            */
             setProgreso( num => {
                 if(num <= 0){
                     clearInterval(intervalo);
-                    if(funcion){
                         /*
                             ¿Por qué hago esto? = setTimeout de la funcion que paso por props 
                             Cuando el componente llega al final o se desmonta, intenta ejecutar funcion().
@@ -28,9 +26,8 @@ const MensajeFlotante = (props) => {
                             en cuanto tengas un hueco libre (milisegundos después), ejecuta esta función".
                         */
                         setTimeout(()=>{
-                            funcion();
-                        },0);
-                    }
+                            quitarMensaje();
+                        },10);
                     return 0;
                 }
                 return num - 10;
@@ -46,9 +43,9 @@ const MensajeFlotante = (props) => {
     },[])
     return(
         <>
-            <div className={`mensaje-flotante ${estado}`}>
+            <div className={`mensaje-flotante tipo-${tipoMensaje}`}>
                 {mensaje}
-                <progress min={0} max={maxProgreso} value={progreso}></progress>
+                <progress min={0} max={tiempoActivo} value={progreso}></progress>
             </div>
         </>
     );
