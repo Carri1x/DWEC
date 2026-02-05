@@ -39,8 +39,8 @@ const useListaCompraAPI = () => {
                 supabaseConexion
                 .from('ListasCompra')
                 .insert([
-                    {nombre: nombre},
-                    {id_propietario: idPropietario}
+                    {nombre: nombre,
+                    id_propietario: idPropietario}
                 ])
                 .select()
             );

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useRef } from "react";
 import MensajeAceptarCancelar from "../shared/MensajeAceptarCancelar";
 import MensajeFlotante from "../shared/MensajeFlotante";
 
@@ -35,21 +35,21 @@ const ProveedorMensajes = ({children}) => {
         });
 
         return new Promise((resolver) => {
-            // Guardamos la función 'resolve' en la referencia para llamarla luego
+            // Guardamos la función 'resolve' en la referencia para llamarla luego.
             resolverConfirmacion.current = resolver;
         });
     };
     /**
-     * Función interna que llaman los botones del modal
+     * Función interna que llaman los botones del modal.
      */
     const manejarRespuesta = (respuesta) => {
         // 1. Cerramos el modal
         setMensajeConfirmacion({ ...mensajeConfirmacion, activo: false });
         
-        // 2. Si existe una promesa pendiente, la resolvemos con true o false
+        // 2. Si existe una promesa pendiente, la resolvemos con true o false.
         if (resolverConfirmacion.current) {
             resolverConfirmacion.current(respuesta);
-            resolverConfirmacion.current = null; // Limpiamos
+            resolverConfirmacion.current = null; // Limpiamos.
         }
     };
 

@@ -13,7 +13,6 @@ const CrearProducto = () => {
     const {
         cambiarEstadoNuevoProducto,
         crearProducto,
-        cargarProductos
     } = useContextoProductos();
 
     const [erroresForm, setErroresForm] = useState({});

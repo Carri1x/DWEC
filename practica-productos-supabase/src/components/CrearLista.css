@@ -1,0 +1,42 @@
+.oculto{
+    display: none;
+}
+
+.enunciado-crear-lista {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    margin-bottom: 5px;
+}
+
+.enunciado-crear-lista h4{
+    margin: 0;
+    user-select: none;
+}
+.enunciado-crear-lista img{
+    height: 17px;
+    width: 17px;
+    padding-top: 2px;
+    margin-left: 10px;
+}
+
+.rotacion-noventa {
+    transform: rotateZ(90deg);
+    transition: transform 0.2s ease
+}
+
+.funcion-crear-lista section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.funcion-crear-lista section img {
+    width: 25px;
+    margin-left: 10px;
+}
+
+.funcion-crear-lista section input{
+    padding: 10px 10px;
+}

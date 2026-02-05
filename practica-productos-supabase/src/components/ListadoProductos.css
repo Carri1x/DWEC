@@ -1,7 +1,14 @@
+.listado-productos-container {
+    display: grid;
+    grid-template-columns: 400px auto;
+    grid-template-rows: auto;
+    min-width: 1000px;
+}
+
 /* Contenedor principal */
 .listado-container {
     padding: 20px;
-    padding-bottom: 100px;  /*Espacio para que el resumen no tape productos */
+    padding-bottom: 100px;  /*Espacio para que el resumen no tape productos */;
 }
 
 /* La cuadrícula de productos */
@@ -9,6 +16,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
     gap: 20px;
+    max-width: 1200px;
+    justify-self: center;
 }
 
 /* El div de información de abajo */
@@ -55,4 +64,11 @@
 }
 .formulario-filtrado button{
     margin: 0;
+}
+
+.controles-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }

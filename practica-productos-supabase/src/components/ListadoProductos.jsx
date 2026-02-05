@@ -6,11 +6,13 @@ import Cargando from "../shared/Cargando.jsx";
 import FiltrarProductos from './FiltrarProductos.jsx';
 import OrdenarProductos from "./OrdenarProductos.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
-import MensajeAceptarCancelar from "../shared/MensajeAceptarCancelar.jsx";
 import { useNavigate } from "react-router-dom";
+import useContextoMensajes from "../hooks/useContextoMensajes.js";
+import ListasCompra from "./ListasCompra.jsx";
 
 const ListadoProductos = () => {
   const { sesionIniciada } = useContextoSesion();
+  const { confirmarAccion } = useContextoMensajes();
   const {
     productos,
     cargando,
@@ -19,8 +21,6 @@ const ListadoProductos = () => {
   } = useContextoProductos();
   const [totalProductos, setTotalProductos] = useState(0);
   const [costeTotal, setCosteTotal] = useState(0);
-  const [solicitudBorrarProducto, setSolicitudBorrarProducto] = useState(false);
-  const [productoAEliminar, setProductoAEliminar] = useState(null);
   const navegar = useNavigate()
 
   /** -------------------------------------- EFECT CALCULO TOTAL PRODUCTOS Y COSTE TOTAL --------------------------------------
@@ -38,85 +38,79 @@ const ListadoProductos = () => {
   }, [productos, productosFiltrados]); // ------------------------------------ END EFECT CALCULO TOTAL PRODUCTOS Y COSTE TOTAL ------------------------------------
 
   return (
-    <div className="listado-container" onClick={(evento) => {
-      if (evento.target.tagName !== 'BUTTON') return;
-      const idProducto = evento.target.dataset.id;
+    <div className="listado-productos-container">
+      {sesionIniciada && <ListasCompra/>}
 
-      if (evento.target.dataset.tipo === 'editar-producto') { //--------------------------------- APARTADO EDITAR PRODUCTO -----------------------------------
-        navegar(`/sup/editar-producto/${idProducto}`); //Navegamos a la página de editar producto.
-      } //--------------------------------------------------------------------------------------- END APARTADO EDITAR PRODUCTO -------------------------------
-      //------------------------------------------------------------------------------------------------------------------------------------------------------
-      if (evento.target.dataset.tipo === 'eliminar-producto') { //--------------------------------- APARTADO ELIMINAR PRODUCTO -------------------------------
-        const producto = productos.find((prod) => prod.id.toString() === idProducto);
-        setProductoAEliminar(producto); //ES  EN EL MENSAJE ACPETAR/CANCELAR DONDE SE LANZA LA FUNCIÓN ELIMINAR EL PRODUCTO.
-        setSolicitudBorrarProducto(true);
-      } //---------------------------------------------------------------------------------------- END APARTADO ELIMINAR PRODUCTO ------------------------------
+      <div className="listado-container" onClick={async (evento) => {
+        if (evento.target.tagName !== 'BUTTON') return;
+        const idProducto = evento.target.dataset.id;
 
-    }}>
-      {solicitudBorrarProducto && //----------------- MENSAJE ACEPTAR/CANCELAR BORRAR PRODUCTO -------------------------------
-        <MensajeAceptarCancelar mensaje={`¿Quieres eliminar ${productoAEliminar?.nombre} de la lista de productos?`}
-          botonIzq={async() => {
-            //Comprobamos que productoAEliminar no es null.
-            if (productoAEliminar) {
-              await eliminarProducto(productoAEliminar.id);
-            }
-            //Una vez eliminado, cerramos el mensaje de aceptar/cancelar.
-            setSolicitudBorrarProducto(false);
-          }}
-          botonDer={() => {
-            //Si no quiere el usuario eliminar el producto, simplemente cerramos el mensaje de aceptar/cancelar.
-            setSolicitudBorrarProducto(false)
+        if (evento.target.dataset.tipo === 'editar-producto') { //--------------------------------- APARTADO EDITAR PRODUCTO -----------------------------------
+          navegar(`/sup/editar-producto/${idProducto}`); //Navegamos a la página de editar producto.
+        } //--------------------------------------------------------------------------------------- END APARTADO EDITAR PRODUCTO -------------------------------
+        //------------------------------------------------------------------------------------------------------------------------------------------------------
+        if (evento.target.dataset.tipo === 'eliminar-producto') { //--------------------------------- APARTADO ELIMINAR PRODUCTO -------------------------------
+          const producto = productos.find((prod) => prod.id.toString() === idProducto);
+
+          const usuarioAcepta = await confirmarAccion(`¿Quieres eliminar ${producto?.nombre} de la lista de productos?`);
+
+          if (usuarioAcepta) {
+            await eliminarProducto(producto.id)
           }
-          } /> /* ------------------------------------ END MENSAJE ACEPTAR/CANCELAR BORRAR PRODUCTO ------------------------------ */}
-      {sesionIniciada && (
-        <div className="controles-container">
-          <FiltrarProductos />
-          <OrdenarProductos />
-        </div>)
-      }
-      {
-        // -------------------------------- LISTADO PRODUCTOS --------------------------------
-        //Si hay productos filtrados los enseñamos. FILTRADO PRODUCTOS.
-        productosFiltrados.length > 0 ? (
-          <div className="productos-grid">
-            {productosFiltrados.map((producto) => {
-              return <Producto key={producto.id} value={producto} />;
-            })}
-          </div>
-        ) : //En caso de que no haya ningún filtro, enseñamos todos los productos. NO HAY PRODUCTOS FILTRADOS.
-          //PRIMERO COMPROBAMOS SI ESTÁ CARGANDO...
-          cargando ? (
-            <Cargando contexto="productos..." /> //Si está cargando, muestro el componente de cargando.
-          ) : (
-            //Si no, muestro los productos.
+
+        } //---------------------------------------------------------------------------------------- END APARTADO ELIMINAR PRODUCTO ------------------------------
+
+      }}>
+        {sesionIniciada && (
+          <div className="controles-container">
+            <FiltrarProductos />
+            <OrdenarProductos />
+          </div>)
+        }
+        {
+          // -------------------------------- LISTADO PRODUCTOS --------------------------------
+          //Si hay productos filtrados los enseñamos. FILTRADO PRODUCTOS.
+          productosFiltrados.length > 0 ? (
             <div className="productos-grid">
-              {
-                //Si hay productos, los mapeo, si no muestro mensaje de que no hay productos...
-                productos && productos.length > 0 ? (
-                  productos.map((producto) => (
-                    <Producto key={producto.id} value={producto} />
-                  ))
-                ) : (
-                  <p>No hay productos guardados aún.</p>
-                )
-              }
+              {productosFiltrados.map((producto) => {
+                return <Producto key={producto.id} value={producto} />;
+              })}
             </div>
-          )
+          ) : //En caso de que no haya ningún filtro, enseñamos todos los productos. NO HAY PRODUCTOS FILTRADOS.
+            //PRIMERO COMPROBAMOS SI ESTÁ CARGANDO...
+            cargando ? (
+              <Cargando contexto="productos..." /> //Si está cargando, muestro el componente de cargando.
+            ) : (
+              //Si no, muestro los productos.
+              <div className="productos-grid">
+                {
+                  //Si hay productos, los mapeo, si no muestro mensaje de que no hay productos...
+                  productos && productos.length > 0 ? (
+                    productos.map((producto) => (
+                      <Producto key={producto.id} value={producto} />
+                    ))
+                  ) : (
+                    <p>No hay productos guardados aún.</p>
+                  )
+                }
+              </div>
+            )
       /* -----------------------------------END LISTADO PRODUCTOS ----------------------------------- */}
 
-      {/* Div de información productos abajo del todo. */}
-      {productos && productos.length > 0 && (
-        <div className="resumen-fijo">
-          <div className="resumen-item">
-            <span>Total Productos</span>
-            <strong>{totalProductos}</strong>
+        {/* Div de información productos abajo del todo. */}
+        {productos && productos.length > 0 && (
+          <div className="resumen-fijo">
+            <div className="resumen-item">
+              <span>Total Productos</span>
+              <strong>{totalProductos}</strong>
+            </div>
+            <div className="resumen-item">
+              <span>Precio medio</span>
+              <strong>{costeTotal.toFixed(2)}€</strong>
+            </div>
           </div>
-          <div className="resumen-item">
-            <span>Precio medio</span>
-            <strong>{costeTotal.toFixed(2)}€</strong>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

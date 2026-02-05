@@ -23,7 +23,6 @@ const ProveedorListaCompra = ({children}) => {
     const [listasCompra, setListasCompra] = useState('');
 
     const cargarListasCompra = async() => {
-        console.log(usuario.id)
         /*
         try {
             const listas = await traerListasAPI(usuario.id);
@@ -36,6 +35,7 @@ const ProveedorListaCompra = ({children}) => {
 
     const crearListaCompra = async(nombre = 'Nueva lista') => {
         try {
+            console.log("Si está entrando en crearListaCompra")
             const data = await crearListaAPI(nombre, usuario.id);
             console.log(data);
             cargarListasCompra();
@@ -48,18 +48,11 @@ const ProveedorListaCompra = ({children}) => {
         //Si no hay usuario lo obtenemos para poder acceder a sus listas.
         if(!usuario) {
             obtenerUsuario();
-        }
-    }, []);
-    /**
-     * Cargamos las listas de la compra del usuario en cuestión.
-     * Tenemos que primero esperar que el usuario exista.
-     */
-    useEffect(() => {
-        //Si no hay usuario es porque no se ha logeado
-        if(usuario){
+        } else {
             cargarListasCompra();
         }
-    },[usuario]);
+    }, []);
+    
 
     const cosasExportar = {
         cargando,

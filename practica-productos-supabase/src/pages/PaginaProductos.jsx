@@ -15,7 +15,6 @@ const PaginaProductos = () => {
           funcion={eliminarMensajeProductos}
         />
       )}
-      { sesionIniciada && <ListasCompra />}
       <Outlet />
     </>
   );

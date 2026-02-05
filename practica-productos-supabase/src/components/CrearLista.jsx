@@ -1,21 +1,19 @@
 import "./CrearLista.css";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import imagenMas from "../assets/mas.png";
+import flechaBlanca from "../assets/flecha-blanca.png";
 import useContextoListaCompra from "../hooks/useContextoListaCompra";
 
 const CrearLista = () => {
-  const sectionRef = useRef(null);
   const [nombreLista, setNombreLista] = useState('');
+  const [estaAbierto, setEstaAbierto] = useState(false);
 
   const {
     crearListaCompra
   } = useContextoListaCompra();
-  
-  /**
-   * Enseñamos la sección , un input para el nombre y un botón de añadir, para crear lista y así que ocupe en este caso, menos espacio.
-   */
+
   const enseñarOcultarSection = () => {
-    sectionRef.current.classList.toggle('ocultar')
+    setEstaAbierto(!estaAbierto);
   }
 
   /**
@@ -24,36 +22,42 @@ const CrearLista = () => {
    * @param {Event} evento 
    */
   const cambiarEstado = (evento) => {
-    const {value} = evento.target;
+    const { value } = evento.target;
     setNombreLista(value);
   }
 
   return (
     <div className="funcion-crear-lista" onClick={(evento) => {
-      if(evento.target.tagName === 'H4'){
+      if (evento.target.closest('.enunciado-crear-lista')) {
         enseñarOcultarSection();
       }
-      if(evento.target.tagName === 'BUTTON'){
+      if (evento.target.id === 'crear-lista') {
         //CREAMOS LA LISTA!!
-        if(nombreLista) {
+        if (nombreLista) {
+          console.log("object")
           crearListaCompra(nombreLista);
         } else {
+          console.log(" 2")
           crearListaCompra();
         }
       }
     }}>
-      <h4>Crear nueva lista</h4>
-      <section ref={sectionRef}>
-        <input
-          type="text"
-          name="nueva-lista"
-          placeholder="Nombre de tu nueva lista"
-          onChange={cambiarEstado}
-        />
-        <button>
-          <img src={imagenMas} alt="Icono de añadir" />
-        </button>
-      </section>
+      <h2>Listas de la compra</h2>
+      <div className="enunciado-crear-lista" >
+        <h4>Crear nueva lista</h4>
+        <img src={flechaBlanca} className={estaAbierto ? 'rotacion-noventa' : ''} alt="flecha blanca" />
+      </div>
+      {estaAbierto &&
+        <section>
+          <input
+            type="text"
+            name="nueva-lista"
+            placeholder="Nombre de tu nueva lista"
+            onChange={cambiarEstado}
+          />
+          <img id="crear-lista" src={imagenMas} alt="Icono de añadir" />
+        </section>
+      }
     </div>
   );
 };
