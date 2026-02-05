@@ -26,17 +26,17 @@
     transition: transform 0.2s ease
 }
 
-.funcion-crear-lista section{
+.funcion-crear-lista form{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.funcion-crear-lista section img {
+.funcion-crear-lista form img {
     width: 25px;
     margin-left: 10px;
 }
 
-.funcion-crear-lista section input{
+.funcion-crear-lista form input{
     padding: 10px 10px;
 }

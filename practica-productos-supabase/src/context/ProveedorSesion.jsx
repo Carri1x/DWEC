@@ -82,21 +82,8 @@ const ProveedorSesion = ({ children }) => {
         }
     }
 
-    const obtenerUsuario = async() => {
-        try {
-            const {data, error} = await supabaseConexion.auth.getUser();
-            if(error) {
-                throw error;
-            }
-            setUsuario(data.user);
-            quitarMensaje();
-        } catch (error) {
-            lanzarMensaje(`Error al obtener el usuario: ${error.message}`, tiposDeMensaje.error);
-        }
-    }
 
     useEffect(() => {
-
         try {
             const suscripcion = supabaseConexion.auth.onAuthStateChange( 
                 (event, session) => {
@@ -104,6 +91,7 @@ const ProveedorSesion = ({ children }) => {
                         //NAVEGAREMOS AL LISTADO DE LA COMPRA
                         navegar('/sup/listado-productos')
                         setSesionIniciada(true);
+                        setUsuario(session.user)
                     } else {
                         navegar('/');
                         setSesionIniciada(false);
@@ -120,7 +108,6 @@ const ProveedorSesion = ({ children }) => {
         registrar,
         logear,
         cerrarSesion,
-        obtenerUsuario,
         sesionIniciada,
         usuario,
     }

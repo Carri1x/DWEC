@@ -1,0 +1,24 @@
+.container-lista{
+    width: 100%;
+    height: fit-content;
+    border: 1px rgba(255, 255, 255, 0.514) solid;
+    border-radius: 10px;
+}
+
+.container-lista .lista-nombre{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: fit-content;
+}
+
+.container-lista .lista-nombre p{
+
+    margin: 5px 0 2px 20px;
+}
+
+.container-lista .lista-nombre img{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}

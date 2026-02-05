@@ -61,6 +61,7 @@ const ListadoProductos = () => {
         } //---------------------------------------------------------------------------------------- END APARTADO ELIMINAR PRODUCTO ------------------------------
 
       }}>
+        <h1>Productos</h1>
         {sesionIniciada && (
           <div className="controles-container">
             <FiltrarProductos />

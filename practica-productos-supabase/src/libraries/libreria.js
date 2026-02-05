@@ -12,3 +12,15 @@ export const filtrarObjeto = (objeto, caracteristicaParaFiltrar) => {
     return false;
 }
 
+export const formatearFechaHoraSupabase = (fechaSupabase) => {
+    /*
+        El formato de la fecha:
+        2026-02-05T17:18:30.069755+00:00
+    */
+    let fecha = fechaSupabase.split('T')[0]; // 'FECHA'T'HORA'
+    fecha = fecha.split('-'); //[YYYY,MM,DD]
+    fecha = `${fecha[2]}/${fecha[1]}/${fecha[0]}`; //DD/MM/YYYY
+    const hora = fechaSupabase.split('T')[1].split('.')[0];
+
+    return `${fecha} a las ${hora}`;
+}

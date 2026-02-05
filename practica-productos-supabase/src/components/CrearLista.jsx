@@ -1,16 +1,17 @@
 import "./CrearLista.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import imagenMas from "../assets/mas.png";
 import flechaBlanca from "../assets/flecha-blanca.png";
 import useContextoListaCompra from "../hooks/useContextoListaCompra";
 
 const CrearLista = () => {
-  const [nombreLista, setNombreLista] = useState('');
-  const [estaAbierto, setEstaAbierto] = useState(false);
-
   const {
     crearListaCompra
   } = useContextoListaCompra();
+
+  const [nombreLista, setNombreLista] = useState('');
+  const [estaAbierto, setEstaAbierto] = useState(false);
+  const formRef = useRef();
 
   const enseñarOcultarSection = () => {
     setEstaAbierto(!estaAbierto);
@@ -28,27 +29,25 @@ const CrearLista = () => {
 
   return (
     <div className="funcion-crear-lista" onClick={(evento) => {
+      evento.preventDefault();
       if (evento.target.closest('.enunciado-crear-lista')) {
         enseñarOcultarSection();
       }
       if (evento.target.id === 'crear-lista') {
-        //CREAMOS LA LISTA!!
         if (nombreLista) {
-          console.log("object")
           crearListaCompra(nombreLista);
         } else {
-          console.log(" 2")
           crearListaCompra();
         }
+        formRef.current.reset();
       }
     }}>
-      <h2>Listas de la compra</h2>
       <div className="enunciado-crear-lista" >
         <h4>Crear nueva lista</h4>
         <img src={flechaBlanca} className={estaAbierto ? 'rotacion-noventa' : ''} alt="flecha blanca" />
       </div>
       {estaAbierto &&
-        <section>
+        <form ref={formRef}>
           <input
             type="text"
             name="nueva-lista"
@@ -56,7 +55,7 @@ const CrearLista = () => {
             onChange={cambiarEstado}
           />
           <img id="crear-lista" src={imagenMas} alt="Icono de añadir" />
-        </section>
+        </form>
       }
     </div>
   );

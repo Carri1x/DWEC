@@ -10,8 +10,8 @@ const ProveedorListaCompra = ({children}) => {
         tiposDeMensaje
     } = useContextoMensajes();
     const {
+        sesionIniciada,
         usuario,
-        obtenerUsuario,
     } = useContextoSesion();
 
     const {
@@ -20,38 +20,33 @@ const ProveedorListaCompra = ({children}) => {
         crearListaAPI,
     } = useListaCompraAPI();
 
-    const [listasCompra, setListasCompra] = useState('');
+    const [listasCompra, setListasCompra] = useState([]);
 
     const cargarListasCompra = async() => {
-        /*
         try {
             const listas = await traerListasAPI(usuario.id);
+            console.log(usuario.id)
             setListasCompra(listas);
         } catch (error) {
             lanzarMensaje(`CargarListasCompra: ${error.message}`, tiposDeMensaje.error)
-        }*/
-
+        }
     }
 
     const crearListaCompra = async(nombre = 'Nueva lista') => {
         try {
-            console.log("Si está entrando en crearListaCompra")
             const data = await crearListaAPI(nombre, usuario.id);
-            console.log(data);
             cargarListasCompra();
+            lanzarMensaje(`Lista '${nombre}' creada correctamente.`, tiposDeMensaje.ok);
         } catch (error) {
             lanzarMensaje(`CrearListaCompra: ${error.message}`,tiposDeMensaje.error);
         }
     }
 
     useEffect(() => {
-        //Si no hay usuario lo obtenemos para poder acceder a sus listas.
-        if(!usuario) {
-            obtenerUsuario();
-        } else {
+        if(sesionIniciada && usuario.id){
             cargarListasCompra();
         }
-    }, []);
+    }, [sesionIniciada, usuario]); //Si la sesión está iniciada cargamos las listas de la compra.
     
 
     const cosasExportar = {
