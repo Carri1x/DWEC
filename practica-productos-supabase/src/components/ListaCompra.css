@@ -14,7 +14,7 @@
     transform:translateX(8px);
 }
 
-.container-lista:active {
+.animacion-clic{
     animation: reboteClic 1s ease;
 }
 

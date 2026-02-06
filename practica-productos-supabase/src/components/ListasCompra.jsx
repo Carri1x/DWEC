@@ -3,11 +3,12 @@ import useContextoListaCompra from "../hooks/useContextoListaCompra.js";
 import ListaCompra from "../components/ListaCompra.jsx";
 import CrearLista from "./CrearLista.jsx";
 import { useNavigate } from "react-router-dom";
-
 const ListasCompra = () => {
-  const { listasCompra } = useContextoListaCompra();
+  const {
+    listasCompra,
+    borrarLista,
+   } = useContextoListaCompra();
   const navegar = useNavigate();
-  const [animar, setAnimar] = useState(false);
 
   return (
     <div
@@ -15,7 +16,6 @@ const ListasCompra = () => {
       onClick={(evento) => {
         //EVENTO que nos llevará a VISUALIZAR LA LISTA que se le haya clicado.
         if (evento.target.closest(".container-lista")) {
-          setAnimar(true);
           const idLista = evento.target.closest(".container-lista").id;
           navegar(`/sup/lyp/lista-compra/${idLista}`);
         }
@@ -25,14 +25,13 @@ const ListasCompra = () => {
           borrarLista(idLista);
         }
       }}
-      onAnimationEnd={() }
     >
       <h2>Listas de la compra</h2>
       <CrearLista />
-      <div className="container-listas">
+      <div className={`container-listas`} >
         {listasCompra && listasCompra.length > 0 ? (
           listasCompra.map((lista) => {
-            return <ListaCompra key={lista.id} value={lista} />;
+            return <ListaCompra key={lista.id} value={lista}/>;
           })
         ) : (
           <p>No hay ninguna lista de la compra creada.</p>

@@ -65,11 +65,26 @@ const useListaCompraAPI = () => {
     }
 
 
+    const traerProductosDeLista = async(idLista) => {
+        try {
+            const productos = await peticion(
+                supabaseConexion
+                .from('ListasCompra_Productos')
+                .select('*')
+                .eq('id_ListasCompra', idLista)
+            )
+            return productos;
+        } catch (error) {
+            throw error;            
+        }
+    }
+
     return {
         cargando,
         traerListasAPI,
         traerListaPorIdAPI,
         crearListaAPI,
+        traerProductosDeLista,
     }
 }
 

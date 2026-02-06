@@ -7,7 +7,8 @@ const contextoListaCompra = createContext();
 const ProveedorListaCompra = ({children}) => {
     const {
         lanzarMensaje,
-        tiposDeMensaje
+        tiposDeMensaje,
+        confirmarAccion,
     } = useContextoMensajes();
     const {
         sesionIniciada,
@@ -19,6 +20,7 @@ const ProveedorListaCompra = ({children}) => {
         traerListasAPI,
         traerListaPorIdAPI,
         crearListaAPI,
+        traerProductosDeLista,
     } = useListaCompraAPI();
 
     const [listasCompra, setListasCompra] = useState([]);
@@ -35,7 +37,9 @@ const ProveedorListaCompra = ({children}) => {
 
     const cargarListaPorID = async(idLista) =>{
         try {
-            const lista = await traerListaPorIdAPI(idLista);
+            let lista = await traerListaPorIdAPI(idLista);
+            const productos = await traerProductosDeLista(idLista);
+            lista = {...lista, productos: [...productos]};
             setLista(lista);
         } catch (error) {
             lanzarMensaje(`CargarListaPorID: ${error.message}`, tiposDeMensaje.error);
@@ -51,6 +55,10 @@ const ProveedorListaCompra = ({children}) => {
             lanzarMensaje(`CrearListaCompra: ${error.message}`,tiposDeMensaje.error);
         }
     }
+    
+    const borrarLista = async() => {
+        const confirmado = await confirmarAccion('Aun no se ha hecho esta funcionalidad BORRAR LISTA');
+    }
 
     useEffect(() => {
         if(sesionIniciada && usuario.id){
@@ -65,6 +73,7 @@ const ProveedorListaCompra = ({children}) => {
         listasCompra,
         crearListaCompra,
         cargarListaPorID,
+        borrarLista,
     }
     
     return (

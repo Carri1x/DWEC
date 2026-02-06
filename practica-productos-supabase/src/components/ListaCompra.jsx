@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import './ListaCompra.css';
+import { useState } from "react";
+import papelera from '../assets/papelera.png';
+import {formatearFechaHoraSupabase} from '../libraries/libreria.js';
 
 const ListaCompra = (props) => {
+    const [animar, setAnimar] = useState(false);
     const {id, nombre, created_at} = props.value;
 
     return (
         <div 
             id={id} 
-            className={`container-lista ${animar ? 'animacion-clic' : ''}`} 
-            /* Cuando la animación termina, reseteamos el estado para poder repetirla */
+            className={`container-lista ${animar ? "animacion-clic": ""}`} 
+            onClick={() => setAnimar(true)}
             onAnimationEnd={() => setAnimar(false)}
         >
             <div className="lista-nombre">
