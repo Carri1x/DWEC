@@ -33,6 +33,20 @@ const useListaCompraAPI = () => {
         } 
     }
 
+    const traerListaPorIdAPI = async(idLista) => {
+        try {
+            const listaAPI = await peticion(
+                supabaseConexion
+                .from('ListasCompra')
+                .select('*')
+                .eq('id', idLista)
+            );
+            return listaAPI[0];
+        } catch (error) {
+            throw error;
+        }
+    }
+
     const crearListaAPI = async(nombre, idPropietario) => {
         try {
             const data = await peticion(
@@ -51,10 +65,10 @@ const useListaCompraAPI = () => {
     }
 
 
-
     return {
         cargando,
         traerListasAPI,
+        traerListaPorIdAPI,
         crearListaAPI,
     }
 }

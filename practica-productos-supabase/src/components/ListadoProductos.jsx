@@ -8,7 +8,6 @@ import OrdenarProductos from "./OrdenarProductos.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import { useNavigate } from "react-router-dom";
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
-import ListasCompra from "./ListasCompra.jsx";
 
 const ListadoProductos = () => {
   const { sesionIniciada } = useContextoSesion();
@@ -38,9 +37,6 @@ const ListadoProductos = () => {
   }, [productos, productosFiltrados]); // ------------------------------------ END EFECT CALCULO TOTAL PRODUCTOS Y COSTE TOTAL ------------------------------------
 
   return (
-    <div className="listado-productos-container">
-      {sesionIniciada && <ListasCompra/>}
-
       <div className="listado-container" onClick={async (evento) => {
         if (evento.target.tagName !== 'BUTTON') return;
         const idProducto = evento.target.dataset.id;
@@ -112,7 +108,6 @@ const ListadoProductos = () => {
           </div>
         )}
       </div>
-    </div>
   );
 };
 

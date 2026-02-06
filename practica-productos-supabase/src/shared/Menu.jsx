@@ -9,11 +9,11 @@ const Menu = () => {
     return (
         <div className='contenedor-menu'>
             <Link to={'/'}>Inicio</Link>
-            <Link to={'/sup/listado-productos'}>Listado Productos</Link> 
+            <Link to={'/sup/lyp/listado-productos'}>Listado Productos</Link> 
             { sesionIniciada && 
                 <>
                     <Link to={'/sup/crear-producto'}>Crear Producto</Link>
-                    <Link to={'/sup/listas-compra'}>Lista Compra</Link>
+                    <Link to={'/sup/lyp/listas-compra'}>Lista Compra</Link>
                 </>
             }
         </div>

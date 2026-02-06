@@ -17,18 +17,28 @@ const ProveedorListaCompra = ({children}) => {
     const {
         cargando,
         traerListasAPI,
+        traerListaPorIdAPI,
         crearListaAPI,
     } = useListaCompraAPI();
 
     const [listasCompra, setListasCompra] = useState([]);
+    const [lista, setLista] = useState({});
 
     const cargarListasCompra = async() => {
         try {
             const listas = await traerListasAPI(usuario.id);
-            console.log(usuario.id)
             setListasCompra(listas);
         } catch (error) {
             lanzarMensaje(`CargarListasCompra: ${error.message}`, tiposDeMensaje.error)
+        }
+    }
+
+    const cargarListaPorID = async(idLista) =>{
+        try {
+            const lista = await traerListaPorIdAPI(idLista);
+            setLista(lista);
+        } catch (error) {
+            lanzarMensaje(`CargarListaPorID: ${error.message}`, tiposDeMensaje.error);
         }
     }
 
@@ -51,8 +61,10 @@ const ProveedorListaCompra = ({children}) => {
 
     const cosasExportar = {
         cargando,
+        lista,
         listasCompra,
         crearListaCompra,
+        cargarListaPorID,
     }
     
     return (

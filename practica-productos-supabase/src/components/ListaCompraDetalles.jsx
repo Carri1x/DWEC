@@ -1,11 +1,21 @@
 import { useParams } from "react-router-dom";
+import useContextoListaCompra from "../hooks/useContextoListaCompra.js";
+import { useEffect } from "react";
 
 const ListaCompraDetalles = () => {
     const {idLista} = useParams();
-    //Aquí buscarmemos el id (luego la información) de cada producto y su cantidad en esa lista.
+    const { 
+        lista,
+        cargarListaPorID
+    } = useContextoListaCompra();
+
+    useEffect(() => {
+        cargarListaPorID(idLista);
+    }, [idLista])
 
     return (
         <>
+            <p>{lista.nombre}</p>  
         </>
     )
 }

@@ -40,6 +40,7 @@ const CrearLista = () => {
           crearListaCompra();
         }
         formRef.current.reset();
+        setEstaAbierto(false);
       }
     }}>
       <div className="enunciado-crear-lista" >
