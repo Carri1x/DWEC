@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react"
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import useListaCompraAPI from "../hooks/useListaCompraAPI.js";
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
+import useContextoProductos from "../hooks/useContextoProductos.js";
 
 const contextoListaCompra = createContext();
 const ProveedorListaCompra = ({children}) => {
@@ -20,8 +21,14 @@ const ProveedorListaCompra = ({children}) => {
         traerListasAPI,
         traerListaPorIdAPI,
         crearListaAPI,
-        traerProductosDeLista,
+        traerProductosDeListaAPI,
+        añadirProductoAPI,
+        actualizarProductoCantidadAPI,
     } = useListaCompraAPI();
+
+    const {
+        cargarProductoPorID,
+    } = useContextoProductos();
 
     const [listasCompra, setListasCompra] = useState([]);
     const [lista, setLista] = useState({});
@@ -38,7 +45,17 @@ const ProveedorListaCompra = ({children}) => {
     const cargarListaPorID = async(idLista) =>{
         try {
             let lista = await traerListaPorIdAPI(idLista);
-            const productos = await traerProductosDeLista(idLista);
+            let refListaProducto = await traerProductosDeListaAPI(idLista);
+            let productos = refListaProducto.map( async(ref) => {
+                const producto = await cargarProductoPorID(ref.id_Producto);
+                return {
+                    ...producto,
+                    cantidad: ref.cantidad,
+                } 
+            });    
+            productos = await Promise.allSettled(productos);
+            productos = productos.map(p => p.value);
+
             lista = {...lista, productos: [...productos]};
             setLista(lista);
         } catch (error) {
@@ -53,6 +70,25 @@ const ProveedorListaCompra = ({children}) => {
             lanzarMensaje(`Lista '${nombre}' creada correctamente.`, tiposDeMensaje.ok);
         } catch (error) {
             lanzarMensaje(`CrearListaCompra: ${error.message}`,tiposDeMensaje.error);
+        }
+    }
+
+    const añadirProducto = async(idLista, idProducto) => {
+        try {
+            const data = await añadirProductoAPI(idLista, idProducto);
+            cargarListaPorID(idLista);
+            return data;
+        } catch (error) {
+            lanzarMensaje(`AñadirProducto: ${error.message}`, tiposDeMensaje.error)
+        }
+    }
+
+    const actualizarProductoCantidad = async(idLista, idProducto, cantidad) => {
+        try {
+            const data = await actualizarProductoCantidadAPI(idLista, idProducto, cantidad);
+            cargarListaPorID(idLista);
+        } catch (error) {
+            lanzarMensaje(`ActualizarProductoCantidad: ${error.message}`, tiposDeMensaje.error);
         }
     }
     
@@ -74,6 +110,8 @@ const ProveedorListaCompra = ({children}) => {
         crearListaCompra,
         cargarListaPorID,
         borrarLista,
+        añadirProducto,
+        actualizarProductoCantidad
     }
     
     return (

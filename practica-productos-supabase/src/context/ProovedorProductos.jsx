@@ -23,6 +23,7 @@ const ProveedorProductos = ({children}) => {
         insertarProductoAPI,
         eliminarProductoAPI,
         editarProductoAPI,
+        traerProductoPorIdAPI,
     } = useProductosAPI();
 
     const [productos, setProductos] = useState([]); //Estos son todos los productos principales que se hacen en la primera petición cuando se crea este Proovedor.
@@ -38,6 +39,18 @@ const ProveedorProductos = ({children}) => {
 
         } catch (error) {  
             lanzarMensaje(error.message, tiposDeMensaje.error);
+        } finally {
+            setCargando(false);
+        }
+    }
+
+    const cargarProductoPorID = async(idProducto) => {
+        setCargando(true);
+        try {
+            const productoAPI = await traerProductoPorIdAPI(idProducto);
+            return productoAPI;
+        } catch (error) {
+            lanzarMensaje(`CargarProductoPorID: ${error.message}`, tiposDeMensaje.error);
         } finally {
             setCargando(false);
         }
@@ -142,6 +155,7 @@ const ProveedorProductos = ({children}) => {
         crearProducto,
         eliminarProducto,
         editarProducto,
+        cargarProductoPorID,
     }
 
     return (

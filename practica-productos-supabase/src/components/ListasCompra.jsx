@@ -28,7 +28,7 @@ const ListasCompra = () => {
     >
       <h2>Listas de la compra</h2>
       <CrearLista />
-      <div className={`container-listas`} >
+      <div className='container-listas' >
         {listasCompra && listasCompra.length > 0 ? (
           listasCompra.map((lista) => {
             return <ListaCompra key={lista.id} value={lista}/>;

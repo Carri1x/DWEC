@@ -65,7 +65,7 @@ const useListaCompraAPI = () => {
     }
 
 
-    const traerProductosDeLista = async(idLista) => {
+    const traerProductosDeListaAPI = async(idLista) => {
         try {
             const productos = await peticion(
                 supabaseConexion
@@ -78,13 +78,49 @@ const useListaCompraAPI = () => {
             throw error;            
         }
     }
+    
+    const añadirProductoAPI = async(idLista, idProducto) => {
+        try {
+            const data = peticion(
+                supabaseConexion
+                .from('ListasCompra_Productos')
+                .insert(
+                    {id_ListasCompra: idLista,
+                    id_Producto: idProducto,
+                    cantidad: 1}
+                )
+            );
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    const actualizarProductoCantidadAPI = async(idLista, idProducto, cantidad) => {
+        try {
+            const data = peticion(
+                supabaseConexion
+                .from('ListasCompra_Productos')
+                .update({cantidad: cantidad})
+                .eq('id_ListasCompra', idLista)
+                .eq('id_Producto', idProducto)
+                .select()
+            )
+
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
 
     return {
         cargando,
         traerListasAPI,
         traerListaPorIdAPI,
         crearListaAPI,
-        traerProductosDeLista,
+        traerProductosDeListaAPI,
+        añadirProductoAPI,
+        actualizarProductoCantidadAPI,
     }
 }
 

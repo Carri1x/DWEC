@@ -1,0 +1,42 @@
+.container-producto-miniatura {
+    height: 30px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 10%;
+    align-items: center;
+}
+
+.container-producto-miniatura p {
+    margin: 0;
+}
+
+.container-producto-miniatura img{
+    width: 18px;
+    height: 18px;
+}
+
+.miniatura-detalles {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.miniatura-detalles input {
+    width: 40px;
+    height: 0px;
+}
+
+.miniatura-opciones {
+    display: grid;
+    grid-template-columns: 18px 1fr 18px;
+    grid-template-rows: 1fr;
+    gap: 5px;
+    width: 100%;
+}
+
+.miniatura-cantidad {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}

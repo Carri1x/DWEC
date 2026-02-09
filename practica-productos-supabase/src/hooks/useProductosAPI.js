@@ -15,6 +15,18 @@ const useProductosAPI = () => {
         }
     }
 
+    const traerProductoPorIdAPI = async(idProducto) => {
+        try {
+            const {data, error} = await supabaseConexion.from('Productos').select('*').eq('id', idProducto).single();
+            if(error) {
+                throw error;
+            }
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     const filtroProductosAPI = async(filtro = '', columna = 'nombre') => {
         try {
             let peticion = supabaseConexion.from('Productos').select('*');
@@ -100,6 +112,7 @@ const useProductosAPI = () => {
         insertarProductoAPI,
         eliminarProductoAPI,
         editarProductoAPI,
+        traerProductoPorIdAPI,
     }
 };
 export default useProductosAPI;
