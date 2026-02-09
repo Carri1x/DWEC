@@ -24,6 +24,8 @@ const ProveedorListaCompra = ({children}) => {
         traerProductosDeListaAPI,
         añadirProductoAPI,
         actualizarProductoCantidadAPI,
+        borrarProductoDeListaAPI,
+        borrarListaAPI,
     } = useListaCompraAPI();
 
     const {
@@ -72,6 +74,15 @@ const ProveedorListaCompra = ({children}) => {
             lanzarMensaje(`CrearListaCompra: ${error.message}`,tiposDeMensaje.error);
         }
     }
+    const borrarLista = async(idLista) => {
+        try {
+            const data = await borrarListaAPI(idLista);
+            cargarListasCompra();
+            lanzarMensaje(`La lista '${lista.nombre} ha sido borrada.'`)
+        } catch (error) {
+            lanzarMensaje(`BorrarLista: ${error.message}`,tiposDeMensaje.error);
+        }
+    }
 
     const añadirProducto = async(idLista, idProducto) => {
         try {
@@ -91,10 +102,17 @@ const ProveedorListaCompra = ({children}) => {
             lanzarMensaje(`ActualizarProductoCantidad: ${error.message}`, tiposDeMensaje.error);
         }
     }
-    
-    const borrarLista = async() => {
-        const confirmado = await confirmarAccion('Aun no se ha hecho esta funcionalidad BORRAR LISTA');
+
+    const borrarProductoDeLista = async(idLista, idProducto) => {
+        try {
+            const data = await borrarProductoDeListaAPI(idLista, idProducto);
+            cargarListaPorID(idLista);
+            return data;
+        } catch (error) {
+            lanzarMensaje(`BorrarProductoDeLista: ${error.message}`, tiposDeMensaje.error);
+        }
     }
+    
 
     useEffect(() => {
         if(sesionIniciada && usuario.id){
@@ -111,7 +129,8 @@ const ProveedorListaCompra = ({children}) => {
         cargarListaPorID,
         borrarLista,
         añadirProducto,
-        actualizarProductoCantidad
+        actualizarProductoCantidad,
+        borrarProductoDeLista
     }
     
     return (

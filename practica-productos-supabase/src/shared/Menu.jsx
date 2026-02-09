@@ -1,3 +1,4 @@
+import useContextoListaCompra from '../hooks/useContextoListaCompra.js';
 import useContextoSesion from '../hooks/useContextoSesion.js';
 import './Menu.css';
 import {Link} from 'react-router-dom';
@@ -13,7 +14,7 @@ const Menu = () => {
             { sesionIniciada && 
                 <>
                     <Link to={'/sup/crear-producto'}>Crear Producto</Link>
-                    <Link to={'/sup/lyp/listas-compra'}>Lista Compra</Link>
+                    <Link to={`/sup/lyp/lista-compra/`}>Lista Compra</Link>
                 </>
             }
         </div>

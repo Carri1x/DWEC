@@ -1,9 +1,9 @@
-import "./ListasCompra.css";
+import "./ListasCompraMiniatura.css";
 import useContextoListaCompra from "../hooks/useContextoListaCompra.js";
-import ListaCompra from "../components/ListaCompra.jsx";
+import ListaCompraMiniatura from "./ListaCompraMiniatura.jsx";
 import CrearLista from "./CrearLista.jsx";
 import { useNavigate } from "react-router-dom";
-const ListasCompra = () => {
+const ListasCompraMiniatura = () => {
   const {
     listasCompra,
     borrarLista,
@@ -31,7 +31,7 @@ const ListasCompra = () => {
       <div className='container-listas' >
         {listasCompra && listasCompra.length > 0 ? (
           listasCompra.map((lista) => {
-            return <ListaCompra key={lista.id} value={lista}/>;
+            return <ListaCompraMiniatura key={lista.id} value={lista}/>;
           })
         ) : (
           <p>No hay ninguna lista de la compra creada.</p>
@@ -41,4 +41,4 @@ const ListasCompra = () => {
   );
 };
 
-export default ListasCompra;
+export default ListasCompraMiniatura;

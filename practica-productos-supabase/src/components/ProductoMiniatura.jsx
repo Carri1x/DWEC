@@ -14,6 +14,11 @@ const ProductoMiniatura = (props) => {
     const [cantidadProducto, setCantidadProducto] = useState(cantidad);
 
 
+    /**
+     * Cambia la cantidad de este Producto en concreto. En esta misma Lista.
+     * @param {Event} evento 
+     * @returns Si se hace un return en esta función es porque se ha terminado la función de "cambiarCantidad".
+     */
     const cambiarCantidad = (evento) => {
         const valor = evento.target.value;
         if (valor === '') {
@@ -25,12 +30,20 @@ const ProductoMiniatura = (props) => {
         setCantidadProducto(num < 0 ? 0 : num);
     };
 
+    
+    /**
+     * Suma uno la cantidad de este producto en esa misma lista.
+     */
     const sumar = () => {
         setCantidadProducto((cant) => {
             return cant + 1
         });
     }
 
+    /**
+     * Resta uno la cantidad de este producto en esa misma lista.
+     * No puede ser la cantidad menor que uno, en ese caso el usuario deberá eliminar el producto.
+     */
     const restar = () => {
         setCantidadProducto((cant) => {
             if(cant <= 1) return 1;
@@ -59,9 +72,10 @@ const ProductoMiniatura = (props) => {
                 <p>Peso: {peso}kg</p>
                 <p>Precio: {precio}€</p>
                 {cantidad && 
-                <div className='miniatura-cantidad'>
+                <div className='miniatura-cantidad'> peti
                     <label>Cantidad: {cantidadProducto? cantidadProducto : 0}</label>
                     <input type="text" value={cantidadProducto} onChange={(evento) => {
+                        //Cambia la cantidad de este input en cuanto está cambiando este valor del input.
                         cambiarCantidad(evento)
                     }} />
                 </div>
@@ -70,7 +84,7 @@ const ProductoMiniatura = (props) => {
             <div className='miniatura-opciones'>
                 {cantidad && <img src={iconoMenos} alt="Simbolo para restar un producto" onClick={restar}/>}
                 <img src={añadir} alt="Símbolo añadir producto" onClick={sumar}/>
-                {cantidad && <img src={papelera} alt="Simbolo eliminar"/>}
+                {cantidad && <img src={papelera} className='boton-borrar-producto' alt="Simbolo eliminar"/>}
             </div>
         </div>
     )

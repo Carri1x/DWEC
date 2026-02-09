@@ -24,6 +24,7 @@ const Rutas = () => {
                     <Route path="lyp" element={<PaginaListasYProductos/>}>
                         <Route path="listado-productos" element={<ListadoProductos />}/>
                         <Route path="lista-compra/:idLista" element={<ListaCompraDetalles/>}></Route>
+                        <Route path="lista-compra/" element={<ListaCompraDetalles/>}></Route>
                     </Route>
                     
                 </Route>

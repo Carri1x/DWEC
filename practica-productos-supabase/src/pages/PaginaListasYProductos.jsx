@@ -1,5 +1,5 @@
 
-import ListasCompra from "../components/ListasCompra.jsx";
+import ListasCompraMiniatura from "../components/ListasCompraMiniatura.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import { Outlet } from "react-router-dom";
 
@@ -8,7 +8,7 @@ const PaginaListasYProductos = () => {
 
     return (
         <div className="listado-productos-container">
-            {sesionIniciada && <ListasCompra/>}
+            {sesionIniciada && <ListasCompraMiniatura/>}
             <Outlet /> 
         </div>
     )

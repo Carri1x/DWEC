@@ -5,16 +5,23 @@ import useContextoListaCompra from "../hooks/useContextoListaCompra.js";
 import useContextoProductos from "../hooks/useContextoProductos";
 import ListadoProductosMiniatura from "./ListadoProductosMiniatura.jsx";
 import ProductoMiniatura from "./ProductoMiniatura.jsx";
+import useContextoMensajes from '../hooks/useContextoMensajes.js';
 
 const ListaCompraDetalles = () => {
     const {idLista} = useParams();
     const {
         productos,
     } = useContextoProductos();
+    
     const { 
         lista,
-        cargarListaPorID
-    } = useContextoListaCompra();
+        cargarListaPorID,
+        borrarProductoDeLista
+    } = useContextoListaCompra(); 
+
+    const {
+        confirmarAccion
+    } = useContextoMensajes();
 
     const [modoAddProductos, setModoAddProductos] = useState(false);
     const [hayProductosAñadir, setHayProductosAñadir] = useState(true);
@@ -45,25 +52,54 @@ const ListaCompraDetalles = () => {
 
 
     useEffect(() => {
-        cargarListaPorID(idLista);
-    }, [idLista])
+        if(idLista){
+            cargarListaPorID(idLista);
+        }
+    }, [idLista, lista])
 
     return (
-        <div className="container-lista-compra-detalles">
-            <h1>Lista de la compra: {lista?.nombre}</h1>
-            { hayProductosAñadir && <button onClick={() => {
-                setModoAddProductos(!modoAddProductos);
-            }}> {modoAddProductos? 'Terminar':'Añadir productos' }</button>}
-            {
-                lista.productos && lista.productos.length > 0 ? (
-                    lista.productos.map((producto) => {
-                        return <ProductoMiniatura key={producto.id} value={producto} idLista={lista.id}/>
-                    })
-                ) : ( <p>No hay productos añadidos en esta lista.</p>)
+        <div className="container-lista-compra-detalles" onClick={async(evento) => {
+            if(evento.target.closest('.container-producto-miniatura') && evento.target.classList.contains('boton-borrar-producto')) {
+                //Como es el contenedor principal de este producto el que tiene el id, es entonces porqué lo buscamos en ese elemento que tiene cerca el evento.target.
+                const idProducto = evento.target.closest('.container-producto-miniatura').id;
+                //Buscamos el produto a borrar para simplemente mencionarlo en el mensaje de confirmación ===>> confirmarAccion('.....${nombreDelProducto}');
+                const productoABorrar = lista.productos.find((p) => p.id === idProducto);
+                const borradoConfirmado = await confirmarAccion(`¿Estás seguro que quieres eliminar el producto: ${productoABorrar.nombre}, de la lista: ${lista.nombre}?`);
+                //Si el usuario ha confirmado de que si quiere borrar el producto se procederá a eliminarlo.
+                if(borradoConfirmado){
+                    await borrarProductoDeLista(lista.id, idProducto);
+                }
             }
-            <div className="catalogo-productos">
-                {modoAddProductos && <ListadoProductosMiniatura value={productosAccesibles} />}
-            </div>
+        }}>
+            {
+                lista && lista.nombre? 
+                <>
+                    <h1>Lista de la compra: {lista?.nombre}</h1>
+                    { //Aquí en caso de que no hayan más productos para seleccionar en <ListadoProductosMiniatura /> borraremos el botón para que no ocupe espacio innecesario. 
+                    hayProductosAñadir && <button onClick={() => {
+                        setModoAddProductos(!modoAddProductos);
+                    }}> {modoAddProductos? 'Terminar selección':'Añadir productos' }</button>}
+                    {
+                        lista.productos && lista.productos.length > 0 ? (
+                            lista.productos.map((producto) => {
+                                return <ProductoMiniatura key={producto.id} value={producto} idLista={lista.id}/>
+                            })
+                        ) : ( <p>No hay productos añadidos en esta lista.</p>)
+                    }
+                    <div className="catalogo-productos">
+                        { //Aquí tenemos el catálogo de los productos que AÚN NO TIENE SELECCIONADOS EN SU LISTA DE LA COMPRA.
+                        modoAddProductos && <ListadoProductosMiniatura value={productosAccesibles} />}
+                    </div>
+                </>
+                : (
+                    <>
+                        <p>No hay ninguna lista seleccionada.</p>
+                        <small>Selecciona una lista de las que hay en la parte izquierda de tu pantalla.</small>
+                        <small>En caso de no haber ninunga puedes seleccionar la opción superior de crear una nueva.</small>
+                    </>
+                )
+            }
+            
         </div>
     )
 }

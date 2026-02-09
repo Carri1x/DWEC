@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import { supabaseConexion } from "../supabase/Supabase.js";
 import { useNavigate } from 'react-router-dom';
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
+import useSesionAPI from "../hooks/useSesionAPI.js";
 
 
 const contextoSesion = createContext();
@@ -11,8 +11,15 @@ const ProveedorSesion = ({ children }) => {
     const {
         tiposDeMensaje,
         lanzarMensaje,
-        quitarMensaje,
     } = useContextoMensajes();
+
+    const {
+        cargando,
+        registrarUsuarioAPI,
+        logearUsuarioAPI,
+        cerrarSesionAPI,
+        usuarioSuscripcion,
+    } = useSesionAPI()
 
     const datosSesionIniciales = {
         nombre: "",
@@ -33,7 +40,7 @@ const ProveedorSesion = ({ children }) => {
 
     const registrar = async () => {
         try {
-            const { data, error } = await supabaseConexion.auth.signUp({
+            const datos = await registrarUsuarioAPI({
                 email: datosSesion.email,
                 password: datosSesion.password,
                 options: {
@@ -42,12 +49,8 @@ const ProveedorSesion = ({ children }) => {
                     }
                 }
             });
-
-            if(error) {
-                throw error;
-            } else {
-                lanzarMensaje(`Verifica la cuenta a través del correo proporcionado: ${datosSesion.email}`, tiposDeMensaje.info);
-            }
+            lanzarMensaje(`Verifica la cuenta a través del correo proporcionado: ${datosSesion.email}`, tiposDeMensaje.info);
+            return datos;
         } catch (error) {
             lanzarMensaje(`Error al registrarse: ${error.message}`, tiposDeMensaje.error);
         }
@@ -55,18 +58,14 @@ const ProveedorSesion = ({ children }) => {
 
     const logear = async () => {
         try {
-            const {data, error} = await supabaseConexion.auth.signInWithPassword({
+            const data = await logearUsuarioAPI({
                 email: datosSesion.email,
                 password: datosSesion.password,
                 options: {
                     emailRedirectTo: "http://localhost:5173/"
                 }
             });
-
-            if(error) {
-                throw error;
-            }
-
+            return data;
         } catch (error) {
             lanzarMensaje(`Error al logearse: ${error.message}`, tiposDeMensaje.error);
         }
@@ -74,9 +73,9 @@ const ProveedorSesion = ({ children }) => {
 
     const cerrarSesion = async() => {
         try {
-            await supabaseConexion.auth.signOut();
-            quitarMensaje();
+            const data = cerrarSesionAPI();
             navegar('/');
+            return data;
         } catch (error) {
             lanzarMensaje(`Error al cerrar sesión: ${error.message}`, tiposDeMensaje.error);
         }
@@ -85,7 +84,7 @@ const ProveedorSesion = ({ children }) => {
 
     useEffect(() => {
         try {
-            const suscripcion = supabaseConexion.auth.onAuthStateChange( 
+            const suscripcion = usuarioSuscripcion(
                 (event, session) => {
                     if(session) {
                         //NAVEGAREMOS AL LISTADO DE LA COMPRA
@@ -96,8 +95,7 @@ const ProveedorSesion = ({ children }) => {
                         navegar('/');
                         setSesionIniciada(false);
                     }
-                }
-            );
+                });
         } catch (error) {
             lanzarMensaje(error.message, tiposDeMensaje.error);
         }
