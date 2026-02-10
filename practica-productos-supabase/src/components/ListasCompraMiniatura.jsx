@@ -3,8 +3,10 @@ import useContextoListaCompra from "../hooks/useContextoListaCompra.js";
 import ListaCompraMiniatura from "./ListaCompraMiniatura.jsx";
 import CrearLista from "./CrearLista.jsx";
 import { useNavigate } from "react-router-dom";
+import Cargando from "../shared/Cargando.jsx";
 const ListasCompraMiniatura = () => {
   const {
+    cargando,
     listasCompra,
     borrarListaPorID,
    } = useContextoListaCompra();
@@ -17,7 +19,8 @@ const ListasCompraMiniatura = () => {
         //EVENTO que nos llevará a VISUALIZAR LA LISTA que se le haya clicado.
         if (evento.target.closest(".container-lista")) {
           const idLista = evento.target.closest(".container-lista").id;
-          navegar(`/sup/lyp/lista-compra/${idLista}`);
+          navegar(`/lista-compra/${idLista}`);
+          return;
         }
         //EVENTO de BORRAR LISTA que se haya clicado.
         if (evento.target.closest(".container-lista") && evento.target.tagName === 'IMG') { // CONDICIÓN: Si está dentro del div.container-lista Y es la imagen papelera.
@@ -26,6 +29,7 @@ const ListasCompraMiniatura = () => {
         }
       }}
     >
+      {cargando && <Cargando contexto={'Borrando lista...'}/>}
       <h2>Listas de la compra</h2>
       <CrearLista />
       <div className='container-listas' >

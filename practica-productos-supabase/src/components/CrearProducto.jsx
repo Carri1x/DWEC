@@ -4,6 +4,7 @@ import useContextoSesion from "../hooks/useContextoSesion.js";
 import { Link } from "react-router-dom";
 import useContextoProductos from "../hooks/useContextoProductos.js";
 import { erroresFormulario } from "../libraries/forms.js";
+import Cargando from '../shared/Cargando.jsx';
 
 const CrearProducto = () => {
 
@@ -11,6 +12,7 @@ const CrearProducto = () => {
         sesionIniciada
     } = useContextoSesion();
     const {
+        cargando, 
         cambiarEstadoNuevoProducto,
         crearProducto,
     } = useContextoProductos();
@@ -38,6 +40,7 @@ const CrearProducto = () => {
     return (
         <>
             <div className="crear-producto-container">
+                {cargando && <Cargando contexto={'Creando el producto...'}/>}
                 {
                     !sesionIniciada ? ( //Exactamente si no tiene la sesión iniciada tendrá que logearse...
                         <>

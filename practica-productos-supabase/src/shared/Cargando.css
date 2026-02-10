@@ -1,10 +1,29 @@
+
 .cargando {
     text-align: center;
     padding: 2rem;
     font-size: 1.2rem;
     color: #ccc;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
 }
 .cargando img{
     width: 50px;
     height: 50px;
+}
+.cargando-overlay {
+    position: absolute;   /* Lo sacamos del flujo normal */
+    top: 50%;             /* Mitad vertical */
+    left: 50%;            /* Mitad horizontal */
+    transform: translate(-50%, -50%); /* Ajuste exacto al centro */
+    z-index: 999;         /* Por encima de todo */
+    
+    /* Opcional: un fondito blanco semitransparente para que se lea mejor */
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: 10px;
+    padding: 10px;
+    pointer-events: none; /* Para que puedas clicar lo de abajo si fuera necesario */
 }

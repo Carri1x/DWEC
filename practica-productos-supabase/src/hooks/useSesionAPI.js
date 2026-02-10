@@ -84,46 +84,13 @@ const useSesionAPI = () => {
     }
   };
 
-  /**
-   * La función flecha de que va a hacer el el manejador 
-   * de la base de datos cuando 
-   * se de cuenta que la sesión está iniciada
-   * Y que va a hacer cuando no está iniciada.
-   * 
-   * @example usuarioSuscripcion(
-   *    (event, session) => {
-            if(session) {
-                //Si hay sesión hacemos la lógica que queramos.
-                navegar('/sup/listado-productos')
-                setSesionIniciada(true);
-                setUsuario(session.user)
-            } else {
-                //Si no hay sesión hacemos la lógica que queramos.
-                navegar('/');
-                setSesionIniciada(false);
-            }
-        });
-   * )
-   * 
-   * @async
-   * @param {Function} callBack 
-   * @returns Objeto de código y texto de respuesta.
-   */
-  const usuarioSuscripcion = (callBack) => {
-    try {
-      const data = peticion(supabaseConexion.auth.onAuthStateChange(callBack));
-      return data;
-    } catch (error) {
-      throw error;
-    }
-  };
+
 
   return {
     cargando,
     registrarUsuarioAPI,
     logearUsuarioAPI,
     cerrarSesionAPI,
-    usuarioSuscripcion,
   };
 };
 

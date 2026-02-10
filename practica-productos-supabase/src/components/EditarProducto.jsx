@@ -6,11 +6,13 @@ import useContextoProductos from "../hooks/useContextoProductos.js";
 import { Link } from "react-router-dom";
 import { comprobarCambiosEditados } from "../libraries/forms.js";
 import { erroresFormulario } from "../libraries/forms.js";
+import Cargando from '../shared/Cargando.jsx';
 
 const EditarProducto = () => {
     const { sesionIniciada } = useContextoSesion();
     const { idProducto } = useParams();
     const {
+        cargando,
         productos,
         editarProducto,
     } = useContextoProductos();
@@ -55,6 +57,7 @@ const EditarProducto = () => {
                 ) :  //En cambio, si tiene la sesión iniciada podrá editar un producto...
                     (
                         <div className="editar-producto-container">
+                            {cargando && <Cargando contexto={'Editando el producto...'}/> }
                             <h2>Editar Producto</h2>
                             <button onClick={() => {setFormulario(productoEditar)}}>Resetear producto</button>
                             <form ref={formRef}>

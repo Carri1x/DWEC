@@ -1,6 +1,7 @@
 import './Register.css';
 import useContextoSesion from '../hooks/useContextoSesion.js';
 import { Link } from 'react-router-dom';
+import Cargando from '../shared/Cargando.jsx';
 
 /**
  * Este formulario actualiza el estado `datosSesion` en el ProveedorSesion con el que luego se registrará el usuario.
@@ -8,10 +9,11 @@ import { Link } from 'react-router-dom';
  * @returns Un formulario.
  */
 const Register = () => {
-    const {registrar, actualizarEstadoSesion} = useContextoSesion();
+    const {cargando, registrar, actualizarEstadoSesion} = useContextoSesion();
 
     return (
         <div className='contenedor-registrar'>
+            {cargando && <Cargando contexto={'Registrandote...'}/>}
             <small><Link to={'/login'}>Ya tengo una cuenta</Link></small>
             <h2>Regístrate</h2>
 

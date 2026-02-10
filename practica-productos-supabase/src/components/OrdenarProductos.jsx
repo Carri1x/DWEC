@@ -1,9 +1,10 @@
 import { useState } from "react";
 import useContextoProductos from "../hooks/useContextoProductos";
 import "./Controles.css";
+import Cargando from "../shared/Cargando.jsx";
 
 const OrdenarProductos = () => {
-    const {ordenarProductos} = useContextoProductos();
+    const { cargando, ordenarProductos} = useContextoProductos();
     //Este estado `columnaOrdenado` cambiará en caso de que el usuario use el HTMLElementSelect para cambiar por la opción que quiere ordenar.
     const [columnaOrdenado, setColumnaOrdenado] = useState('nombre');
     //Este estado cambiará cada vez que se clica en el botón, para identificar como va a querer ordenar el usuario. 
@@ -11,6 +12,7 @@ const OrdenarProductos = () => {
 
     return (
         <div className="control-group">
+            {cargando && <Cargando contexto={'Ordenando productos...'} />}
             <h3>Ordenar por</h3>
             <div className="flex-row">
                 <select className="input-custom" style={{width: 'auto'}} onChange={(e) => setColumnaOrdenado(e.target.value)}>

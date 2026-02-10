@@ -8,6 +8,7 @@ import OrdenarProductos from "./OrdenarProductos.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import { useNavigate } from "react-router-dom";
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
+import ListasCompraMiniatura from "./ListasCompraMiniatura.jsx";
 
 const ListadoProductos = () => {
   const { sesionIniciada } = useContextoSesion();
@@ -42,7 +43,7 @@ const ListadoProductos = () => {
         const idProducto = evento.target.dataset.id;
 
         if (evento.target.dataset.tipo === 'editar-producto') { //--------------------------------- APARTADO EDITAR PRODUCTO -----------------------------------
-          navegar(`/sup/editar-producto/${idProducto}`); //Navegamos a la página de editar producto.
+          navegar(`/editar-producto/${idProducto}`); //Navegamos a la página de editar producto.
         } //--------------------------------------------------------------------------------------- END APARTADO EDITAR PRODUCTO -------------------------------
         //------------------------------------------------------------------------------------------------------------------------------------------------------
         if (evento.target.dataset.tipo === 'eliminar-producto') { //--------------------------------- APARTADO ELIMINAR PRODUCTO -------------------------------
@@ -58,6 +59,7 @@ const ListadoProductos = () => {
 
       }}>
         <h1>Productos</h1>
+        {sesionIniciada && <ListasCompraMiniatura />}
         {sesionIniciada && (
           <div className="controles-container">
             <FiltrarProductos />
@@ -76,7 +78,7 @@ const ListadoProductos = () => {
           ) : //En caso de que no haya ningún filtro, enseñamos todos los productos. NO HAY PRODUCTOS FILTRADOS.
             //PRIMERO COMPROBAMOS SI ESTÁ CARGANDO...
             cargando ? (
-              <Cargando contexto="productos..." /> //Si está cargando, muestro el componente de cargando.
+              <Cargando contexto="Cargando productos..." /> //Si está cargando, muestro el componente de cargando.
             ) : (
               //Si no, muestro los productos.
               <div className="productos-grid">

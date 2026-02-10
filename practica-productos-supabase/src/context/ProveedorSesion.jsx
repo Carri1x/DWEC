@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
 import useSesionAPI from "../hooks/useSesionAPI.js";
+import { supabaseConexion } from "../supabase/Supabase.js";
 
 
 const contextoSesion = createContext();
@@ -18,7 +19,6 @@ const ProveedorSesion = ({ children }) => {
         registrarUsuarioAPI,
         logearUsuarioAPI,
         cerrarSesionAPI,
-        usuarioSuscripcion,
     } = useSesionAPI()
 
     //Datos que se usan como referencia en `datosSesion`, son los datos que tiene que tener por defecto en el formulario.
@@ -125,7 +125,7 @@ const ProveedorSesion = ({ children }) => {
      */
     useEffect(() => {
         try {
-            const suscripcion = usuarioSuscripcion(
+            const suscripcion = supabaseConexion.auth.onAuthStateChange( 
                 (event, session) => {
                     if(session) {
                         //NAVEGAREMOS AL LISTADO DE LA COMPRA
@@ -136,7 +136,8 @@ const ProveedorSesion = ({ children }) => {
                         navegar('/');
                         setSesionIniciada(false);
                     }
-                });
+                }
+            );
         } catch (error) {
             lanzarMensaje(error.message, tiposDeMensaje.error);
         }

@@ -1,6 +1,7 @@
 import './Login.css';
 import useContextoSesion from '../hooks/useContextoSesion.js';
 import { Link } from 'react-router-dom';
+import Cargando from '../shared/Cargando.jsx';
 
 /**
  * Este formulario actualiza el estado `datosSesion` en el ProveedorSesion con el que luego se logeara el usuario.
@@ -9,10 +10,11 @@ import { Link } from 'react-router-dom';
  */
 const Login = () => {
 
-    const {logear, actualizarEstadoSesion} = useContextoSesion();
+    const {cargando, logear, actualizarEstadoSesion} = useContextoSesion();
 
     return (
         <div className='contenedor-login'>
+            {cargando && <Cargando contexto={'Iniciando sesión...'}/>}
             <h2>Inicia sesión</h2>
             <label htmlFor="email">Email:</label>
             <input type="email" name='email' id='email' placeholder='Inserte su email para logearse.'

@@ -4,9 +4,11 @@ import papelera from '../assets/papelera.png';
 import iconoMenos from '../assets/icono-menos.png';
 import { useState, useEffect } from 'react';
 import useContextoListaCompra from '../hooks/useContextoListaCompra.js';
+import Cargando from '../shared/Cargando.jsx';
 
 const ProductoMiniatura = (props) => {
     const {
+        cargando,
         actualizarProductoCantidad,
     } = useContextoListaCompra()
     const idLista = props.idLista;
@@ -58,7 +60,7 @@ const ProductoMiniatura = (props) => {
      */
     useEffect(() => {
         if (cantidadProducto === cantidad) return;
-
+        console.log("ProductoMiniatura: La esta liando fuerte")
         // Creamos un temporizador de 4 segundos.
         const temporizador = setTimeout(() => {
             if (!cantidadProducto) return; 
@@ -71,6 +73,7 @@ const ProductoMiniatura = (props) => {
 
     return (
         <div id={id} className="container-producto-miniatura">
+            {cargando && <Cargando contexto={'Actualizando la cantidad del producto...'} />}
             <p>{nombre}</p>
             <div className='miniatura-detalles'>
                 <p>Peso: {peso}kg</p>

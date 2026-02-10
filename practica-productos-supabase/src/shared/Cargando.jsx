@@ -5,9 +5,9 @@ const Cargando = (props) => {
     const {contexto} = props;
 
     return (
-        <div className="contenedor-cargando">
+        <div className="cargando">
             <img src={gifCargando} alt="Gif de Cargando"/>
-            <p>Cargando {contexto}</p>
+            {contexto && <p>{contexto}</p>}
         </div>
     );
 }
