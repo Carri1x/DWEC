@@ -19,11 +19,21 @@ const EditarProducto = () => {
     const [erroresForm, setErroresForm] = useState({});
     const formRef = useRef(null);
 
+    /**
+     * Función que se encarga de cambiar el estado del formulario cada vez que el usuario escriba en alguno de los campos del formulario.
+     * 
+     * @param {Event} evento 
+     */
     const cambiarEstadoFormulario = (evento) => {
         const { name, value } = evento.target;
         setFormulario({ ...formulario, [name]: value });
     }
 
+    /**
+     * Cuando se cargue el componente, se buscará el producto a editar 
+     * en el contexto de productos,
+     * utilizando el idProducto obtenido de los parámetros de la URL.
+     */
     useEffect(() => {
         const productoEditar = productos.find((producto) => producto.id.toString() === idProducto);
         setProductoEditar(productoEditar);

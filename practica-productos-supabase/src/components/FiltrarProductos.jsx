@@ -8,6 +8,13 @@ const FiltrarProductos = () => {
     const [opcionFiltrado, setOpcionFiltrado] = useState('nombre');
     const refFiltro = useRef();
 
+    /**
+     * Función que se encarga de cambiar el estado del filtro 
+     * y la opción de filtrado cada vez que el usuario escriba en el input 
+     * o cambie la opción de filtrado.
+     * 
+     * @param {Event} evento 
+     */
     const cambiarEstado = (evento) => {
         const { name, value } = evento.target;
         if (name === 'opcion-filtro') {
@@ -17,19 +24,16 @@ const FiltrarProductos = () => {
         }
     }
 
+    /**
+     * Función que borra el filtro aplicado, tanto en el estado del componente como en el contexto de productos, 
+     * para que se muestren todos los productos.
+     * 
+     */
     const borrarFiltro = () => {
         borrarFiltroProductos();
         setFiltro('');
         refFiltro.current.value = '';
     }
-
-    /**
-     * Yo le pido el css a la IA y ahora me esta encapsulando todo lo que yo hago con algunos divs etc y me hace algunas mejoras si son necesarias
-     * Si veo que no me gustan le dan por el cu... entonces me ha gustado la de cambiar estado, no ponerle el callback (evento) => {funcion(evento)}si no... dejarlo así y no me parece mal. Lo veo más limpio. 
-     * 
-     * Lo de style={{flex: 1}} se lo ha sacado de la chistera pero me flipa lo que hace... parece que no pero algunas cositas están guay...
-     * en <OrdenarProductos me ha hehco lo mismo y me ha tocado cosas de código y lo he dejado como me lo ha dado... Simplemente me lo ha dejado más limpio y está bien.
-     */
 
     return (
         <div className="control-group">

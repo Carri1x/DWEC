@@ -18,6 +18,15 @@ const CrearProducto = () => {
     const [erroresForm, setErroresForm] = useState({});
     const formRef = useRef(null);
 
+    /**
+     * Función que se encarga de validar el formulario de creación de producto, 
+     * utilizando la función erroresFormulario que hemos creado en la carpeta libraries.
+     * IMPORTANTE: 
+     * - Esta función setea los errores en el estado del componente para poder mostrarlos en el formulario.
+     * 
+     * @param {Object} formulario 
+     * @returns Si el formulario es válido, devuelve true. Si no, devuelve false.
+     */
     const formularioValido = (formulario) => {
         const errores = erroresFormulario(formulario);
         setErroresForm(errores);

@@ -51,13 +51,17 @@ const ProductoMiniatura = (props) => {
         });
     }
 
+    /**
+     * Cada vez que cambie la cantidad de un producto, se actualizará esta cantidad en la base de datos.
+     * Cada 4 segundos se actualizará la cantidad del producto, si el usuario vuelve a cambiar la cantidad antes de que pasen los 4 segundos,
+     * se reiniciará el temporizador y se volverán a contar otros 4 segundos para actualizar la cantidad.
+     */
     useEffect(() => {
         if (cantidadProducto === cantidad) return;
 
         // Creamos un temporizador de 4 segundos.
         const temporizador = setTimeout(() => {
             if (!cantidadProducto) return; 
-            console.log(`Enviando al backend: ${cantidadProducto} unidades de ${nombre}`);
             actualizarProductoCantidad(idLista, id, cantidadProducto);
         }, 4000);
 

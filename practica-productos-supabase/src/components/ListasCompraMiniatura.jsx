@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const ListasCompraMiniatura = () => {
   const {
     listasCompra,
-    borrarLista,
+    borrarListaPorID,
    } = useContextoListaCompra();
   const navegar = useNavigate();
 
@@ -22,7 +22,7 @@ const ListasCompraMiniatura = () => {
         //EVENTO de BORRAR LISTA que se haya clicado.
         if (evento.target.closest(".container-lista") && evento.target.tagName === 'IMG') { // CONDICIÓN: Si está dentro del div.container-lista Y es la imagen papelera.
           const idLista = evento.target.closest(".container-lista").id;
-          borrarLista(idLista);
+          borrarListaPorID(idLista);
         }
       }}
     >
