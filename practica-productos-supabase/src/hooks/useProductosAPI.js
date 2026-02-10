@@ -1,4 +1,5 @@
 import { supabaseConexion } from "../supabase/Supabase.js";
+import { useState } from "react";
 
 /**
  * Hook/API de acceso a la tabla `Productos` en Supabase.
@@ -7,7 +8,29 @@ import { supabaseConexion } from "../supabase/Supabase.js";
  * @returns {Object} Conjunto de funciones para interactuar con la API de productos
  */
 const useProductosAPI = () => {
+    const [cargando, setCargando] = useState(false);
 
+    /**
+     * Función general que abstrae la lógica del error y los datos que devuelve supabase. Por lo que las siguientes peticiónes especificas solo tendrán que fijarse en las PETICIONES de los datos requeridos para estos.
+     * 
+     * @async
+     * @param {Function} query Consulta que se hará al gestor de base de datos supabase.
+     * @throws {Error} Específicamente devuelve el error que ha surgido en el gestor SUPABASE, porque ha ocurrido y en que parte ha acurrido del gestor.
+     * @returns Los datos que se han sugerido al gestor de base de datos SUPABASE
+     */
+    const peticion = async(query) => {
+        setCargando(true);
+        try {
+            const {data, error} = await query;
+            if(error) throw error;
+            return data;
+        } catch (error) {
+            throw error;
+        } finally {
+            setCargando(false);
+        }
+    }
+ 
     /**
      * Obtiene todos los productos almacenados en la tabla `Productos`.
      * 
@@ -17,12 +40,8 @@ const useProductosAPI = () => {
      */
     const traerProductosAPI = async() => {
         try {
-            const {data, error} = await supabaseConexion.from('Productos').select('*'); 
-            if(error) {
-                throw error;
-            }
+            const data = await peticion(supabaseConexion.from('Productos').select('*'));
             return data;
-
         } catch (error) {
             throw error;
         }
@@ -39,10 +58,7 @@ const useProductosAPI = () => {
      */
     const traerProductoPorIdAPI = async(idProducto) => {
         try {
-            const {data, error} = await supabaseConexion.from('Productos').select('*').eq('id', idProducto).single();
-            if(error) {
-                throw error;
-            }
+            const data = await peticion(supabaseConexion.from('Productos').select('*').eq('id', idProducto).single());
             return data;
         } catch (error) {
             throw error;
@@ -61,29 +77,38 @@ const useProductosAPI = () => {
      * @async
      * @param {String} filtro Valor introducido por el usuario
      * @param {String} columna Columna sobre la que se aplica el filtro
-     * @returns {Promise<Array>} Lista de productos filtrados
+     * @returns {Promise<Array>} Lista de productos filtrados || Si el filtro es una cadena vacía esta función devolverá un @returns {Array[]} Array vacío.
      * @throws {Error} Si el filtro numérico no es válido o falla la petición
      */
     const filtroProductosAPI = async(filtro = '', columna = 'nombre') => {
         try {
-            let peticion = supabaseConexion.from('Productos').select('*');
-            // En esta parte evito que se haga una petición.
+            let query = supabaseConexion.from('Productos').select('*');
+            // Si el nombre del filtro es una cadena vacía, se devolverá un array vacío.
             if(filtro.trim() === '') {
                 return [];
             } else if (columna === 'nombre') {
-                peticion = peticion.ilike(columna, `%${filtro.trim()}%`);
+                //Si la columna que se quiere insertar es nombre, añadiremos el modificador `ilike`
+                // que nos da supabase para que se filte los productos que sean como ese nombre de `filtro`.
+                query = query.ilike(columna, `%${filtro.trim()}%`);
             } else {
+                /**
+                 * En el último caso es el filtrado por `precio` o por `peso`.
+                 * 
+                 * Entonces lo que hacemos es replazar las comas si las hay por puntos y luego de esa acción 
+                 */
                 filtro = filtro.replace(',', '.');
                 filtro = parseFloat(filtro);
+                // Si filtro no es un número, lanza un error. 
                 if(isNaN(filtro)) {
                     throw Error('El filtro debe ser un número válido para esta opción.');
                 }
-                peticion = peticion.gte(columna, filtro).lt(columna, filtro + 1);
+                /**Si filtro es un número al fin, añadimos las sentencias gte(mayor/igual que) y lt (menor que).  
+                 * @example query.gte(peso , 2.3).lt(peso , 2.3 + 1) 
+                 *     ¡¡ LA COLUMNA PESO Y EL PESO POR EL QUE QUEREMOS FILTRAR !!
+                 */ 
+                query = query.gte(columna, filtro).lt(columna, filtro + 1);
             }   
-            const {data, error} = await peticion;
-            if(error) {
-                throw error;
-            }
+            const data= await peticion(query);
             return data;
         } catch (error) {
             throw error;
@@ -101,10 +126,7 @@ const useProductosAPI = () => {
      */
     const ordenaProductosAPI = async(columna = 'nombre', orden = true) => {
         try {
-            const {data, error} = await supabaseConexion.from('Productos').select('*').order(columna, {ascending: orden});
-            if(error) {
-                throw error;
-            }
+            const data = await peticion(supabaseConexion.from('Productos').select('*').order(columna, {ascending: orden}));
             return data;
         } catch (error) {
             throw error;
@@ -123,10 +145,7 @@ const useProductosAPI = () => {
      */
     const insertarProductoAPI = async(producto) => {
         try {
-            const {error} = await supabaseConexion.from('Productos').insert(producto);
-            if(error) {
-                throw error;
-            }
+            await peticion(supabaseConexion.from('Productos').insert(producto));
         } catch (error) {
             throw error;
         }
@@ -141,10 +160,7 @@ const useProductosAPI = () => {
      */
     const eliminarProductoAPI = async(idProducto) => {
         try {
-            const {error} = await supabaseConexion.from('Productos').delete().eq('id', idProducto);
-            if(error) {
-                throw error;
-            }
+            await peticion(supabaseConexion.from('Productos').delete().eq('id', idProducto));
         } catch (error) {
             throw error;
         }
@@ -160,16 +176,14 @@ const useProductosAPI = () => {
      */
     const editarProductoAPI = async(producto) => {
         try {
-            const {error} = await supabaseConexion.from('Productos').update(producto).eq('id', producto.id);
-            if(error) {
-                throw error;
-            }
+            await peticion(supabaseConexion.from('Productos').update(producto).eq('id', producto.id));
         } catch (error) {
             throw error;
         }
     }
 
     return {
+        cargando,
         traerProductosAPI,
         filtroProductosAPI,
         ordenaProductosAPI,

@@ -21,23 +21,43 @@ const ProveedorSesion = ({ children }) => {
         usuarioSuscripcion,
     } = useSesionAPI()
 
+    //Datos que se usan como referencia en `datosSesion`, son los datos que tiene que tener por defecto en el formulario.
     const datosSesionIniciales = {
         nombre: "",
         email: "",
         password: ""
     }
 
-    const [datosSesion, setDatosSesion] = useState(datosSesionIniciales);
-    const [usuario, setUsuario] = useState({});
-    const [sesionIniciada, setSesionIniciada] = useState(false);
+    // `datosSesion` Son los datos que previamente ha insertado el usuario a través de un formulario, para luego usarlo en las funciones `registrar`, `logear`...
+    const [datosSesion, setDatosSesion] = useState(datosSesionIniciales); 
+    const [usuario, setUsuario] = useState({}); // Es el usuario que se ha recogido desde SUPABASE.
+    const [sesionIniciada, setSesionIniciada] = useState(false); // Estado BOOLEANO que recoge la información de si la sesión está iniciada o no. DATO: se setea en el useEffect de este proveedor.
 
-    const navegar = useNavigate();
+    const navegar = useNavigate();  // Variable para navegar hasta una página del sitio web.
 
+    /**
+     * Función que actualiza el estado de `datosSesion` para registrar o logear a un usuario.
+     * 
+     * IMPORTANTE: 
+     * - Esta función no hace ninguna petición a al gestor de base de datos.
+     * - Esta función solo controla y cambia el estado de un estado (valga la redundancia) de este proveedor.
+     * 
+     * @param {Event} evento 
+     */
     const actualizarEstadoSesion = (evento) => {
         const {name, value} = evento.target;
         setDatosSesion({...datosSesion, [name]: value});
     }
 
+    /**
+     * Función que registra a un nuevo usuario en la base de datos. 
+     * 
+     * Se le asignará el estado autenticado dentro de la base de datos si ha seguido la verificación de email necesaria.
+     * En cambio no se registrará en la base de datos. 
+     * 
+     * @async
+     * @returns Devuelve los datos del usuario.
+     */
     const registrar = async () => {
         try {
             const datos = await registrarUsuarioAPI({
@@ -56,6 +76,15 @@ const ProveedorSesion = ({ children }) => {
         }
     }
 
+    /**
+     * Función que logea a un usuario ya previamente registrado.
+     * 
+     * IMPORTANTE: 
+     * - Si el usuario no ha sido registrado deberá usarse la función registrar();
+     * - Si se ha iniciado sesión en el usuario cambiará el estado `sesionIniciada` por true.
+     * 
+     * @returns devuelve el usuario logeado.
+     */
     const logear = async () => {
         try {
             const data = await logearUsuarioAPI({
@@ -71,6 +100,14 @@ const ProveedorSesion = ({ children }) => {
         }
     }
 
+    /**
+     * Función que cierra la sesión de un usuario.
+     * 
+     * IMPORTANTE: 
+     * - Si se ha cerrado sesión el usuario cambiará el estado `sesionIniciada` por FALSE.
+     * 
+     * @returns devuelve el usuario que ha cerrado sesión.
+     */
     const cerrarSesion = async() => {
         try {
             const data = cerrarSesionAPI();
@@ -82,6 +119,10 @@ const ProveedorSesion = ({ children }) => {
     }
 
 
+    /**
+     * Este useEffect está controlando con una suscripción a la tabla de AUTH DE SUPABASE, para
+     * notificarnos si el usuario tiene la sesión iniciada o no.
+     */
     useEffect(() => {
         try {
             const suscripcion = usuarioSuscripcion(
@@ -102,6 +143,7 @@ const ProveedorSesion = ({ children }) => {
     }, []);
 
     const datosAExportar = {
+        cargando,
         actualizarEstadoSesion,
         registrar,
         logear,

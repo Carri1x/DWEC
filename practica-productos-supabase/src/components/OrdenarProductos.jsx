@@ -4,7 +4,9 @@ import "./Controles.css";
 
 const OrdenarProductos = () => {
     const {ordenarProductos} = useContextoProductos();
+    //Este estado `columnaOrdenado` cambiará en caso de que el usuario use el HTMLElementSelect para cambiar por la opción que quiere ordenar.
     const [columnaOrdenado, setColumnaOrdenado] = useState('nombre');
+    //Este estado cambiará cada vez que se clica en el botón, para identificar como va a querer ordenar el usuario. 
     const [ascendente, setAscendente] = useState(true);
 
     return (

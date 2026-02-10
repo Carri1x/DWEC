@@ -2,6 +2,11 @@ import './Login.css';
 import useContextoSesion from '../hooks/useContextoSesion.js';
 import { Link } from 'react-router-dom';
 
+/**
+ * Este formulario actualiza el estado `datosSesion` en el ProveedorSesion con el que luego se logeara el usuario.
+ * 
+ * @returns Un formulario.
+ */
 const Login = () => {
 
     const {logear, actualizarEstadoSesion} = useContextoSesion();

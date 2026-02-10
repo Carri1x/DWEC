@@ -182,6 +182,13 @@ const ProveedorListaCompra = ({children}) => {
         }
     }
 
+    /**
+     * Función que borra todos los productos de la lista por ID.
+     * 
+     * @param {String (UUID)} idLista 
+     * @param {String (UUID)} idProducto 
+     * @returns Devuelve todos los productos de la lista que se han borrado.
+     */
     const borrarProductoDeLista = async(idLista, idProducto) => {
         try {
             const data = await borrarProductoDeListaAPI(idLista, idProducto);
@@ -193,6 +200,11 @@ const ProveedorListaCompra = ({children}) => {
     }
     
 
+    /**
+     * USE EFFECT que carga todas las listas que tiene el usuario si tiene la sesión iniciada.
+     * 
+     * También se hace la comprobación por usuario.id, porque daban errores de que el ID del usuario era `undefined`.
+     */
     useEffect(() => {
         if(sesionIniciada && usuario.id){
             cargarListasCompra();

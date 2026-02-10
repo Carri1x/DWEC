@@ -1,35 +1,29 @@
 import "./Inicio.css";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import useContextoSesion from "../hooks/useContextoSesion.js";
-import MensajeAceptarCancelar from "../shared/MensajeAceptarCancelar.jsx";
+import useContextoMensajes from "../hooks/useContextoMensajes.js";
 
 const Inicio = () => {
   const { sesionIniciada, cerrarSesion } = useContextoSesion();
+  const { confirmarAccion } = useContextoMensajes();
 
-  const [solicitudCerrarSesion, setSolicitudCerrarSesion] = useState(false);
-
-  const activarCerradoSesion = () => {
-    setSolicitudCerrarSesion(true);
-  };
-
-  const denegarCerradoSesion = () => {
-    setSolicitudCerrarSesion(false);
+  /**
+   * Función que habilita la posibilidad de cerrar la sesión.
+   * 
+   * IMPORTANTE: (Esta función confirmarAccion() enseña un mensaje parecido a confim() de JVanilla que aparece por pantalla)
+   * - Si acepta el mensaje se cerrará la sesión.
+   * - Si no acepta el mensaje no cerrará sesión.
+   * --- PD: En ambas opciones/acciones se quitará el mensaje que aparece por pantalla.  
+   */
+  const funCerradoSesion = async () => {
+    const acepta = await confirmarAccion(`¿Estás seguro que quieres cerrar la sesión?`);
+    if (acepta) {
+      cerrarSesion();
+    }
   };
 
   return (
     <div className="contenedor-inicio">
-      {solicitudCerrarSesion && (
-        <MensajeAceptarCancelar
-          mensaje={"¿Estás seguro que quieres cerrar la sesión?"}
-          botonIzq={() => {
-            cerrarSesion();
-            //Quitamos el mensaje de aceptar cancelar, si no se queda estático en la pantalla...
-            setSolicitudCerrarSesion(false);
-          }}
-          botonDer={denegarCerradoSesion}
-        />
-      )}
       <h1>Inicio</h1>
       <h3>
         ¡¡¡Esta página podrás encontrar los mejores pedidos que hay en la
@@ -50,7 +44,7 @@ const Inicio = () => {
           <p>Ya estás activo, ¿quieres cerrar la sesión?</p>
           <button
             onClick={() => {
-              activarCerradoSesion();
+              funCerradoSesion();
             }}
           >
             Cerrar sesión

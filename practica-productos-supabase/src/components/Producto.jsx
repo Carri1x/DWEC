@@ -12,7 +12,7 @@ const Producto = (props) => {
             <p>Peso: {peso} kg</p>
             <p>Precio: {precio}€</p>
             <p>{descripcion}</p>
-            {
+            {   //Si tiene la sesión iniciada puede acceder a eliminar y editar productos.
                 sesionIniciada ? <>
                     <button className='btn' data-tipo="eliminar-producto" data-id={id}>Eliminar</button>
                     <button className='btn' data-tipo="editar-producto" data-id={id}>Editar</button>

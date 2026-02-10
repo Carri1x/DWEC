@@ -4,8 +4,11 @@ import "./Controles.css";
 
 const FiltrarProductos = () => {
     const { filtrarProductos, borrarFiltroProductos } = useContextoProductos();
+    // Este estado `filro` es el nombre por el que va a querer filtrar los productos. Ej= uva (uva riquisima), uv (uva riquisima), manz (manzana)...
     const [filtro, setFiltro] = useState('');
+    //Este estado `opcionFiltrado` es la columna por la que va a querer el usuario filtrar.
     const [opcionFiltrado, setOpcionFiltrado] = useState('nombre');
+    // Este useRef() se usa solamente para borrar el valor del filtro que ha querido ejecutar el usuario.
     const refFiltro = useRef();
 
     /**

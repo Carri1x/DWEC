@@ -2,6 +2,11 @@ import './Register.css';
 import useContextoSesion from '../hooks/useContextoSesion.js';
 import { Link } from 'react-router-dom';
 
+/**
+ * Este formulario actualiza el estado `datosSesion` en el ProveedorSesion con el que luego se registrará el usuario.
+ * 
+ * @returns Un formulario.
+ */
 const Register = () => {
     const {registrar, actualizarEstadoSesion} = useContextoSesion();
 
