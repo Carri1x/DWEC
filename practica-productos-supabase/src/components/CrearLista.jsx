@@ -7,7 +7,6 @@ import Cargando from "../shared/Cargando.jsx";
 
 const CrearLista = () => {
   const {
-    cargando,
     crearListaCompra
   } = useContextoListaCompra();
 
@@ -60,7 +59,6 @@ const CrearLista = () => {
         setEstaAbierto(false);
       }
     }}>
-      {cargando && <Cargando contexto={"Insertando nueva lista..."}/>}
       <div className="enunciado-crear-lista" >
         <h4>Crear nueva lista</h4>
         {/*Si está abierto mostramos la flecha hacia abajo, si no, la flecha hacia la derecha.*/}

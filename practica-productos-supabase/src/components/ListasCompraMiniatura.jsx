@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import Cargando from "../shared/Cargando.jsx";
 const ListasCompraMiniatura = () => {
   const {
-    cargando,
     listasCompra,
     borrarListaPorID,
    } = useContextoListaCompra();
@@ -17,7 +16,7 @@ const ListasCompraMiniatura = () => {
       className="container-lista-compra"
       onClick={(evento) => {
         //EVENTO que nos llevará a VISUALIZAR LA LISTA que se le haya clicado.
-        if (evento.target.closest(".container-lista")) {
+        if (evento.target.closest(".container-lista") && evento.target.tagName !== 'IMG') { // CONDICIÓN: Si está dentro del div.container-lista Y NO es la imagen papelera.
           const idLista = evento.target.closest(".container-lista").id;
           navegar(`/lista-compra/${idLista}`);
           return;
@@ -29,7 +28,6 @@ const ListasCompraMiniatura = () => {
         }
       }}
     >
-      {cargando && <Cargando contexto={'Borrando lista...'}/>}
       <h2>Listas de la compra</h2>
       <CrearLista />
       <div className='container-listas' >

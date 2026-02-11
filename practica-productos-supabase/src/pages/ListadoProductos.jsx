@@ -1,21 +1,22 @@
 import "./ListadoProductos.css";
 import { useState, useEffect } from "react";
 import useContextoProductos from "../hooks/useContextoProductos.js";
-import Producto from "./Producto.jsx";
+import Producto from "../components/Producto.jsx";
 import Cargando from "../shared/Cargando.jsx";
-import FiltrarProductos from './FiltrarProductos.jsx';
-import OrdenarProductos from "./OrdenarProductos.jsx";
+import FiltrarProductos from '../components/FiltrarProductos.jsx';
+import OrdenarProductos from "../components/OrdenarProductos.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import { useNavigate } from "react-router-dom";
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
-import ListasCompraMiniatura from "./ListasCompraMiniatura.jsx";
+import ListasCompraMiniatura from "../components/ListasCompraMiniatura.jsx";
 
 const ListadoProductos = () => {
   const { sesionIniciada } = useContextoSesion();
   const { confirmarAccion } = useContextoMensajes();
   const {
-    productos,
     cargando,
+    mensajeCargando,
+    productos,
     productosFiltrados,
     eliminarProducto,
   } = useContextoProductos();
@@ -59,6 +60,7 @@ const ListadoProductos = () => {
 
       }}>
         <h1>Productos</h1>
+        {cargando && <Cargando contexto={mensajeCargando} />}
         {sesionIniciada && <ListasCompraMiniatura />}
         {sesionIniciada && (
           <div className="controles-container">
@@ -76,11 +78,8 @@ const ListadoProductos = () => {
               })}
             </div>
           ) : //En caso de que no haya ningún filtro, enseñamos todos los productos. NO HAY PRODUCTOS FILTRADOS.
-            //PRIMERO COMPROBAMOS SI ESTÁ CARGANDO...
-            cargando ? (
-              <Cargando contexto="Cargando productos..." /> //Si está cargando, muestro el componente de cargando.
-            ) : (
-              //Si no, muestro los productos.
+             (
+              //Muestro los productos.
               <div className="productos-grid">
                 {
                   //Si hay productos, los mapeo, si no muestro mensaje de que no hay productos...
@@ -89,6 +88,7 @@ const ListadoProductos = () => {
                       <Producto key={producto.id} value={producto} />
                     ))
                   ) : (
+                    //Aquí como no ha habido productos ni en PRODUCTOS FILTRADOS ni en PRODUCTOS tengo que decir que no hay productos.
                     <p>No hay productos guardados aún.</p>
                   )
                 }

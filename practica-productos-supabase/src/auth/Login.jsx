@@ -10,11 +10,11 @@ import Cargando from '../shared/Cargando.jsx';
  */
 const Login = () => {
 
-    const {cargando, logear, actualizarEstadoSesion} = useContextoSesion();
+    const {cargando, mensajeCargando, logear, actualizarEstadoSesion} = useContextoSesion();
 
     return (
         <div className='contenedor-login'>
-            {cargando && <Cargando contexto={'Iniciando sesión...'}/>}
+            {cargando && <Cargando contexto={mensajeCargando}/>}
             <h2>Inicia sesión</h2>
             <label htmlFor="email">Email:</label>
             <input type="email" name='email' id='email' placeholder='Inserte su email para logearse.'

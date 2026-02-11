@@ -2,6 +2,7 @@ import "./Header.css";
 import { Link, useNavigate } from "react-router-dom";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
+import logo from '../assets/logo.png'
 
 const Header = () => {
   const { sesionIniciada, cerrarSesion } = useContextoSesion();
@@ -34,7 +35,7 @@ const Header = () => {
           navegarInicio();
         }}
       >
-        <img src="./src/assets/order_9280764.png" alt="Logo de la página" />
+        <img src={logo} alt="Logo de la página" />
         <h1>productos supabase</h1>
       </div>
 

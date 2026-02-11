@@ -2,12 +2,12 @@ import "./ListaCompraDetalles.css";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useContextoListaCompra from "../hooks/useContextoListaCompra.js";
-import useContextoProductos from "../hooks/useContextoProductos";
-import ListadoProductosMiniatura from "./ListadoProductosMiniatura.jsx";
-import ProductoMiniatura from "./ProductoMiniatura.jsx";
+import useContextoProductos from "../hooks/useContextoProductos.js";
+import ListadoProductosMiniatura from "../components/ListadoProductosMiniatura.jsx";
+import ProductoMiniatura from "../components/ProductoMiniatura.jsx";
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
 import Cargando from "../shared/Cargando.jsx";
-import ListasCompraMiniatura from "./ListasCompraMiniatura.jsx";
+import ListasCompraMiniatura from "../components/ListasCompraMiniatura.jsx";
 import useContextoSesion from "../hooks/useContextoSesion.js";
 
 const ListaCompraDetalles = () => {
@@ -19,6 +19,7 @@ const ListaCompraDetalles = () => {
 
   const { 
     cargando,
+    mensajeCargando,
     lista,
     cargarListaPorID, 
     borrarProductoDeLista 
@@ -30,6 +31,36 @@ const ListaCompraDetalles = () => {
   const [modoAddProductos, setModoAddProductos] = useState(false);
   const [hayProductosAñadir, setHayProductosAñadir] = useState(true);
   const [productosAccesibles, setProductosAccesibles] = useState([]);
+  //Estos estados tienen que ver con el total tanto cantidad como coste de toda la lista del usuario.
+  const [cantidadTotalProductos, setCantidadTotalProductos] = useState(0);
+  const [costeTotalProductos, setCosteTotalProductos] = useState(0);
+
+  /**
+   * Este useEffect va a calcular el TOTAL DE LOS PRODUCTOS que tiene el usuario y el TOTAL DEL PRECIO.
+   */
+  useEffect(() => {
+    //Si no hay productos en la lista no hacemos la operación.
+    if(!lista.productos) return;
+    // En esta lista de productos nos sacamos un p
+    const productos = lista.productos.map((p) => { 
+      return p;
+    });
+    //--------------------------------------- CÁLCULO CANTIDAD TOTAL PRODUCTOS --------------------------------
+    //Sacamos la cantidad total de los productos de la lista.
+    const cantidad = productos.reduce((acum, producto) => {
+      return acum + producto.cantidad;
+    }, 0); // NOTA RECORDATORIO: Si no ponemos este cero en la primera iteración acum será igual a un producto por lo tanto será [object Object]+segundoValor.
+    
+    setCantidadTotalProductos(cantidad);
+    
+    //--------------------------------------- CÁLCULO PRECIO TOTAL PRODUCTOS --------------------------------
+    const precio = productos.reduce((acum, producto) => {
+      return acum + producto.precio;
+    }, 0); // NOTA RECORDATORIO: Si no ponemos este cero en la primera iteración acum será igual a un producto por lo tanto será [object Object]+segundoValor.
+
+    setCosteTotalProductos(precio);
+
+  }, [lista.productos]);
 
   useEffect(() => {
     // Verificamos que tengamos tanto los productos generales como los de la lista.
@@ -56,7 +87,6 @@ const ListaCompraDetalles = () => {
   }, [productos, lista.productos]);
 
   useEffect(() => {
-    console.log("ListaCompraDetalles: la esta liando");
     //Si hay id de la lista a la que queremos solicitar la lista.
     if (idLista) {
       cargarListaPorID(idLista);
@@ -89,7 +119,7 @@ const ListaCompraDetalles = () => {
         }
       }}
     >
-        {cargando && <Cargando/>}
+        {cargando && <Cargando contexto={mensajeCargando}/>}
         {sesionIniciada && <ListasCompraMiniatura />}
       {lista && lista.nombre ? (
         <>
@@ -142,6 +172,9 @@ const ListaCompraDetalles = () => {
           </small>
         </>
       )}
+      <div className="total-cantida-precio-lista">
+
+      </div>
     </div>
   );
 };

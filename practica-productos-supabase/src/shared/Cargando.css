@@ -1,29 +1,72 @@
-
-.cargando {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.2rem;
-    color: #ccc;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* 1. EL CONTENEDOR / FONDO OSCURO */
+.cargando-overlay {
+    /* Ocupa todo el espacio disponible del contenedor padre (relative) o pantalla (fixed) */
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* El color negro con 30% de opacidad (el "oscurito") */
+    background-color: rgba(0, 0, 0, 0.3);
+    
+    /* LA CLAVE MÁGICA: Esto permite que los clicks ATRAVIESEN este fondo */
+    pointer-events: none;
+    
+    /* Para centrar el contenido perfectamente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Aseguramos que esté por encima visualmente */
     z-index: 999;
+    
+    /* Opcional: una transición suave de entrada */
+    animation: aparecer 0.3s ease-in-out;
 }
-.cargando img{
+
+/* 2. EL CONTENIDO (GIF Y TEXTO) */
+.cargando-contenido {
+    text-align: center;
+    color: #fff; /* Texto blanco para que resalte sobre el oscuro */
+    background-color: rgba(0, 0, 0, 0.6); /* Opcional: una cajita más oscura para el texto */
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    
+    /* Si quisieras que AL MENOS el gif sí bloqueara clicks (opcional), 
+       pondrías pointer-events: auto; aquí. 
+       Pero si quieres todo clickeable, no pongas nada. */
+}
+
+.cargando-contenido img {
     width: 50px;
     height: 50px;
+    display: block;
+    margin: 0 auto 0.5rem auto;
 }
-.cargando-overlay {
-    position: absolute;   /* Lo sacamos del flujo normal */
-    top: 50%;             /* Mitad vertical */
-    left: 50%;            /* Mitad horizontal */
-    transform: translate(-50%, -50%); /* Ajuste exacto al centro */
-    z-index: 999;         /* Por encima de todo */
-    
-    /* Opcional: un fondito blanco semitransparente para que se lea mejor */
-    background-color: rgba(255, 255, 255, 0.8); 
-    border-radius: 10px;
-    padding: 10px;
-    pointer-events: none; /* Para que puedas clicar lo de abajo si fuera necesario */
+
+.cargando-contenido p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Animación opcional para que no aparezca de golpe */
+@keyframes aparecer {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  margin: 0 auto 10px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

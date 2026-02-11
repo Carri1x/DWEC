@@ -9,11 +9,11 @@ import Cargando from '../shared/Cargando.jsx';
  * @returns Un formulario.
  */
 const Register = () => {
-    const {cargando, registrar, actualizarEstadoSesion} = useContextoSesion();
+    const {cargando, mensajeCargando, registrar, actualizarEstadoSesion} = useContextoSesion();
 
     return (
         <div className='contenedor-registrar'>
-            {cargando && <Cargando contexto={'Registrandote...'}/>}
+            {cargando && <Cargando contexto={mensajeCargando}/>}
             <small><Link to={'/login'}>Ya tengo una cuenta</Link></small>
             <h2>Regístrate</h2>
 

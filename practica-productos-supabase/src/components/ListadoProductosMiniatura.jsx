@@ -1,7 +1,6 @@
 import './ListadoProductosMiniatura.css';
 import ProductoMiniatura from "./ProductoMiniatura";
 import useContextoListaCompra from '../hooks/useContextoListaCompra';
-import Cargando from '../shared/Cargando.jsx';
 
 /**
  * Componente que proporciona los productos que tiene accesibles el usuario para añadir en su lista de la compra.
@@ -14,7 +13,6 @@ const ListadoProductosMiniatura = (props) => {
     const productosAccesibles = props.value;
 
     const {
-        cargando,
         lista,
         añadirProducto,
     } =useContextoListaCompra();
@@ -35,7 +33,6 @@ const ListadoProductosMiniatura = (props) => {
                 }
             }}
         >
-            {cargando && <Cargando contexto={'Añadiendo producto...'} />}
             {productosAccesibles ? productosAccesibles.map((producto)=> {
                 return <ProductoMiniatura key={producto.id} value={producto}/>
             }) : <p>No hay productos accesibles.</p>}

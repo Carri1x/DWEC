@@ -16,6 +16,7 @@ const ProveedorSesion = ({ children }) => {
 
     const {
         cargando,
+        mensajeCargando,
         registrarUsuarioAPI,
         logearUsuarioAPI,
         cerrarSesionAPI,
@@ -145,6 +146,7 @@ const ProveedorSesion = ({ children }) => {
 
     const datosAExportar = {
         cargando,
+        mensajeCargando,
         actualizarEstadoSesion,
         registrar,
         logear,

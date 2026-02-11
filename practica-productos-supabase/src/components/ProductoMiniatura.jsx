@@ -8,7 +8,6 @@ import Cargando from '../shared/Cargando.jsx';
 
 const ProductoMiniatura = (props) => {
     const {
-        cargando,
         actualizarProductoCantidad,
     } = useContextoListaCompra()
     const idLista = props.idLista;
@@ -73,7 +72,6 @@ const ProductoMiniatura = (props) => {
 
     return (
         <div id={id} className="container-producto-miniatura">
-            {cargando && <Cargando contexto={'Actualizando la cantidad del producto...'} />}
             <p>{nombre}</p>
             <div className='miniatura-detalles'>
                 <p>Peso: {peso}kg</p>

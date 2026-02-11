@@ -17,6 +17,7 @@ const ProveedorProductos = ({children}) => {
     }
     const {
         cargando,
+        mensajeCargando,
         traerProductosAPI,
         filtroProductosAPI, 
         ordenaProductosAPI,
@@ -181,6 +182,7 @@ const ProveedorProductos = ({children}) => {
     const datosAExportar = {
         productos,
         cargando,
+        mensajeCargando,
         cargarProductos,
         productosFiltrados,
         filtrarProductos,

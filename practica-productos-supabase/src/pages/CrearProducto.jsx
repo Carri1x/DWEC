@@ -12,7 +12,8 @@ const CrearProducto = () => {
         sesionIniciada
     } = useContextoSesion();
     const {
-        cargando, 
+        cargando,
+        mensajeCargando,
         cambiarEstadoNuevoProducto,
         crearProducto,
     } = useContextoProductos();
@@ -40,7 +41,7 @@ const CrearProducto = () => {
     return (
         <>
             <div className="crear-producto-container">
-                {cargando && <Cargando contexto={'Creando el producto...'}/>}
+                {cargando && <Cargando contexto={mensajeCargando}/>}
                 {
                     !sesionIniciada ? ( //Exactamente si no tiene la sesión iniciada tendrá que logearse...
                         <>

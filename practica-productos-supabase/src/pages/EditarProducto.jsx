@@ -13,6 +13,7 @@ const EditarProducto = () => {
     const { idProducto } = useParams();
     const {
         cargando,
+        mensajeCargando,
         productos,
         editarProducto,
     } = useContextoProductos();
@@ -57,7 +58,7 @@ const EditarProducto = () => {
                 ) :  //En cambio, si tiene la sesión iniciada podrá editar un producto...
                     (
                         <div className="editar-producto-container">
-                            {cargando && <Cargando contexto={'Editando el producto...'}/> }
+                            {cargando && <Cargando contexto={mensajeCargando}/> }
                             <h2>Editar Producto</h2>
                             <button onClick={() => {setFormulario(productoEditar)}}>Resetear producto</button>
                             <form ref={formRef}>

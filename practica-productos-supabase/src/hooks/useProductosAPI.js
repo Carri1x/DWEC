@@ -9,6 +9,7 @@ import { useState } from "react";
  */
 const useProductosAPI = () => {
     const [cargando, setCargando] = useState(false);
+    const [mensajeCargando, setMensajeCargando] = useState('');
 
     /**
      * Función general que abstrae la lógica del error y los datos que devuelve supabase. Por lo que las siguientes peticiónes especificas solo tendrán que fijarse en las PETICIONES de los datos requeridos para estos.
@@ -28,6 +29,7 @@ const useProductosAPI = () => {
             throw error;
         } finally {
             setCargando(false);
+            setMensajeCargando('')
         }
     }
  
@@ -39,6 +41,7 @@ const useProductosAPI = () => {
      * @throws {Error} Si ocurre un error en la petición a Supabase
      */
     const traerProductosAPI = async() => {
+        setMensajeCargando('Obteniendo los productos...')
         try {
             const data = await peticion(supabaseConexion.from('Productos').select('*'));
             return data;
@@ -57,6 +60,7 @@ const useProductosAPI = () => {
      * @throws {Error} Si no se encuentra el producto o falla la petición
      */
     const traerProductoPorIdAPI = async(idProducto) => {
+        setMensajeCargando('Obteniendo el producto...')
         try {
             const data = await peticion(supabaseConexion.from('Productos').select('*').eq('id', idProducto).single());
             return data;
@@ -81,6 +85,7 @@ const useProductosAPI = () => {
      * @throws {Error} Si el filtro numérico no es válido o falla la petición
      */
     const filtroProductosAPI = async(filtro = '', columna = 'nombre') => {
+        setMensajeCargando(`Encontrando los productos que coincidan con: ${filtro? filtro : "desconocido"} ...`)
         try {
             let query = supabaseConexion.from('Productos').select('*');
             // Si el nombre del filtro es una cadena vacía, se devolverá un array vacío.
@@ -125,6 +130,7 @@ const useProductosAPI = () => {
      * @throws {Error} Si falla la petición a Supabase
      */
     const ordenaProductosAPI = async(columna = 'nombre', orden = true) => {
+        setMensajeCargando(`Ordenando los productos por atributo: ${columna}`)
         try {
             const data = await peticion(supabaseConexion.from('Productos').select('*').order(columna, {ascending: orden}));
             return data;
@@ -144,6 +150,7 @@ const useProductosAPI = () => {
      * @throws {Error} Si ocurre un error durante la inserción
      */
     const insertarProductoAPI = async(producto) => {
+        setMensajeCargando(`Guardando el producto ${producto.nombre}...`)
         try {
             await peticion(supabaseConexion.from('Productos').insert(producto));
         } catch (error) {
@@ -159,6 +166,7 @@ const useProductosAPI = () => {
      * @throws {Error} Si falla la eliminación
      */
     const eliminarProductoAPI = async(idProducto) => {
+        setMensajeCargando('Eliminando el producto...')
         try {
             await peticion(supabaseConexion.from('Productos').delete().eq('id', idProducto));
         } catch (error) {
@@ -175,6 +183,7 @@ const useProductosAPI = () => {
      * @throws {Error} Si falla la actualización
      */
     const editarProductoAPI = async(producto) => {
+        setMensajeCargando('Editando el producto...')
         try {
             await peticion(supabaseConexion.from('Productos').update(producto).eq('id', producto.id));
         } catch (error) {
@@ -184,6 +193,7 @@ const useProductosAPI = () => {
 
     return {
         cargando,
+        mensajeCargando,
         traerProductosAPI,
         filtroProductosAPI,
         ordenaProductosAPI,

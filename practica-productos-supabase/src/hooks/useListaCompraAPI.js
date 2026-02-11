@@ -10,6 +10,7 @@ import { supabaseConexion } from "../supabase/Supabase.js";
  */
 const useListaCompraAPI = () => {
     const [cargando, setCargando] = useState(false);
+    const [mensajeCargando, setMensajeCargando] = useState('')
 
     /**
      * Función general que abstrae la lógica del error y los datos que devuelve supabase. Por lo que las siguientes peticiónes especificas solo tendrán que fijarse en las PETICIONES de los datos requeridos para estos.
@@ -31,6 +32,7 @@ const useListaCompraAPI = () => {
             throw error;
         } finally {
             setCargando(false);
+            setMensajeCargando('');
         }
     }
 
@@ -43,6 +45,7 @@ const useListaCompraAPI = () => {
      * @returns Devuelve todas las listas de la compra que tiene ese propietario.
      */
     const traerListasAPI = async (idPropietario) => {
+        setMensajeCargando('Trayendo listas de la compra...')
         try {
             const listasAPI = await peticion(
                 supabaseConexion
@@ -65,6 +68,7 @@ const useListaCompraAPI = () => {
      * @returns Devuelve esa lista buscada por id.
      */
     const traerListaPorIdAPI = async(idLista) => {
+        setMensajeCargando('Buscando lista de la compra...')
         try {
             const listaAPI = await peticion(
                 supabaseConexion
@@ -87,6 +91,7 @@ const useListaCompraAPI = () => {
      * @returns Devuelve el estado y el texto del estado de la petición.
      */
     const crearListaAPI = async(nombre, idPropietario) => {
+        setMensajeCargando('Creando tu lista de la compra...')
         try {
             const data = await peticion(
                 supabaseConexion
@@ -115,6 +120,7 @@ const useListaCompraAPI = () => {
      * @returns Devuelve la información del borrado y en caso de alguna otra de los productos borrados dentro por la clave 'productosBorrados'.
      */
     const borrarListaAPI = async(idLista) => {
+        setMensajeCargando('Borrando lista de la compra...')
         try {
             //Primero borramos todos sus productos si los tiene.
             const dataProdBorrados = await borrarProductosLista(idLista);
@@ -139,6 +145,7 @@ const useListaCompraAPI = () => {
      * @returns Devuelve los productos de la lista buscada por id en concreto. 
      */
     const traerProductosDeListaAPI = async(idLista) => {
+        setMensajeCargando('Trayendo todos los productos de la lista...')
         try {
             const productos = await peticion(
                 supabaseConexion
@@ -168,6 +175,7 @@ const useListaCompraAPI = () => {
      * @returns 
      */
     const añadirProductoAPI = async(idLista, idProducto) => {
+        setMensajeCargando('Añadiendo el producto a la lista...')
         try {
             const data = await peticion(
                 supabaseConexion
@@ -194,6 +202,7 @@ const useListaCompraAPI = () => {
      * @returns Devolverá el producto entero con su nueva cantidad actualizada.
      */
     const actualizarProductoCantidadAPI = async(idLista, idProducto, cantidad) => {
+        setMensajeCargando('Actualizando la cantidad del producto...')
         try {
             const data = await peticion(
                 supabaseConexion
@@ -219,6 +228,7 @@ const useListaCompraAPI = () => {
      * @returns Devuelve el producto borrado, con toda su información de la cantidad que estaba seleccionada en esta lista.
      */
     const borrarProductoDeListaAPI = async(idLista, idProducto) => {
+        setMensajeCargando('Borrando el producto de la tabla...')
         try {
             const data = await peticion(
                 supabaseConexion
@@ -248,6 +258,7 @@ const useListaCompraAPI = () => {
      * @returns Devuelve todos los productos de esa lista.
      */
     const borrarProductosLista = async(idLista) => {
+        setMensajeCargando('Borrando todos los productos de la tabla...')
         try {
             const data = await peticion(
                 supabaseConexion
@@ -266,6 +277,7 @@ const useListaCompraAPI = () => {
 
     return {
         cargando,
+        mensajeCargando,
         traerListasAPI,
         traerListaPorIdAPI,
         crearListaAPI,

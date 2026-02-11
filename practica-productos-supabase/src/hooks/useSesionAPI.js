@@ -11,6 +11,7 @@ import { supabaseConexion } from "../supabase/Supabase.js";
  */
 const useSesionAPI = () => {
   const [cargando, setCargando] = useState(false);
+  const [mensajeCargando, setMensajeCargando] = useState('');
 
   /**
    * Función general que abstrae la lógica del error y los datos que devuelve supabase. Por lo que las siguientes peticiónes especificas solo tendrán que fijarse en las PETICIONES de los datos requeridos para estos.
@@ -32,6 +33,7 @@ const useSesionAPI = () => {
       throw error;
     } finally {
       setCargando(false);
+      setMensajeCargando('');
     }
   };
 
@@ -43,6 +45,7 @@ const useSesionAPI = () => {
    * @returns Objeto de código y texto de respuesta.
    */
   const registrarUsuarioAPI = async (usuario) => {
+    setMensajeCargando(`Registrándote como usuario...`)
     try {
       const data = await peticion(supabaseConexion.auth.signUp(usuario));
       return data;
@@ -59,6 +62,7 @@ const useSesionAPI = () => {
    * @returns Objeto de código y texto de respuesta.
    */
   const logearUsuarioAPI = async (usuario) => {
+    setMensajeCargando(`Iniciando sesión...`)
     try {
       const data = await peticion(
         supabaseConexion.auth.signInWithPassword(usuario),
@@ -76,6 +80,7 @@ const useSesionAPI = () => {
    * @returns Objeto de código y texto de respuesta.
    */
   const cerrarSesionAPI = async () => {
+    setMensajeCargando(`Cerrando sesión...`)
     try {
       const data = await peticion(supabaseConexion.auth.signOut());
       return data;
@@ -88,6 +93,7 @@ const useSesionAPI = () => {
 
   return {
     cargando,
+    mensajeCargando,
     registrarUsuarioAPI,
     logearUsuarioAPI,
     cerrarSesionAPI,

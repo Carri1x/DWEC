@@ -17,6 +17,7 @@ const ProveedorListaCompra = ({children}) => {
 
     const {
         cargando,
+        mensajeCargando,
         traerListasAPI,
         traerListaPorIdAPI,
         crearListaAPI,
@@ -66,7 +67,6 @@ const ProveedorListaCompra = ({children}) => {
      */
     const cargarListaPorID = async(idLista) =>{
         try {
-            console.log("O es aqui??? Proveedorlistacompra.69")
             // 1. Cargamos la información de la lista.
             let lista = await traerListaPorIdAPI(idLista);
             /* 2. Cargamos los productos de esta lista. 
@@ -215,6 +215,7 @@ const ProveedorListaCompra = ({children}) => {
 
     const cosasExportar = {
         cargando,
+        mensajeCargando,
         lista,
         listasCompra,
         crearListaCompra,

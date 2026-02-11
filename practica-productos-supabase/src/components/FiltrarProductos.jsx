@@ -1,10 +1,9 @@
 import { useState, useRef } from "react";
 import useContextoProductos from "../hooks/useContextoProductos.js";
 import "./Controles.css";
-import Cargando from "../shared/Cargando.jsx";
 
 const FiltrarProductos = () => {
-    const { cargando, filtrarProductos, borrarFiltroProductos } = useContextoProductos();
+    const { filtrarProductos, borrarFiltroProductos } = useContextoProductos();
     // Este estado `filro` es el nombre por el que va a querer filtrar los productos. Ej= uva (uva riquisima), uv (uva riquisima), manz (manzana)...
     const [filtro, setFiltro] = useState('');
     //Este estado `opcionFiltrado` es la columna por la que va a querer el usuario filtrar.
@@ -41,7 +40,6 @@ const FiltrarProductos = () => {
 
     return (
         <div className="control-group">
-            {cargando && <Cargando contexto={'Filtrando los productos...'} />}
             <h3>Filtrar por</h3>
             <div className="flex-row">
                 <select name="opcion-filtro" className="input-custom" style={{width: 'auto'}} onChange={cambiarEstado}>
