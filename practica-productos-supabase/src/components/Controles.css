@@ -1,94 +1,82 @@
-/* Contenedor general para los filtros y el ordenado */
-.controles-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 10px;
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
+/* =============================================
+   CONTROLES.CSS — FiltrarProductos & OrdenarProductos
+   ============================================= */
 
 .control-group {
-    background-color: #2d2d2d; /* Gris de las tarjetas */
-    padding: 1.5rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  flex: 1;
 }
 
 .control-group h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    color: #a5a5a5;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.65rem;
 }
 
-/* Estilos para Selects e Inputs */
+.flex-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .input-custom {
-    background-color: #3d3d3d;
-    border: 1px solid #4d4d4d;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s;
-    width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 0.42rem 0.75rem;
+  font-size: 0.85rem;
+  font-family: 'DM Sans', sans-serif;
+  height: 36px;
+  transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .input-custom:focus {
-    border-color: #5d5fef;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-ring);
+  outline: none;
 }
 
-/* Contenedor horizontal para elementos dentro del grupo */
-.flex-row {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
+.flex-row .btn-primary {
+  height: 36px;
+  padding: 0 1rem;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  background: var(--accent);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
 }
 
-/* Botones */
-.btn-primary {
-    background-color: #5d5fef;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: background 0.3s, transform 0.1s;
+.flex-row .btn-primary:hover {
+  background: var(--accent-hover);
 }
 
-.btn-primary:hover {
-    background-color: #4a4cdb;
+.flex-row .btn-primary.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
 }
 
-.btn-primary:active {
-    transform: scale(0.98);
+.flex-row .btn-primary.btn-secondary:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
 }
 
-.btn-secondary {
-    background-color: #444;
-    color: #ccc;
-    border: 1px solid #555;
+.flex-row .btn-primary.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
-.btn-outline {
-    background: transparent;
-    border: 1px solid #5d5fef;
-    color: #5d5fef;
-}
-
-.status-label {
-    font-size: 0.8rem;
-    color: #888;
+.flex-row .btn-primary.btn-outline:hover {
+  background: var(--accent-light);
 }

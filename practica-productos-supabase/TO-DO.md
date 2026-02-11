@@ -1,7 +1,7 @@
-# COSAS PENDIENTE
+# COSAS PENDIENTES
 
-1. Hacer el sumatorio de todos los productos como un componente aparte.
+~~1. Hacer el sumatorio de todos los productos como un componente aparte.~~ :ok:
 
-    - En `<listaCompraDetalles/>` tenemos que terminar la función de sumado de cantidad y productos totales, con la opción de avisar al usuario que traiga el coche por el peso.
+~~En `<listaCompraDetalles/>` tenemos que terminar la función de sumado de cantidad y productos totales, con la opción de avisar al usuario que traiga el coche por el peso.~~ :ok:
 
-2. ~~Cambiar los componentes, que llevan asignada un `<Route />` en el componente Rutas, de la carpeta `components` a la carpeta `pages`.~~ :ok:
+~~2. Cambiar los componentes, que llevan asignada un `<Route />` en el componente Rutas, de la carpeta `components` a la carpeta `pages`.~~ :ok:

@@ -59,12 +59,11 @@ const ProductoMiniatura = (props) => {
      */
     useEffect(() => {
         if (cantidadProducto === cantidad) return;
-        console.log("ProductoMiniatura: La esta liando fuerte")
-        // Creamos un temporizador de 4 segundos.
+        // Creamos un temporizador de 3 segundos.
         const temporizador = setTimeout(() => {
             if (!cantidadProducto) return; 
             actualizarProductoCantidad(idLista, id, cantidadProducto);
-        }, 4000);
+        }, 3000);
 
         // Si el usuario vuelve a clicar antes de que pase el segundo, limpiamos el anterior temporizador.
         return () => clearTimeout(temporizador);
@@ -77,7 +76,7 @@ const ProductoMiniatura = (props) => {
                 <p>Peso: {formatearPesoEspanya(peso)}kg</p>
                 <p>Precio: {formatearMonedaEspanya(precio)}</p>
                 {cantidad && 
-                <div className='miniatura-cantidad'> peti
+                <div className='miniatura-cantidad'>
                     <label>Cantidad: {cantidadProducto? cantidadProducto : 0}</label>
                     <input type="text" value={cantidadProducto} onChange={(evento) => {
                         //Cambia la cantidad de este input en cuanto está cambiando este valor del input.

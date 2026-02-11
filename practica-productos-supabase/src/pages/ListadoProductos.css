@@ -1,74 +1,98 @@
-.listado-productos-container {
-    display: grid;
-    grid-template-columns: 400px auto;
-    grid-template-rows: auto;
-    min-width: 1000px;
+/* =============================================
+   LISTADOPRODUCTOS.CSS
+   ============================================= */
+
+/* -------------------------------------------------------
+   Wrapper externo: sidebar | contenido principal
+   ------------------------------------------------------- */
+.main-contenedor-listado-productos {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem 80px;
+  min-height: calc(100vh - 160px);
 }
 
-/* Contenedor principal */
+/* El sidebar .container-lista-compra se posiciona sticky por su propio CSS */
+
+/* -------------------------------------------------------
+   Columna principal (todo dentro de listado-container)
+   ------------------------------------------------------- */
 .listado-container {
-    padding: 20px;
-    padding-bottom: 100px;  /*Espacio para que el resumen no tape productos */;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
-/* La cuadrícula de productos */
+.listado-container > h1 {
+  font-size: 1.8rem;
+}
+
+/* Controles: filtro y orden en fila */
+.controles-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Grid de tarjetas de producto */
 .productos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-    gap: 20px;
-    max-width: 1200px;
-    justify-self: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
 }
 
-/* El div de información de abajo */
+.listado-container > p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* -------------------------------------------------------
+   Barra de resumen fija al fondo
+   ------------------------------------------------------- */
 .resumen-fijo {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #2c2c2c;
-    color: white;
-    display: flex;
-    gap: 40px;
-    padding: 15px 40px;
-    border-radius: 50px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    border: 1px solid var(--color-link); /* Verde Supabase */
-    z-index: 100;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  padding: 0.6rem 2rem;
+  z-index: 50;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
 }
 
 .resumen-item {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
 }
 
 .resumen-item span {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: #888;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .resumen-item strong {
-    font-size: 1.2rem;
-    color: var(--color-link);
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
-/* Formulario de filtrado */
-.formulario-filtrado {
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    gap: 10px;
-}
-.formulario-filtrado button{
-    margin: 0;
-}
-
-.controles-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+/* -------------------------------------------------------
+   Responsive
+   ------------------------------------------------------- */
+@media (max-width: 768px) {
+  .main-contenedor-listado-productos {
+    flex-direction: column;
+  }
 }

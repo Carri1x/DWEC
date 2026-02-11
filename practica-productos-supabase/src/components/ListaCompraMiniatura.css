@@ -1,53 +1,68 @@
-.container-lista{
-    width: 100%;
-    height: fit-content;
-    border: 1px rgba(255, 255, 255, 0.514) solid;
-    border-radius: 10px;
-    background-image: linear-gradient(135deg, 
-        var(--color-link-hover) 0% 18%,
-        transparent 38% 100%
-    );
-    transition: transform 0.35s ease;
+/* =============================================
+   LISTACOMPRAMINIATURA.CSS
+   ============================================= */
+
+.container-lista {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  user-select: none;
 }
 
-.container-lista:hover{
-    transform:translateX(8px);
+.container-lista:hover {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 0 1px var(--accent-ring);
 }
 
-.animacion-clic{
-    animation: reboteClic 0.25s ease;
+.lista-nombre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
-
-
-@keyframes reboteClic {
-    from {
-        transform: translateX(8px);
-    } 
-
-    50% {
-        transform: translateX(30px);
-    }
-
-    to {
-        transform: translateX(8px);
-    }
+.lista-nombre p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
 }
 
-
-.container-lista .lista-nombre{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: fit-content;
+.lista-nombre img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition);
+  filter: brightness(1.5);
+  flex-shrink: 0;
 }
 
-.container-lista .lista-nombre p{
-    margin: 5px 0 2px 20px;
+.lista-nombre img:hover {
+  opacity: 1;
+  transform: scale(1.15);
 }
 
-.container-lista .lista-nombre img{
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
+.container-lista small {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+/* Animación al clicar */
+@keyframes clickPulse {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.97); }
+  70%  { transform: scale(1.01); border-color: var(--accent); }
+  100% { transform: scale(1); }
+}
+
+.animacion-clic {
+  animation: clickPulse 0.28s ease forwards;
 }

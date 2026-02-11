@@ -1,3 +1,163 @@
+/* =============================================
+   LISTACOMPRADETALLES.CSS
+   ============================================= */
+
+/* -------------------------------------------------------
+   Wrapper externo: sidebar izquierdo | contenido
+   ------------------------------------------------------- */
+.main-container-lista-compra-detalles {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.5rem 2rem 2rem;
+  min-height: calc(100vh - 160px);
+}
+
+/* El sidebar .container-lista-compra se posiciona sticky por su propio CSS */
+
+/* -------------------------------------------------------
+   Div interior: columna con h1, botón, productos, totales
+   y catálogo a la derecha de los productos
+   ------------------------------------------------------- */
 .container-lista-compra-detalles {
-    width: 900px;
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  grid-template-rows: auto;
+  gap: 0.85rem 1.25rem;
+  align-items: start;
+}
+
+/* h1 ocupa las dos columnas */
+.container-lista-compra-detalles > h1 {
+  grid-column: 1 / -1;
+  font-size: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Botón "Añadir productos" / "Terminar selección" — col 1 */
+.container-lista-compra-detalles > button {
+  grid-column: 1;
+  justify-self: start;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.85rem;
+  border-radius: var(--radius-md);
+}
+.container-lista-compra-detalles > button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Lista de productos de la cesta — col 1 */
+.lista-productos-compra-miniatura {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Mensaje sin productos — col 1 */
+.container-lista-compra-detalles > p {
+  grid-column: 1;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Mensajes estado vacío — col 1 */
+.container-lista-compra-detalles > small {
+  grid-column: 1;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+/* Catálogo — col 2, se queda sticky a la derecha abarcando las filas */
+.catalogo-productos {
+  grid-column: 2;
+  grid-row: 2 / 6;
+  position: sticky;
+  top: 112px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.catalogo-productos::before {
+  content: 'Catálogo';
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Totales — col 1 */
+.total-cantida-precio-lista {
+  grid-column: 1;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2.5rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.total-cantida-precio-lista p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+/* Aviso peso elevado */
+.aviso-peso-elevado {
+  width: 100%;
+  background: var(--warning-light);
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+}
+
+.aviso-peso-elevado p {
+  font-size: 0.82rem;
+  color: var(--warning);
+}
+
+/* -------------------------------------------------------
+   Responsive
+   ------------------------------------------------------- */
+@media (max-width: 900px) {
+  .main-container-lista-compra-detalles {
+    flex-direction: column;
+  }
+
+  .container-lista-compra-detalles {
+    grid-template-columns: 1fr;
+  }
+
+  .container-lista-compra-detalles > h1,
+  .container-lista-compra-detalles > button,
+  .lista-productos-compra-miniatura,
+  .catalogo-productos,
+  .total-cantida-precio-lista {
+    grid-column: 1;
+  }
+
+  .catalogo-productos {
+    grid-row: auto;
+    position: relative;
+    top: 0;
+    max-height: none;
+  }
 }

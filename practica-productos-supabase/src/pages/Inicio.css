@@ -1,42 +1,68 @@
-
-.btn-link {
-    background-color: var(--color-link);
-    padding: 20px;
-    color: var(--color-negro-principal);
-    border-radius: 20px;
-}
-
-.btn-link:hover {
-    background-color: var(--color-link-hover);
-    color: var(--color-blanco-principal)
-}
+/* =============================================
+   INICIO.CSS
+   ============================================= */
 
 .contenedor-inicio {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 2rem;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.03);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  margin: 5rem auto;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
 .contenedor-inicio h1 {
-    color: var(--color-link);
-    margin-bottom: 0.5rem;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .contenedor-inicio h3 {
-    font-weight: 300;
-    opacity: 0.8;
-    margin-bottom: 2rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
 .contenedor-iniciar-registrar-sesion {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.contenedor-iniciar-registrar-sesion p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.contenedor-iniciar-registrar-sesion p a {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.contenedor-inicio > div > p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.contenedor-inicio > div > button {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1.2rem;
+}
+.contenedor-inicio > div > button:hover {
+  background: var(--danger-light);
+  color: var(--danger);
+  border-color: var(--danger);
 }

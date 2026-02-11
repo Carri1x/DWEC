@@ -1,24 +1,17 @@
-header, footer {
-  width: 100%;
-  padding: 1rem 0;
-  background-color: #1a1a1a; /* Un poco más oscuro que el fondo */
-}
+/* =============================================
+   APP.CSS
+   ============================================= */
 
-/* Este es el truco clave: 
-   Hacemos que el contenedor de las rutas crezca */
-main, .rutas-container { 
-  flex: 1; 
-  width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-/* Ajuste para que los elementos dentro de Rutas se vean bien */
-.contenedor-login, .contenedor-registrar, .contenedor-inicio {
+#root {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-top: 50px;
+  min-height: 100vh;
 }
 
+.rutas-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 2500px;
+  align-self: center;
+}

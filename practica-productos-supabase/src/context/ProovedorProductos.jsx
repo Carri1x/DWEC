@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import useProductosAPI from "../hooks/useProductosAPI.js";
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
+import useContextoListaCompra from "../hooks/useContextoListaCompra.js";
 
 const contextoProductos = createContext();
 const ProveedorProductos = ({children}) => {
@@ -25,6 +26,7 @@ const ProveedorProductos = ({children}) => {
         eliminarProductoAPI,
         editarProductoAPI,
         traerProductoPorIdAPI,
+        borrarProductoDeTodasListasCompraAPI,
     } = useProductosAPI();
 
     const [productos, setProductos] = useState([]); //Estos son todos los productos principales que se hacen en la primera petición cuando se crea este Proovedor.
@@ -146,12 +148,17 @@ const ProveedorProductos = ({children}) => {
     /**
      * Función que elimina un producto en la base de datos a través del ID que se ha pasado por parámetro.
      * 
-     * @param {String (UUID)} id 
+     * IMPORTANTE!! DANGER!! IMPORTANTE!!:
+     * ESTA FUNCIÓN `borrarProductoDeTodasListasCompraAPI(idProducto)` TOCA LA TABLA ---> ListasCompra_Productos <--- UTILIZAR ESTA FUNCIÓN CON PRECAUCIÓN.
+     * 
+     * @param {String (UUID)} idProducto ID del producto a eliminar.
      */
-    const eliminarProducto = async(id) => {
+    const eliminarProducto = async(idProducto) => {
         try {
+            //Eliminamos los productos de todas las listas  de los usuarios si no tenemos conflicto con las constraints y no podemos hacerlo.
+            await borrarProductoDeTodasListasCompraAPI(idProducto)
             //Llamada a la API para eliminar el producto.
-            await eliminarProductoAPI(id);
+            await eliminarProductoAPI(idProducto);
             lanzarMensaje('Producto eliminado correctamente');
             cargarProductos();
         } catch (error) {

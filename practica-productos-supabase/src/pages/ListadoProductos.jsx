@@ -39,29 +39,31 @@ const ListadoProductos = () => {
   }, [productos, productosFiltrados]); // ------------------------------------ END EFECT CALCULO TOTAL PRODUCTOS Y COSTE TOTAL ------------------------------------
 
   return (
-      <div className="listado-container" onClick={async (evento) => {
-        if (evento.target.tagName !== 'BUTTON') return;
-        const idProducto = evento.target.dataset.id;
+    <div className="main-contenedor-listado-productos" onClick={async (evento) => {
+      if (evento.target.tagName !== 'BUTTON') return;
+      const idProducto = evento.target.dataset.id;
 
-        if (evento.target.dataset.tipo === 'editar-producto') { //--------------------------------- APARTADO EDITAR PRODUCTO -----------------------------------
-          navegar(`/editar-producto/${idProducto}`); //Navegamos a la página de editar producto.
-        } //--------------------------------------------------------------------------------------- END APARTADO EDITAR PRODUCTO -------------------------------
-        //------------------------------------------------------------------------------------------------------------------------------------------------------
-        if (evento.target.dataset.tipo === 'eliminar-producto') { //--------------------------------- APARTADO ELIMINAR PRODUCTO -------------------------------
-          const producto = productos.find((prod) => prod.id.toString() === idProducto);
+      if (evento.target.dataset.tipo === 'editar-producto') { //--------------------------------- APARTADO EDITAR PRODUCTO -----------------------------------
+        navegar(`/editar-producto/${idProducto}`); //Navegamos a la página de editar producto.
+      } //--------------------------------------------------------------------------------------- END APARTADO EDITAR PRODUCTO -------------------------------
+      //------------------------------------------------------------------------------------------------------------------------------------------------------
+      if (evento.target.dataset.tipo === 'eliminar-producto') { //--------------------------------- APARTADO ELIMINAR PRODUCTO -------------------------------
+        const producto = productos.find((prod) => prod.id.toString() === idProducto);
 
-          const usuarioAcepta = await confirmarAccion(`¿Quieres eliminar ${producto?.nombre} de la lista de productos?`);
+        const usuarioAcepta = await confirmarAccion(`¿Quieres eliminar ${producto?.nombre} de la lista de productos? ¡Ten en cuenta que si borras un producto aquí se borrará en la lista de los usuarios!`);
 
-          if (usuarioAcepta) {
-            await eliminarProducto(producto.id)
-          }
+        if (usuarioAcepta) {
+          await eliminarProducto(producto.id)
+        }
 
-        } //---------------------------------------------------------------------------------------- END APARTADO ELIMINAR PRODUCTO ------------------------------
+      } //---------------------------------------------------------------------------------------- END APARTADO ELIMINAR PRODUCTO ------------------------------
 
-      }}>
+    }}>
+      {cargando && <Cargando contexto={mensajeCargando} />}
+      {sesionIniciada && <ListasCompraMiniatura />}
+
+      <div className="listado-container">
         <h1>Productos</h1>
-        {cargando && <Cargando contexto={mensajeCargando} />}
-        {sesionIniciada && <ListasCompraMiniatura />}
         {sesionIniciada && (
           <div className="controles-container">
             <FiltrarProductos />
@@ -78,7 +80,7 @@ const ListadoProductos = () => {
               })}
             </div>
           ) : //En caso de que no haya ningún filtro, enseñamos todos los productos. NO HAY PRODUCTOS FILTRADOS.
-             (
+            (
               //Muestro los productos.
               <div className="productos-grid">
                 {
@@ -110,6 +112,8 @@ const ListadoProductos = () => {
           </div>
         )}
       </div>
+    </div>
+
   );
 };
 

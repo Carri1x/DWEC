@@ -1,16 +1,39 @@
-.contenedor-menu{
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+/* =============================================
+   MENU.CSS
+   ============================================= */
+
+.contenedor-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 2rem;
+  height: 44px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
 }
 
-a{
-    color: var(--color-link);
-    text-decoration: none;  
-    font-weight: bold;
-    font-size: larger;
+.contenedor-menu a {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: color var(--transition), background var(--transition);
+  letter-spacing: 0.02em;
 }
 
-a:hover{
-    color: var(--color-link-hover);
+.contenedor-menu a:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  text-decoration: none;
+}
+
+/* Separador visual sutil entre links */
+.contenedor-menu a + a {
+  border-left: 1px solid var(--border);
+  margin-left: 0.25rem;
+  padding-left: 1rem;
+  border-radius: 0;
+  border-left: none;
 }

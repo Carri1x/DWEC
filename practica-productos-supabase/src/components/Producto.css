@@ -1,29 +1,114 @@
+/* =============================================
+   PRODUCTO.CSS — Tarjeta producto estilo Goodreads dark
+   ============================================= */
 
 .producto-card {
-    background-color: hsla(250, 4%, 32%, 0.445);
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.producto-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
 }
 
 .producto-card:hover {
-    transform: translateY(-5px);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.producto-card:hover::before {
+  opacity: 1;
+}
+
+.producto-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'Playfair Display', serif;
 }
 
 .producto-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover; /* Esto hace que la imagen se corte pero no se deforme */
-    border-radius: 8px;
-    margin-bottom: 10px;
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin: 0.25rem 0;
 }
 
-small{
-    font-size: 0.67em;
-    color: var(--color-link);
+.producto-card p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.producto-card .btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+/* Botón eliminar */
+.producto-card .btn[data-tipo="eliminar-producto"] {
+  background: var(--danger-light);
+  color: var(--danger);
+  border: 1px solid transparent;
+}
+.producto-card .btn[data-tipo="eliminar-producto"]:hover {
+  background: var(--danger);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Botón editar */
+.producto-card .btn[data-tipo="editar-producto"] {
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid transparent;
+}
+.producto-card .btn[data-tipo="editar-producto"]:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.producto-card .btn + .btn {
+  margin-left: 0.4rem;
+}
+
+/* Botones en fila */
+.producto-card > :last-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.producto-card small a {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.producto-card small a:hover {
+  color: var(--accent);
 }

@@ -178,6 +178,11 @@ const ProveedorListaCompra = ({children}) => {
         try {
             const data = await actualizarProductoCantidadAPI(idLista, idProducto, cantidad);
             cargarListaPorID(idLista);
+            const producto = lista.productos.find((p) => {
+                return p.id === idProducto
+            });
+            console.log(producto)
+            lanzarMensaje(`Producto ${producto.nombre} actualizado correctamente.`)
         } catch (error) {
             lanzarMensaje(`ActualizarProductoCantidad: ${error.message}`, tiposDeMensaje.error);
         }

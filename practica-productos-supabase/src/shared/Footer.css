@@ -1,6 +1,16 @@
-.contenedor-footer{
-    height: 10px;
+/* =============================================
+   FOOTER.CSS
+   ============================================= */
+
+.contenedor-footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding: 1rem 2rem;
+  text-align: center;
 }
-.contenedor-footer small{
-    margin-bottom: 5px;
+
+.contenedor-footer small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
 }

@@ -168,7 +168,7 @@ const useProductosAPI = () => {
     const eliminarProductoAPI = async(idProducto) => {
         setMensajeCargando('Eliminando el producto...')
         try {
-            await peticion(supabaseConexion.from('Productos').delete().eq('id', idProducto));
+            await peticion(supabaseConexion.from('Productos').delete().eq('id', idProducto));        
         } catch (error) {
             throw error;
         }
@@ -191,6 +191,35 @@ const useProductosAPI = () => {
         }
     }
 
+    /**
+     * Función que borra el producto pasado por parámetro en todas las listas de la compra de todos los usuarios.
+     * 
+     * IMPORTANTE!! DANGER!! IMPORTANTE!!:
+     * ESTA FUNCIÓN TOCA LA TABLA ---> ListasCompra_Productos <--- UTILIZAR ESTA FUNCIÓN CON PRECAUCIÓN.
+     * 
+     * He pensado que mejor hacer una función que haga esto en vez de hacer un borrado en cascada en supabase, simplemente porque estamos en clase de Entorno CLIENTE.
+     * 
+     * @async
+     * @param {String (UUID)} idProducto
+     * @return 
+     */
+    const borrarProductoDeTodasListasCompraAPI = async(idProducto) => {
+        setMensajeCargando('Borrando producto de las listas...');
+        try {
+            const data = await peticion(
+                supabaseConexion
+                .from('ListasCompra_Productos')
+                .delete()
+                .eq('id_Producto', idProducto)
+                .select()
+            )
+            return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
     return {
         cargando,
         mensajeCargando,
@@ -201,6 +230,7 @@ const useProductosAPI = () => {
         eliminarProductoAPI,
         editarProductoAPI,
         traerProductoPorIdAPI,
+        borrarProductoDeTodasListasCompraAPI,
     }
 };
 export default useProductosAPI;

@@ -1,148 +1,68 @@
-/* Variables basadas en la imagen de referencia */
-:root {
-    --primary-purple: #5b5bed; /* El color morado de tus botones */
-    --primary-purple-hover: #4a4adb; /* Un tono un poco más oscuro para el hover */
-    --dark-bg-main: #121212; /* Fondo muy oscuro de la web */
-    --dark-bg-card: #1e1e24; /* Fondo de los contenedores/tarjetas */
-    --text-light: #e0e0e0; /* Color de texto claro */
-    --text-muted: #a0a0a0; /* Color de texto secundario/placeholders */
-    --error-red: #ff4d4d; /* Rojo para errores */
-    --border-radius: 8px; /* Redondeado de esquinas */
-}
+/* =============================================
+   CREARPRODUCTO.CSS
+   ============================================= */
 
-/* --- Contenedor Principal --- */
 .crear-producto-container {
-    max-width: 700px; /* Ancho máximo para que no se desparrame en pantallas grandes */
-    margin: 2rem auto; /* Centrado horizontalmente */
-    padding: 2.5rem;
-    background-color: var(--dark-bg-card); /* Fondo tipo tarjeta como los filtros de la imagen */
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    color: var(--text-light);
+  max-width: 580px;
+  margin: 2.5rem auto;
+  padding: 2.5rem 2rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
-/* Título */
-h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
+.crear-producto-container h1 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
 }
 
-/* --- Estilos del Formulario --- */
+.crear-producto-container p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
 .formulario-producto {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* Espacio entre cada grupo de input */
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
 }
 
-/* Etiquetas (Labels) */
-label {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--primary-purple); /* Color morado para los labels como en la imagen */
-    font-size: 0.95rem;
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* Inputs y Textarea */
-input[type="text"],
-textarea {
-    padding: 0.8rem 1rem;
-    border-radius: var(--border-radius);
-    border: 1px solid #333; /* Borde sutil oscuro */
-    background-color: #2a2a35; /* Fondo de input ligeramente más claro que la tarjeta */
-    color: var(--text-light);
-    font-size: 1rem;
-    transition: all 0.3s ease;
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-size: 0.9rem;
 }
 
-/* Placeholder */
-input::placeholder,
-textarea::placeholder {
-    color: var(--text-muted);
-    opacity: 0.7;
+.btn.btn-primary.btn-block,
+button.btn.btn-primary.btn-block {
+  width: 100%;
+  padding: 0.7rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  border-radius: var(--radius-md);
 }
-
-/* Estado Focus (cuando haces clic en el input) */
-input:focus,
-textarea:focus {
-    outline: none;
-    border-color: var(--primary-purple); /* Borde morado al hacer foco */
-    box-shadow: 0 0 0 3px rgba(91, 91, 237, 0.25); /* Pequeño resplandor morado */
-}
-
-/* Textarea específico */
-textarea {
-    resize: vertical; /* Solo permite estirar hacia abajo */
-    min-height: 120px;
-}
-
-/* --- Mensajes de Error --- */
-.mensaje-error {
-    color: var(--error-red);
-    font-size: 0.85rem;
-    margin-top: 0.4rem;
-    font-weight: 500;
-}
-
-/* Borde rojo si el input tiene error */
-input.input-error,
-textarea.input-error {
-    border-color: var(--error-red);
-}
-
-
-/* --- Botones --- */
-.btn {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    text-align: center;
-    text-decoration: none; /* Para el Link que parece botón */
-    display: inline-block;
-}
-
-/* Botón Primario (Morado) */
-.btn-primary {
-    background-color: var(--primary-purple);
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: var(--primary-purple-hover);
-}
-
-.btn-primary:active {
-    transform: scale(0.98); /* Pequeño efecto al hacer click */
-}
-
-/* Botón que ocupa todo el ancho */
-.btn-block {
-    width: 100%;
-    margin-top: 1rem;
-    padding: 1rem;
-    font-size: 1.1rem;
-}
-
-
-/* --- Estado: No Sesión Iniciada --- */
-.no-sesion-container {
-    text-align: center;
-    padding: 3rem 1rem;
-}
-
-.no-sesion-container p {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
+.btn.btn-primary.btn-block:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }

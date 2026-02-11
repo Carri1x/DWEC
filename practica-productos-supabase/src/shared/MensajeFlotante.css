@@ -1,76 +1,79 @@
+/* =============================================
+   MENSAJEFLOTANTE.CSS
+   ============================================= */
+
 .mensaje-flotante {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    min-width: 250px;
-    max-width: 350px;
-    padding: 16px;
-    border-radius: 12px;
-    background: rgba(36, 36, 36, 0.9); /* Fondo oscuro semi-transparente */
-    backdrop-filter: blur(10px); /* Efecto de desenfoque */
-    color: var(--color-blanco-principal);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    animation: slideIn 0.3s ease-out;
-    font-size: 0.95rem;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 600;
+  min-width: 260px;
+  max-width: 360px;
+  padding: 0.85rem 1.1rem 0.6rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  animation: entrarFlotante 0.22s ease;
 }
 
-/* Animación de entrada */
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+@keyframes entrarFlotante {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* Colores según el estado (puedes pasar estas clases como props) */
-.mensaje-flotante.error {
-    border-left: 5px solid #ff4d4d;
+/* Tipos de mensaje */
+.mensaje-flotante.tipo-exito {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--bg-card) 90%, var(--success));
 }
 
-.mensaje-flotante.exito {
-    border-left: 5px solid #4ade80;
+.mensaje-flotante.tipo-error {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--bg-card) 90%, var(--danger));
 }
 
-.mensaje-flotante.info {
-    border-left: 5px solid var(--color-link);
+.mensaje-flotante.tipo-aviso {
+  border-color: var(--warning);
+  background: color-mix(in srgb, var(--bg-card) 90%, var(--warning));
 }
 
-/* Estilo de la barra de progreso nativa */
-progress {
-    width: 100%;
-    height: 4px;
-    appearance: none;
-    -webkit-appearance: none;
-    border: none;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
+.mensaje-flotante.tipo-info {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--bg-card) 90%, var(--accent));
 }
 
-/* Color de la barra de carga para navegadores Webkit (Chrome/Safari) */
-progress::-webkit-progress-bar {
-    background: rgba(255, 255, 255, 0.1);
+/* Barra de progreso */
+.mensaje-flotante progress {
+  width: 100%;
+  height: 3px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 2px;
+  background: var(--border);
+  overflow: hidden;
 }
 
-progress::-webkit-progress-value {
-    background: var(--color-link);
-    transition: width 0.1s linear;
+.mensaje-flotante progress::-webkit-progress-bar {
+  background: var(--border);
+  border-radius: 2px;
 }
 
-/* Color de la barra para Firefox */
-progress::-moz-progress-bar {
-    background: var(--color-link);
-}
+/* Color de relleno según tipo */
+.mensaje-flotante.tipo-exito progress::-webkit-progress-value  { background: var(--success); }
+.mensaje-flotante.tipo-error  progress::-webkit-progress-value { background: var(--danger);  }
+.mensaje-flotante.tipo-aviso  progress::-webkit-progress-value { background: var(--warning); }
+.mensaje-flotante.tipo-info   progress::-webkit-progress-value { background: var(--accent);  }
+.mensaje-flotante             progress::-webkit-progress-value { background: var(--accent);  }
 
-/* Cambiar color de barra si es error o éxito */
-.error progress::-webkit-progress-value { background: #ff4d4d; }
-.exito progress::-webkit-progress-value { background: #4ade80; }
+/* Firefox */
+.mensaje-flotante.tipo-exito progress::-moz-progress-bar  { background: var(--success); }
+.mensaje-flotante.tipo-error  progress::-moz-progress-bar { background: var(--danger);  }
+.mensaje-flotante.tipo-aviso  progress::-moz-progress-bar { background: var(--warning); }
+.mensaje-flotante             progress::-moz-progress-bar { background: var(--accent);  }
