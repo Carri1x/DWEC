@@ -1,6 +1,7 @@
 import './Producto.css';
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import { Link } from "react-router-dom";
+import { formatearPesoEspanya, formatearMonedaEspanya } from '../libraries/libreria.js';
 
 const Producto = (props) => {
     const { sesionIniciada } = useContextoSesion();
@@ -9,8 +10,8 @@ const Producto = (props) => {
         <div className="producto-card">
             <h3>{nombre}</h3>
             {imagen && <img src={imagen} alt={`Imagen de ${nombre}`} />}
-            <p>Peso: {peso} kg</p>
-            <p>Precio: {precio}€</p>
+            <p>Peso: {formatearPesoEspanya(peso)} kg</p>
+            <p>Precio: {formatearMonedaEspanya(precio)}</p>
             <p>{descripcion}</p>
             {   //Si tiene la sesión iniciada puede acceder a eliminar y editar productos.
                 sesionIniciada ? <>

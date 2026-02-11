@@ -4,7 +4,7 @@ import papelera from '../assets/papelera.png';
 import iconoMenos from '../assets/icono-menos.png';
 import { useState, useEffect } from 'react';
 import useContextoListaCompra from '../hooks/useContextoListaCompra.js';
-import Cargando from '../shared/Cargando.jsx';
+import { formatearPesoEspanya, formatearMonedaEspanya} from '../libraries/libreria.js';
 
 const ProductoMiniatura = (props) => {
     const {
@@ -74,8 +74,8 @@ const ProductoMiniatura = (props) => {
         <div id={id} className="container-producto-miniatura">
             <p>{nombre}</p>
             <div className='miniatura-detalles'>
-                <p>Peso: {peso}kg</p>
-                <p>Precio: {precio}€</p>
+                <p>Peso: {formatearPesoEspanya(peso)}kg</p>
+                <p>Precio: {formatearMonedaEspanya(precio)}</p>
                 {cantidad && 
                 <div className='miniatura-cantidad'> peti
                     <label>Cantidad: {cantidadProducto? cantidadProducto : 0}</label>

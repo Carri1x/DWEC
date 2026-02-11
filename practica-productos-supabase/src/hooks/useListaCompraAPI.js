@@ -17,11 +17,14 @@ const useListaCompraAPI = () => {
      * 
      * @async
      * @param {Function} query Consulta que se hará al gestor de base de datos supabase.
+     * @param {Boolean} cargando En caso de que la petición no queramos que salga el componente <Cargando /> 
      * @throws {Error} Específicamente devuelve el error que ha surgido en el gestor SUPABASE, porque ha ocurrido y en que parte ha acurrido del gestor.
      * @returns Los datos que se han sugerido al gestor de base de datos SUPABASE
      */
-    const peticion = async(query) => {
-        setCargando(true);
+    const peticion = async(query, cargando = true) => {
+        if(cargando) {
+            setCargando(true);
+        }
         try {
             const {data, error} = await query;
             if(error) {
@@ -211,7 +214,7 @@ const useListaCompraAPI = () => {
                 .eq('id_ListasCompra', idLista)
                 .eq('id_Producto', idProducto)
                 .select()
-            )
+            ,false); //Añadimos false a la petición por si queremos o no que salga el componente <Cargando /> 
 
             return data;
         } catch (error) {

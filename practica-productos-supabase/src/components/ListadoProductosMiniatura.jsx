@@ -20,7 +20,8 @@ const ListadoProductosMiniatura = (props) => {
     return(
         <section className="section-listado-productos-miniatura"
             onClick={(evento) => {
-                /*Al ser este el apartado del listado de los productos que tiene por insertar en su lista de la compra.
+                /*
+                    Al ser este el apartado del listado de los productos que tiene por insertar en su lista de la compra.
                     En el momento que el usuario pinche en la foto(añadir) se añadirá este producto en su lista, 
                     ahora este producto formará parte de <ListaCompraDetalles/>,
                     que dentro tiene otros <ProductoMiniatura/> los cuales ahora tienen cantidad y se verán de otra forma.  

@@ -24,3 +24,25 @@ export const formatearFechaHoraSupabase = (fechaSupabase) => {
 
     return `${fecha} a las ${hora}`;
 }
+
+/**
+ * Función que formatea el estilo de la moneda al español de ESPAÑA. :es:
+ * 
+ * @param {Number} precio 
+ * @returns Devuelve el precio formateado al Español de ESPAÑA. 
+ */
+export const formatearMonedaEspanya = (precio) => {
+    if(!precio) return '-';
+    return Intl.NumberFormat("es-ES", {
+        style: "currency",
+        currency: "EUR",
+        useGrouping: true,
+    }).format(precio)
+} 
+
+export const formatearPesoEspanya = (peso) => {
+    if(!peso) return '-';
+    return Intl.NumberFormat('es-ES', {
+        useGrouping: true
+    }).format(peso);
+}

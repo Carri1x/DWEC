@@ -13,7 +13,7 @@ He actualizado absolutamente todos los componentes, clases, hooks y componentes.
 
     - He puesto comentarios en **todos** los componentes que lo requerían.
 
->He cambiado "casi" toda la app de productos. Agradecería que le hecharas un vistazo a todo para puedas darme feedback si fuera necesario.
+>He cambiado "casi" toda la app de productos (práctica 6.10). Agradecería que le hecharas un vistazo a todo para puedas darme feedback si fuera necesario.
 
 
 ---
