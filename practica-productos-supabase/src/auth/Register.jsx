@@ -11,6 +11,10 @@ import Cargando from '../shared/Cargando.jsx';
 const Register = () => {
     const {cargando, mensajeCargando, registrar, actualizarEstadoSesion} = useContextoSesion();
 
+    const comprobarContrasena = (evento) => {
+
+    }
+
     return (
         <div className='contenedor-registrar'>
             {cargando && <Cargando contexto={mensajeCargando}/>}
@@ -39,8 +43,8 @@ const Register = () => {
             />
             <label htmlFor="password">Confirmar Contraseña: </label>
             <input type="password" name="password" id="password" placeholder='Confirma tu Contraseña'
-                onChange={(evento) => {
-                    actualizarEstadoSesion(evento);
+                onCahnge={(evento) => {
+
                 }}
             />
 
