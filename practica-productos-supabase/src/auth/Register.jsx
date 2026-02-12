@@ -37,6 +37,12 @@ const Register = () => {
                     actualizarEstadoSesion(evento);
                 }}
             />
+            <label htmlFor="password">Confirmar Contraseña: </label>
+            <input type="password" name="password" id="password" placeholder='Confirma tu Contraseña'
+                onChange={(evento) => {
+                    actualizarEstadoSesion(evento);
+                }}
+            />
 
             <button onClick={() => {
                 registrar()
