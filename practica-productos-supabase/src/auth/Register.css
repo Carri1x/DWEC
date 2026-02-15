@@ -54,3 +54,16 @@
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
+
+.contenedor-input-ojo {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+img.ojo-contraseña {
+  width: 20px;
+  margin-top: 2px;
+  margin-left: -25px;
+}

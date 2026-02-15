@@ -210,3 +210,18 @@ button:not([class]):hover {
   color: var(--text-primary);
   font-size: 1.1rem;
 }
+
+/* Sobrescribir el fondo blanco del autocompletado del navegador */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    /* Cambia '#2a2a36' por el color hexadecimal exacto del fondo de tus inputs oscuros */
+    -webkit-box-shadow: 0 0 0 30px #2a2a36 inset !important;
+    
+    /* Color del texto cuando se autocompleta */
+    -webkit-text-fill-color: white !important;
+    
+    /* Esto ayuda a que el cambio sea suave y no parpadee en blanco al cargar */
+    transition: background-color 5000s ease-in-out 0s;
+}

@@ -50,6 +50,10 @@ const ProveedorSesion = ({ children }) => {
         setDatosSesion({...datosSesion, [name]: value});
     }
 
+    const limpiarContrasena = () =>{
+        setDatosSesion({...datosSesion, password: ""});
+    }
+
     /**
      * Función que registra a un nuevo usuario en la base de datos. 
      * 
@@ -153,6 +157,7 @@ const ProveedorSesion = ({ children }) => {
         cerrarSesion,
         sesionIniciada,
         usuario,
+        limpiarContrasena,
     }
 
     return (
