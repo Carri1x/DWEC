@@ -62,7 +62,6 @@ const ListaCompraDetalles = () => {
     }
 
     const evitarProductosRepetidosEnAmbasListas = () => {
-
         //Filtramos el catálogo global.
         const filtrados = productos.filter((pGeneral) => {
             // Buscamos si el producto del catálogo ya existe en la lista personal.

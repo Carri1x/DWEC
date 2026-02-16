@@ -9,6 +9,7 @@ import useContextoSesion from "../hooks/useContextoSesion.js";
 import { useNavigate } from "react-router-dom";
 import useContextoMensajes from "../hooks/useContextoMensajes.js";
 import ListasCompraMiniatura from "../components/ListasCompraMiniatura.jsx";
+import ListadoUsuariosMiniatura from "../components/ListadoUsuariosMiniatura.jsx";
 
 const ListadoProductos = () => {
   const { sesionIniciada, esAdmin } = useContextoSesion();
@@ -61,7 +62,11 @@ const ListadoProductos = () => {
 
     }}>
       {cargando && <Cargando contexto={mensajeCargando} />}
-      {sesionIniciada && <ListasCompraMiniatura />}
+      {esAdmin ?
+        //Si es administrador mostramos el listado de usuarios. 
+        <ListadoUsuariosMiniatura /> 
+        //Si no es administrador y tiene la sesión iniciada enseñamos las Listas de la compra.
+        : (sesionIniciada && <ListasCompraMiniatura />)}
 
       <div className="listado-container">
         <h1>Productos</h1>

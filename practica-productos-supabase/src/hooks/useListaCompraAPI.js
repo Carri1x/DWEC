@@ -41,6 +41,9 @@ const useListaCompraAPI = () => {
 
     /**
      * Función que busca por el id del propietario en la tabla ListasCompra, devolviendo las Listas que tiene este propietario.
+     * 
+     * SI NO SE BUSCA POR ID ES QUE SE ESTÁ HACIENDO UNA BÚSQUEDA DE TODAS LAS LISTAS COMO ADMINISTRADOR.
+     * 
      * En caso de haber error lanza @throws @error un error.
      * 
      * @async
@@ -50,12 +53,12 @@ const useListaCompraAPI = () => {
     const traerListasAPI = async (idPropietario) => {
         setMensajeCargando('Trayendo listas de la compra...')
         try {
-            const listasAPI = await peticion(
-                supabaseConexion
-                .from('ListasCompra')
-                .select('*')
-                .eq('id_propietario', idPropietario)
-            );
+            let supabaseQuery = supabaseConexion.from('ListasCompra').select('*');
+            if(idPropietario) {
+                // Si hay un idPropietario es que el usuario NO ES ADMINISTRADOR.
+                supabaseQuery = supabaseQuery.eq('id_propietario',idPropietario);
+            } //EN CAMBIO SI NO HAY UN ID PROPIETARIO ES QUE EL USUARIO ES ADMINISTRADOR.
+            const listasAPI = await peticion(supabaseQuery);
             return listasAPI;
         } catch (error) {
             throw error;
@@ -276,6 +279,23 @@ const useListaCompraAPI = () => {
         }
     }
 
+    const traerUsuariosAPI = async() => {
+        setMensajeCargando('Cargando usuarios...');
+        try {
+            const usuarios = await peticion(
+                supabaseConexion
+                .from('Perfiles')
+                .select('*')
+            )
+            return usuarios;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    const traerTodasLasListasAPI = async() => {
+        
+    }
     
 
     return {
@@ -289,6 +309,8 @@ const useListaCompraAPI = () => {
         actualizarProductoCantidadAPI,
         borrarProductoDeListaAPI,
         borrarListaAPI,
+        traerUsuariosAPI,
+        traerTodasLasListasAPI
     }
 }
 

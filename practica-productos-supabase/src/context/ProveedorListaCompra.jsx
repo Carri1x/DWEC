@@ -27,6 +27,8 @@ const ProveedorListaCompra = ({children}) => {
         actualizarProductoCantidadAPI,
         borrarProductoDeListaAPI,
         borrarListaAPI,
+        traerUsuariosAPI,
+        traerTodasListasAPI,
     } = useListaCompraAPI();
 
     /**
@@ -39,6 +41,10 @@ const ProveedorListaCompra = ({children}) => {
     // Estado para almacenar las listas de la compra del usuario y la lista de la compra que se está visualizando actualmente.
     const [listasCompra, setListasCompra] = useState([]);
     const [lista, setLista] = useState({}); //Esta es la lista que se está visualizando actualmente, con sus productos incluidos; dentro del atributo: lista.productos.
+
+    // VARIABLES PARA EL ADMINISTRADOR.
+    const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({});
+    const [usuarios, setUsuarios] = useState([]);
 
     /**
      * Función que se encarga de cargar las listas de la compra del usuario, 
@@ -53,7 +59,14 @@ const ProveedorListaCompra = ({children}) => {
      */
     const cargarListasCompra = async(id) => {
         try {
-            const listas = await traerListasAPI(id);
+            let listas = [];
+            if(id){
+                // Si hay un ID es porque el que está usando la aplicaciónes un usuario NO ADMINISTRADOR.
+                listas = await traerListasAPI(id);
+            } else {
+                // Si no hay ID es porque el que está usando la aplicación es un ADMINISTRADOR.
+                listas = await traerTodasListasAPI();
+            }
             setListasCompra(listas);
         } catch (error) {
             lanzarMensaje(`CargarListasCompra: ${error.message}`, tiposDeMensaje.error)
@@ -182,7 +195,6 @@ const ProveedorListaCompra = ({children}) => {
             const producto = lista.productos.find((p) => {
                 return p.id === idProducto
             });
-            console.log(producto)
             lanzarMensaje(`Producto ${producto.nombre} actualizado correctamente.`)
         } catch (error) {
             lanzarMensaje(`ActualizarProductoCantidad: ${error.message}`, tiposDeMensaje.error);
@@ -205,6 +217,22 @@ const ProveedorListaCompra = ({children}) => {
             lanzarMensaje(`BorrarProductoDeLista: ${error.message}`, tiposDeMensaje.error);
         }
     }
+
+    /**
+     * Función que carga todos los usuarios de la aplicación.
+     * IMPORTANTE:
+     * Esta función solo funciona si el usuario es ADMINISTRADOR.
+     * 
+     * @async
+     */
+    const cargarUsuarios = async() => {
+        try {
+            const usuarios = await traerUsuariosAPI();
+            setUsuarios(usuarios);
+        } catch (error) {
+            lanzarMensaje(`CargarUsuarios: ${error.message}`, tiposDeMensaje.error);
+        }
+    }
     
 
     /**
@@ -213,20 +241,24 @@ const ProveedorListaCompra = ({children}) => {
      * También se hace la comprobación por usuario.id, porque daban errores de que el ID del usuario era `undefined`.
      */
     useEffect(() => {
-        //Si no es administrador puede seleccionar sus propias listas.
-        if(!esAdmin){
-            if(sesionIniciada && usuario.id){
+        // Solo actuamos si la sesión ya terminó de cargar
+        if (sesionIniciada) {
+            if (esAdmin) {
+                cargarListasCompra();
+                cargarUsuarios();
+            } else if (usuario?.id) {
                 cargarListasCompra(usuario.id);
             }
         }
-    }, [sesionIniciada, usuario]); //Si la sesión está iniciada cargamos las listas de la compra.
-    
+    }, [sesionIniciada, esAdmin, usuario]); // Añadimos esAdmin como dependencia
 
     const cosasExportar = {
         cargando,
         mensajeCargando,
         lista,
         listasCompra,
+        usuarios,
+        usuarioSeleccionado,
         crearListaCompra,
         cargarListaPorID,
         borrarListaPorID,

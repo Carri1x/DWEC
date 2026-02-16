@@ -5,11 +5,18 @@ import iconoMenos from '../assets/icono-menos.png';
 import { useState, useEffect } from 'react';
 import useContextoListaCompra from '../hooks/useContextoListaCompra.js';
 import { formatearPesoEspanya, formatearMonedaEspanya} from '../libraries/libreria.js';
+import useContextoSesion from '../hooks/useContextoSesion.js';
 
 const ProductoMiniatura = (props) => {
+
+    const {
+        esAdmin,
+    } = useContextoSesion();
+
     const {
         actualizarProductoCantidad,
-    } = useContextoListaCompra()
+    } = useContextoListaCompra();
+
     const idLista = props.idLista;
     const {id, nombre, peso, precio, cantidad} = props.value;
     const [cantidadProducto, setCantidadProducto] = useState(cantidad);
@@ -78,18 +85,22 @@ const ProductoMiniatura = (props) => {
                 {cantidad && 
                 <div className='miniatura-cantidad'>
                     <label>Cantidad: {cantidadProducto? cantidadProducto : 0}</label>
-                    <input type="text" value={cantidadProducto} onChange={(evento) => {
-                        //Cambia la cantidad de este input en cuanto está cambiando este valor del input.
-                        cambiarCantidad(evento)
-                    }} />
+                    {!esAdmin && (
+                        <input type="text" value={cantidadProducto} onChange={(evento) => {
+                            //Cambia la cantidad de este input en cuanto está cambiando este valor del input.
+                            cambiarCantidad(evento)
+                        }} />
+                    )}
                 </div>
                 }
             </div>
-            <div className='miniatura-opciones'>
-                {cantidad && <img src={iconoMenos} alt="Simbolo para restar un producto" onClick={restar}/>}
-                <img src={añadir} alt="Símbolo añadir producto" onClick={sumar}/>
-                {cantidad && <img src={papelera} className='boton-borrar-producto' alt="Simbolo eliminar"/>}
-            </div>
+            {!esAdmin && (
+                <div className='miniatura-opciones'>
+                    {cantidad && <img src={iconoMenos} alt="Simbolo para restar un producto" onClick={restar}/>}
+                    <img src={añadir} alt="Símbolo añadir producto" onClick={sumar}/>
+                    {cantidad && <img src={papelera} className='boton-borrar-producto' alt="Simbolo eliminar"/>}
+                </div>
+            )}
         </div>
     )
 }

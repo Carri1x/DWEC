@@ -10,7 +10,7 @@ import useContextoSesion from "./hooks/useContextoSesion.js";
 function App() {
 
   const {esAdmin} = useContextoSesion()
-
+  console.log(esAdmin)
   return (
     <>
       <Header />
@@ -18,14 +18,7 @@ function App() {
       <main className="rutas-container">
         <ProveedorProductos>
           <ProveedorListaCompra>
-            {//Si es administrador metemos el proveedor de administración.
-            esAdmin ? 
-              <ProveedorAdmin >
-                <Rutas />
-              </ProveedorAdmin>
-              :
-              <Rutas />
-            }
+            <Rutas />
           </ProveedorListaCompra>
         </ProveedorProductos>
       </main>
@@ -34,6 +27,19 @@ function App() {
   );
 }
 export default App;
+
+/*
+  Tengo que notificarte como me has dicho en clase que te haga.
+  QUE:
+  No voy a dejar que el usuario administrador pueda crear listas de la compra, como un usuario normal, 
+  solo si se logea su propio usuario NO ADMINISTRADOR.
+
+  No quiero darle poderes a este usuario administrador.
+
+  Quiero que pueda editar y borrar productos, ver todas las listas de la gente y todos los usuarios que hay, pero no quiero que se cree sus propias cuentas.
+  Básicamente porque para que quiere un usuario administrador crearse una lista personal de la compra, no tiene sentido; que se la haga con su propia cuenta personal.
+*/
+
 
 /*
 --VOY A IR EJECUTANDO POLITICAS EN CÓDIGO PLSQL Y NO POR INTERFAZ DE SUPABASE PARA PORDER COPIANDO Y PEGANDO A ESTE COMENTARIO.

@@ -21,7 +21,7 @@ const ListaCompraMiniatura = (props) => {
             <div className="lista-nombre">
                 <p>{nombre}</p>
                 { //Si no es admin podrá eliminar la lista de la compra.
-                    !esAdmin && <img src={papelera} alt="Papelera" />
+                    !esAdmin && <img src={papelera} className='papelera' alt="Papelera" />
                 }
             </div>
             <small>Creada el día: {formatearFechaHoraSupabase(created_at)}</small>
