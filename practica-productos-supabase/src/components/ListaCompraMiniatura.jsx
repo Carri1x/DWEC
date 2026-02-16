@@ -2,8 +2,10 @@ import './ListaCompraMiniatura.css';
 import { useState } from "react";
 import papelera from '../assets/papelera.png';
 import {formatearFechaHoraSupabase} from '../libraries/libreria.js';
+import useContextoSesion from '../hooks/useContextoSesion.js';
 
 const ListaCompraMiniatura = (props) => {
+    const {esAdmin} = useContextoSesion()
     //He querido hacer una animación en css, en cambio tanto probar me he dado cuenta que la mejor opción es hacer un estado de animación.
     const [animar, setAnimar] = useState(false);
     const {id, nombre, created_at} = props.value;
@@ -18,7 +20,9 @@ const ListaCompraMiniatura = (props) => {
         >
             <div className="lista-nombre">
                 <p>{nombre}</p>
-                <img src={papelera} alt="Papelera" />
+                { //Si no es admin podrá eliminar la lista de la compra.
+                    !esAdmin && <img src={papelera} alt="Papelera" />
+                }
             </div>
             <small>Creada el día: {formatearFechaHoraSupabase(created_at)}</small>
         </div>

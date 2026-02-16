@@ -83,7 +83,13 @@ const Register = () => {
     }
 
     return (
-        <div className='contenedor-registrar'>
+        <div className='contenedor-registrar'
+            onKeyDown={(evento) => {
+                if(evento.key === 'Enter'){
+                    manejarRegistro();
+                }
+            }}
+        >
             {cargando && <Cargando contexto={mensajeCargando} />}
             <small><Link to={'/login'}>Ya tengo una cuenta</Link></small>
             <h2>Regístrate</h2>

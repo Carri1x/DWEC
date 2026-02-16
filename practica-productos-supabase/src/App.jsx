@@ -5,8 +5,11 @@ import Header from "./shared/Header.jsx";
 import Menu from "./shared/Menu.jsx";
 import ProveedorProductos from "./context/ProovedorProductos";
 import ProveedorListaCompra from "./context/ProveedorListaCompra.jsx";
+import useContextoSesion from "./hooks/useContextoSesion.js";
 
 function App() {
+
+  const {esAdmin} = useContextoSesion()
 
   return (
     <>
@@ -15,7 +18,14 @@ function App() {
       <main className="rutas-container">
         <ProveedorProductos>
           <ProveedorListaCompra>
-            <Rutas />
+            {//Si es administrador metemos el proveedor de administración.
+            esAdmin ? 
+              <ProveedorAdmin >
+                <Rutas />
+              </ProveedorAdmin>
+              :
+              <Rutas />
+            }
           </ProveedorListaCompra>
         </ProveedorProductos>
       </main>

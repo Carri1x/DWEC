@@ -9,7 +9,7 @@ import Cargando from '../shared/Cargando.jsx';
 const CrearProducto = () => {
 
     const {
-        sesionIniciada
+        esAdmin
     } = useContextoSesion();
     const {
         cargando,
@@ -43,14 +43,11 @@ const CrearProducto = () => {
             <div className="crear-producto-container">
                 {cargando && <Cargando contexto={mensajeCargando}/>}
                 {
-                    !sesionIniciada ? ( //Exactamente si no tiene la sesión iniciada tendrá que logearse...
+                    !esAdmin ? ( //Exactamente si no es administrador no podrá acceder a esta sección...
                         <>
-                            <p>Para acceder a este apartado debes logearte primero</p>
-                            <Link to={"/login"} className="btn-link">
-                                Iniciar sesión
-                            </Link>
+                            <p>Lo siento no eres administrador, buen intento</p>
                         </>
-                    ) : (  //En cambio, si tiene la sesión iniciada podrá crear un producto...
+                    ) : (  //En cambio, si es admin podrá crear un producto...
                         <>
                             <h1>Crea el nuevo producto...</h1>
                             <form ref={formRef} className="formulario-producto">

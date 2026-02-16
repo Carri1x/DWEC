@@ -131,7 +131,8 @@ const ListaCompraDetalles = () => {
             }}
         >
             {cargando && <Cargando contexto={mensajeCargando} />}
-            {sesionIniciada && <ListasCompraMiniatura />}
+            
+            { sesionIniciada && <ListasCompraMiniatura />}
             <div className="container-lista-compra-detalles">
                 {lista && lista.nombre ? (
                     <>
@@ -204,9 +205,6 @@ const ListaCompraDetalles = () => {
                     </div>
                 }
             </div>
-
-
-
         </div>
     );
 };

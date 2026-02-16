@@ -11,7 +11,7 @@ import useContextoMensajes from "../hooks/useContextoMensajes.js";
 import ListasCompraMiniatura from "../components/ListasCompraMiniatura.jsx";
 
 const ListadoProductos = () => {
-  const { sesionIniciada } = useContextoSesion();
+  const { sesionIniciada, esAdmin } = useContextoSesion();
   const { confirmarAccion } = useContextoMensajes();
   const {
     cargando,
@@ -41,6 +41,7 @@ const ListadoProductos = () => {
   return (
     <div className="main-contenedor-listado-productos" onClick={async (evento) => {
       if (evento.target.tagName !== 'BUTTON') return;
+
       const idProducto = evento.target.dataset.id;
 
       if (evento.target.dataset.tipo === 'editar-producto') { //--------------------------------- APARTADO EDITAR PRODUCTO -----------------------------------

@@ -20,6 +20,7 @@ const ProveedorSesion = ({ children }) => {
         registrarUsuarioAPI,
         logearUsuarioAPI,
         cerrarSesionAPI,
+        esUsuarioAdminAPI,
     } = useSesionAPI()
 
     //Datos que se usan como referencia en `datosSesion`, son los datos que tiene que tener por defecto en el formulario.
@@ -33,6 +34,8 @@ const ProveedorSesion = ({ children }) => {
     const [datosSesion, setDatosSesion] = useState(datosSesionIniciales); 
     const [usuario, setUsuario] = useState({}); // Es el usuario que se ha recogido desde SUPABASE.
     const [sesionIniciada, setSesionIniciada] = useState(false); // Estado BOOLEANO que recoge la información de si la sesión está iniciada o no. DATO: se setea en el useEffect de este proveedor.
+    const [esAdmin, setEsAdmin] = useState(false); //Estado BOOLEANO que verifica si es o no un usuario ADMINISTRADOR.
+
 
     const navegar = useNavigate();  // Variable para navegar hasta una página del sitio web.
 
@@ -123,6 +126,23 @@ const ProveedorSesion = ({ children }) => {
         }
     }
 
+    /**
+     * Función que comprueba si el usuario es administrador.
+     * 
+     * @param {String (UUID)} idUsuario 
+     */
+    const comprobarUsuarioAdministrador = async(idUsuario) => {
+        try {
+            const data = await esUsuarioAdminAPI(idUsuario);
+            if(data.rol === 'administrador'){
+                setEsAdmin(true);
+            } else {
+                setEsAdmin(false);
+            }
+        } catch (error) {
+            lanzarMensaje(`ComprobarUsuarioAdministrador: ${error.message}` , tiposDeMensaje.error)
+        }
+    }
 
     /**
      * Este useEffect está controlando con una suscripción a la tabla de AUTH DE SUPABASE, para
@@ -134,9 +154,10 @@ const ProveedorSesion = ({ children }) => {
                 (event, session) => {
                     if(session) {
                         //NAVEGAREMOS AL LISTADO DE LA COMPRA
-                        navegar('/sup/listado-productos')
+                        navegar('/listado-productos')
                         setSesionIniciada(true);
-                        setUsuario(session.user)
+                        setUsuario(session.user);
+                        comprobarUsuarioAdministrador(session.user.id);
                     } else {
                         navegar('/');
                         setSesionIniciada(false);
@@ -158,6 +179,7 @@ const ProveedorSesion = ({ children }) => {
         sesionIniciada,
         usuario,
         limpiarContrasena,
+        esAdmin,
     }
 
     return (

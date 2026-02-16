@@ -13,7 +13,13 @@ const Login = () => {
     const {cargando, mensajeCargando, logear, actualizarEstadoSesion} = useContextoSesion();
 
     return (
-        <div className='contenedor-login'>
+        <div className='contenedor-login'
+            onKeyDown={(evento) => {
+                if(evento.key === 'Enter'){
+                    logear();
+                }
+            }}
+        >
             {cargando && <Cargando contexto={mensajeCargando}/>}
             <h2>Inicia sesión</h2>
             <label htmlFor="email">Email:</label>

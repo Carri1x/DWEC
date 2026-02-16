@@ -13,6 +13,7 @@ const ProveedorListaCompra = ({children}) => {
     const {
         sesionIniciada,
         usuario,
+        esAdmin,
     } = useContextoSesion();
 
     const {
@@ -50,9 +51,9 @@ const ProveedorListaCompra = ({children}) => {
      * 
      * @async
      */
-    const cargarListasCompra = async() => {
+    const cargarListasCompra = async(id) => {
         try {
-            const listas = await traerListasAPI(usuario.id);
+            const listas = await traerListasAPI(id);
             setListasCompra(listas);
         } catch (error) {
             lanzarMensaje(`CargarListasCompra: ${error.message}`, tiposDeMensaje.error)
@@ -212,8 +213,11 @@ const ProveedorListaCompra = ({children}) => {
      * También se hace la comprobación por usuario.id, porque daban errores de que el ID del usuario era `undefined`.
      */
     useEffect(() => {
-        if(sesionIniciada && usuario.id){
-            cargarListasCompra();
+        //Si no es administrador puede seleccionar sus propias listas.
+        if(!esAdmin){
+            if(sesionIniciada && usuario.id){
+                cargarListasCompra(usuario.id);
+            }
         }
     }, [sesionIniciada, usuario]); //Si la sesión está iniciada cargamos las listas de la compra.
     

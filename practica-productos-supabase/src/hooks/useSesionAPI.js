@@ -89,6 +89,27 @@ const useSesionAPI = () => {
     }
   };
 
+  /**
+   * Función que devuelve si el usuario que se pregunta es administrador o no.
+   * 
+   * @param {String (UUID)} idUsuario 
+   * @returns {Boolean} TRUE si es usuarioAdministrador. FALSE  si no es usuarioAdministrador.
+   */
+  const esUsuarioAdminAPI = async(idUsuario) => {
+    try {
+      const data = await peticion(
+        supabaseConexion
+        .from('Roles')
+        .select('*')
+        .eq('id_rol', idUsuario)
+      )
+      //Viene un array de objetos.
+      //Por lo que tenemos que sacar el objeto del array primero.
+      return data[0];
+    } catch (error) {
+      throw error;
+    }
+  }
 
 
   return {
@@ -97,6 +118,7 @@ const useSesionAPI = () => {
     registrarUsuarioAPI,
     logearUsuarioAPI,
     cerrarSesionAPI,
+    esUsuarioAdminAPI,
   };
 };
 
