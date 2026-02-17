@@ -99,7 +99,7 @@ const useSesionAPI = () => {
     try {
       const data = await peticion(
         supabaseConexion
-        .from('Roles')
+        .from('roles')
         .select('*')
         .eq('id_rol', idUsuario)
       )

@@ -65,7 +65,7 @@ const ProveedorListaCompra = ({children}) => {
                 listas = await traerListasAPI(id);
             } else {
                 // Si no hay ID es porque el que está usando la aplicación es un ADMINISTRADOR.
-                listas = await traerTodasListasAPI();
+               // listas = await traerTodasListasAPI();
             }
             setListasCompra(listas);
         } catch (error) {

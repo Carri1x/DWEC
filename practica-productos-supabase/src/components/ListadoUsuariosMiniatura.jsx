@@ -1,4 +1,5 @@
- import useContextoListaCompra from '../hooks/useContextoListaCompra.js';
+import './ListadoUsuariosMiniatura.css'
+import useContextoListaCompra from '../hooks/useContextoListaCompra.js';
 import UsuarioMiniatura from './UsuarioMiniatura.jsx';
 
 const ListadoUsuariosMiniatura = () => {
@@ -7,16 +8,18 @@ const ListadoUsuariosMiniatura = () => {
         usuarios,
     } = useContextoListaCompra();
 
-    console.log(usuarios)
-
     return (
         <div className="listado-usuarios-miniatura">
-            {
-                usuarios && usuarios.length > 0 
-                && usuarios.map((usuario) => {
-                    return <UsuarioMiniatura value={usuario}/>
-                })
-            }
+            <h2>Listado Usuarios</h2>
+            <div className='container-listas'>
+                {
+                    usuarios && usuarios.length > 0
+                    && usuarios.map((usuario) => {
+                        return <UsuarioMiniatura key={usuario.id} value={usuario} />
+                    })
+                }
+            </div>
+            
         </div>
     )
 }

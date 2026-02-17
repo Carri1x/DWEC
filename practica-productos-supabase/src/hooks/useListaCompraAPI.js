@@ -284,7 +284,7 @@ const useListaCompraAPI = () => {
         try {
             const usuarios = await peticion(
                 supabaseConexion
-                .from('Perfiles')
+                .from('perfiles')
                 .select('*')
             )
             return usuarios;
