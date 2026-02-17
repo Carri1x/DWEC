@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const Cargando = (props) => {
   const { contexto } = props;
   const [activo, setActivo] = useState(false);
-  const tiempoDeEspera = 200; //Esperará el componente cargando unos 'X ms' para mostrarse.
+  const tiempoDeEspera = 300; //Esperará el componente cargando unos 'X ms' para mostrarse.
 
   useEffect(() => {
     // 1. iniciamos el temporizador para hacer visible el componente cargando cuando el componente se monta.

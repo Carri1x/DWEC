@@ -85,7 +85,8 @@ const ProductoMiniatura = (props) => {
                 {cantidad && 
                 <div className='miniatura-cantidad'>
                     <label>Cantidad: {cantidadProducto? cantidadProducto : 0}</label>
-                    {!esAdmin && (
+                    { //Si es ADMIN no puede cambiar la cantidad del producto.
+                    !esAdmin && (
                         <input type="text" value={cantidadProducto} onChange={(evento) => {
                             //Cambia la cantidad de este input en cuanto está cambiando este valor del input.
                             cambiarCantidad(evento)
@@ -94,7 +95,8 @@ const ProductoMiniatura = (props) => {
                 </div>
                 }
             </div>
-            {!esAdmin && (
+            { //Si es ADMIN no puede usar las opciones del producto.
+            !esAdmin && (
                 <div className='miniatura-opciones'>
                     {cantidad && <img src={iconoMenos} alt="Simbolo para restar un producto" onClick={restar}/>}
                     <img src={añadir} alt="Símbolo añadir producto" onClick={sumar}/>

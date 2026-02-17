@@ -3,13 +3,10 @@ import Rutas from "./routes/Rutas";
 import Footer from "./shared/Footer.jsx";
 import Header from "./shared/Header.jsx";
 import Menu from "./shared/Menu.jsx";
-import ProveedorProductos from "./context/ProovedorProductos";
+import ProveedorProductos from "./context/ProveedorProductos.jsx";
 import ProveedorListaCompra from "./context/ProveedorListaCompra.jsx";
-import useContextoSesion from "./hooks/useContextoSesion.js";
 
 function App() {
-
-  const {esAdmin} = useContextoSesion()
 
   return (
     <>

@@ -1,4 +1,4 @@
-import "./ListadoProductos.css";
+import "./PaginaListadoProductos.css";
 import { useState, useEffect } from "react";
 import useContextoProductos from "../hooks/useContextoProductos.js";
 import Producto from "../components/Producto.jsx";

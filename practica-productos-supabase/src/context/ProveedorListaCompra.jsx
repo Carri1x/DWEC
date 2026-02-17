@@ -28,19 +28,24 @@ const ProveedorListaCompra = ({children}) => {
         borrarProductoDeListaAPI,
         borrarListaAPI,
         traerUsuariosAPI,
-        traerTodasListasAPI,
+        eliminarUsuarioAPI,
+        traerUsuarioPorIdAPI,
     } = useListaCompraAPI();
 
     /**
      * Esta función se encarga de cargar una lista de la compra por su ID, y también de cargar los productos de esa lista para tener toda la información necesaria en el estado "lista" que se usará para mostrar los detalles de la lista en la pantalla.
      */
     const {
+        productos,
         cargarProductoPorID,
     } = useContextoProductos();
 
     // Estado para almacenar las listas de la compra del usuario y la lista de la compra que se está visualizando actualmente.
     const [listasCompra, setListasCompra] = useState([]);
     const [lista, setLista] = useState({}); //Esta es la lista que se está visualizando actualmente, con sus productos incluidos; dentro del atributo: lista.productos.
+    const [productosAccesibles, setProductosAccesibles] = useState([]);// Estado que enseña los productos que puede añadir un usuario a su lista de la compra.
+    const [modoAddProductos, setModoAddProductos] = useState(false);
+
 
     // VARIABLES PARA EL ADMINISTRADOR.
     const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({});
@@ -57,16 +62,10 @@ const ProveedorListaCompra = ({children}) => {
      * 
      * @async
      */
-    const cargarListasCompra = async(id) => {
+    const cargarListasCompra = async(idPropietario) => {
         try {
-            let listas = [];
-            if(id){
                 // Si hay un ID es porque el que está usando la aplicaciónes un usuario NO ADMINISTRADOR.
-                listas = await traerListasAPI(id);
-            } else {
-                // Si no hay ID es porque el que está usando la aplicación es un ADMINISTRADOR.
-               // listas = await traerTodasListasAPI();
-            }
+            const  listas = await traerListasAPI(idPropietario);
             setListasCompra(listas);
         } catch (error) {
             lanzarMensaje(`CargarListasCompra: ${error.message}`, tiposDeMensaje.error)
@@ -161,7 +160,7 @@ const ProveedorListaCompra = ({children}) => {
      */
     const añadirProducto = async(idLista, idProducto) => {
         try {
-            const data = await añadirProductoAPI(idLista, idProducto);
+            const data = await añadirProductoAPI(idLista, idProducto, usuario.id);
             cargarListaPorID(idLista);
             return data;
         } catch (error) {
@@ -233,7 +232,74 @@ const ProveedorListaCompra = ({children}) => {
             lanzarMensaje(`CargarUsuarios: ${error.message}`, tiposDeMensaje.error);
         }
     }
+
+    const eliminarUsuario = async(idUsuario) => {
+        if(!esAdmin) return;
+        try {
+            const data = await eliminarUsuarioAPI(idUsuario);
+            await cargarUsuarios();
+        } catch (error) {
+            lanzarMensaje(`EliminarUsuario: ${error.message}`, tiposDeMensaje.error);
+        }
+    }
+
+    const cargarUsuarioYListas = async(idUsuario) => {
+        if(!esAdmin) return;
+        try {
+            const usuario = await traerUsuarioPorIdAPI(idUsuario);
+            setUsuarioSeleccionado(usuario);
+            const listasCompra = await cargarListasCompra(idUsuario);
+            setListasCompra(listasCompra);
+        } catch (error) {
+            lanzarMensaje(`CargarUsuarioYListas: ${error.message}`, tiposDeMensaje.error);
+        }
+    }
     
+    //------------------------------------APARTADO FUNCIONALIDADES PRODUCTOS ACCESIBLES EN LISTA COMPRA----------------------------
+
+    /**
+     * Función que controla los productos que ya están en la lista del usuario.
+     * 
+     * SI HAY PRODUCTOS EN LA LISTA LOS QUITAMOS EN LOS PRODUCTOS ACCESIBLES. 
+     */
+    const evitarProductosRepetidosEnAmbasListas = () => {
+        //Filtramos el catálogo global.
+        const filtrados = productos.filter((pGeneral) => {
+            // Buscamos si el producto del catálogo ya existe en la lista personal.
+            const yaEstaEnLista = lista.productos.some(
+                (pLista) => pLista.id === pGeneral.id,
+            );
+
+            // Si NO está en la lista (!yaEstaEnLista), lo mantenemos en "Accesibles".
+            return !yaEstaEnLista;
+        });
+        setProductosAccesibles(filtrados);
+    }
+
+    /**
+     * Función que cambia el estado de `modoAddProductos` el cual, si está activo (true) 
+     * es que el usuario puede añadir productos; y podrá ver esos `productosAccesibles`.
+     * 
+     * @param {Boolean} estadoNuevo 
+     */
+    const cambiarModoAddProductos = (estadoNuevo) => {
+        setModoAddProductos(estadoNuevo);
+    }
+
+    /**
+     * Este useEffect es para ir borrando los productos de la lista general ya que tiene esos prodcutos añadidos en la lista presonal.
+     */
+    useEffect(() => {
+        // Verificamos que tengamos tanto los productos generales como los de la lista.
+        if (productos && lista?.productos) {
+            evitarProductosRepetidosEnAmbasListas();
+        }
+        // IMPORTANTE: Ponemos las dependencias para que solo se ejecute
+        // cuando cambien los productos del catálogo o los de la lista del usuario.
+    }, [productos, lista.productos]);
+
+    //----------------------FIN--------------FIN APARTADO FUNCIONALIDADES PRODUCTOS ACCESIBLES EN LISTA COMPRA-----------------FIN--------------
+
 
     /**
      * USE EFFECT que carga todas las listas que tiene el usuario si tiene la sesión iniciada.
@@ -244,7 +310,6 @@ const ProveedorListaCompra = ({children}) => {
         // Solo actuamos si la sesión ya terminó de cargar
         if (sesionIniciada) {
             if (esAdmin) {
-                cargarListasCompra();
                 cargarUsuarios();
             } else if (usuario?.id) {
                 cargarListasCompra(usuario.id);
@@ -257,14 +322,19 @@ const ProveedorListaCompra = ({children}) => {
         mensajeCargando,
         lista,
         listasCompra,
+        productosAccesibles,
         usuarios,
         usuarioSeleccionado,
+        modoAddProductos,
         crearListaCompra,
         cargarListaPorID,
         borrarListaPorID,
         añadirProducto,
         actualizarProductoCantidad,
-        borrarProductoDeLista
+        borrarProductoDeLista,
+        cambiarModoAddProductos,
+        eliminarUsuario,
+        cargarUsuarioYListas,
     }
     
     return (

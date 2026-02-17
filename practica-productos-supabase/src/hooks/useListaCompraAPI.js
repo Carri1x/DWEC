@@ -180,7 +180,7 @@ const useListaCompraAPI = () => {
      * @param {String (UUID)} idProducto 
      * @returns 
      */
-    const añadirProductoAPI = async(idLista, idProducto) => {
+    const añadirProductoAPI = async(idLista, idProducto, idUsuario) => {
         setMensajeCargando('Añadiendo el producto a la lista...')
         try {
             const data = await peticion(
@@ -189,7 +189,8 @@ const useListaCompraAPI = () => {
                 .insert(
                     {id_ListasCompra: idLista,
                     id_Producto: idProducto,
-                    cantidad: 1}
+                    cantidad: 1,
+                    id_Propietario: idUsuario}
                 )
             );
             return data;
@@ -293,9 +294,35 @@ const useListaCompraAPI = () => {
         }
     }
 
-    const traerTodasLasListasAPI = async() => {
-        
+    const eliminarUsuarioAPI = async(idUsuario) => {
+        setMensajeCargando('Eliminando el usuario...');
+        try {
+            const data  = await peticion(
+                supabaseConexion
+                .from('pefiles')
+                .delete()
+                .eq('id',idUsuario)
+            )
+        } catch (error) {
+            throw error;
+        }
     }
+
+    const traerUsuarioPorIdAPI = async(idUsuario) => {
+        setMensajeCargando('Cargando al usuario...')
+        try {
+            const usuario = await peticion(
+                supabaseConexion
+                .from('perfiles')
+                .select('*')
+                .eq('id', idUsuario)
+            )
+            return usuario;
+        } catch (error) {
+            throw error;
+        }
+    }
+    
     
 
     return {
@@ -310,7 +337,8 @@ const useListaCompraAPI = () => {
         borrarProductoDeListaAPI,
         borrarListaAPI,
         traerUsuariosAPI,
-        traerTodasLasListasAPI
+        eliminarUsuarioAPI,
+        traerUsuarioPorIdAPI,
     }
 }
 

@@ -43,6 +43,7 @@ const ListasCompraMiniatura = () => {
             return <ListaCompraMiniatura key={lista.id} value={lista}/>;
           })
         ) : (
+          esAdmin ? <p>Selecciona algún usuario para ver sus listas.</p>:
           <p>No hay ninguna lista de la compra creada.</p>
         )}
       </div>

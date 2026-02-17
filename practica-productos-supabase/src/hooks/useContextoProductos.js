@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { contextoProductos } from "../context/ProovedorProductos.jsx";
+import { contextoProductos } from "../context/ProveedorProductos.jsx";
 
 const useContextoProductos = () => {
 
