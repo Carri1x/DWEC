@@ -1,6 +1,7 @@
 import './ListadoUsuariosMiniatura.css'
 import useContextoListaCompra from '../hooks/useContextoListaCompra.js';
 import UsuarioMiniatura from './UsuarioMiniatura.jsx';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ListadoUsuariosMiniatura = () => {
 
@@ -9,24 +10,24 @@ const ListadoUsuariosMiniatura = () => {
         eliminarUsuario,
     } = useContextoListaCompra();
 
+    const navegar = useNavigate();
+
     return (
         <div className="listado-usuarios-miniatura"
             onClick={async(evento) => {
-                console.log("EEEEEEEEEEEEEEEEEEeentra")
                 //Si el TARGET esta dentro de .container-usuario-miniatura y no es la papelera, 
                 // cargaremos todas las listas del usuario al que se le ha seleccionado en el listado de usuarios.
                 if(evento.target.closest('.container-usuario-miniatura') && !evento.target.classList.contains('papelera')){
-                    console.log("entrando")
                     const idPropietario = evento.target.closest('.container-usuario-miniatura').id;
-                    console.log(idPropietario)
-                    await cargarUsuarioYLista(idPropietario);
+                    navegar(`/lista-compra/usuario/${idPropietario}`);  
+                    return;                  
                 }
-
                 //Si el TARGET está dentro de .container-usuario-miniatura y ES LA PAPELERA, 
                 // ELIMINAREMOS AL USUARIO.
-                if(evento.target.closest('.container-usuario-miniatura') && evento.target.className.contains('papelera')) {
+                if(evento.target.closest('.container-usuario-miniatura') && evento.target.classList.contains('papelera')) {
                     const idUsuario = evento.target.closest('.container-usuario-miniatura').id;
-                    await eliminarUsuario(idUsuario)
+                    alert("Porque entra en borrar usuario??")
+                    //await eliminarUsuario(idUsuario)
                 }
             }}
         >

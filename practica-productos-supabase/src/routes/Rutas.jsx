@@ -18,8 +18,9 @@ const Rutas = () => {
                 <Route path="/crear-producto" element={<CrearProducto/>} /> 
                 <Route path="/editar-producto/:idProducto" element={<EditarProducto/>} /> 
                 <Route path="/listado-productos" element={<PaginaListadoProductos />}/>
-                <Route path="/lista-compra/:idLista" element={<ListaCompraDetalles/>} />
                 <Route path="/lista-compra/" element={<ListaCompraDetalles/>} />
+                <Route path="/lista-compra/lista/:idLista" element={<ListaCompraDetalles/>} />
+                <Route path="/lista-compra/usuario/:idPropietario" element={<ListaCompraDetalles/>}/>
             </Routes>
         </>
     );

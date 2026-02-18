@@ -283,10 +283,24 @@ const useListaCompraAPI = () => {
     const traerUsuariosAPI = async() => {
         setMensajeCargando('Cargando usuarios...');
         try {
+            const ususariosNoAdmin = await peticion (
+                supabaseConexion
+                .from('roles')
+                .select('id_rol')
+                .eq('rol', 'usuario')
+            )
+
+            const idsUsuarios = ususariosNoAdmin.map((rol) => {
+                return rol.id_rol;
+            })
+
+            if(idsUsuarios.length === 0) return [];
+
             const usuarios = await peticion(
                 supabaseConexion
                 .from('perfiles')
                 .select('*')
+                .in('id', idsUsuarios) //Filtramos por los IDs obtenidos que no sean ADMINISTRADORES.
             )
             return usuarios;
         } catch (error) {
@@ -322,6 +336,8 @@ const useListaCompraAPI = () => {
             throw error;
         }
     }
+
+    
     
     
 

@@ -12,7 +12,7 @@ import BotonModoAddProductos from "../components/BotonModoAddProductos.jsx";
 import ListadoUsuariosMiniatura from "../components/ListadoUsuariosMiniatura.jsx";
 
 const ListaCompraDetalles = () => {
-    const { idLista } = useParams();
+    const { idLista, idPropietario } = useParams();
 
     const { sesionIniciada, esAdmin } = useContextoSesion();
 
@@ -21,6 +21,7 @@ const ListaCompraDetalles = () => {
         mensajeCargando,
         lista,
         cargarListaPorID,
+        cargarListasCompra,
     } = useContextoListaCompra();
 
     /**
@@ -30,8 +31,10 @@ const ListaCompraDetalles = () => {
         //Si hay id de la lista a la que queremos solicitar la lista.
         if (idLista) {
             cargarListaPorID(idLista);
+        } else if (idPropietario) { // Aquí solo entrará si es ADMIN y si hay un ID de PROPIETARIO.
+            cargarListasCompra(idPropietario);
         }
-    }, [idLista]);
+    }, [idLista, idPropietario]);
 
     return (
         <div className="main-container-lista-compra-detalles">

@@ -66,6 +66,11 @@ const ProveedorListaCompra = ({children}) => {
         try {
                 // Si hay un ID es porque el que está usando la aplicaciónes un usuario NO ADMINISTRADOR.
             const  listas = await traerListasAPI(idPropietario);
+            /* CON ADMIN:
+            Seteo la lista vacía porque cuando hago un cambio de un usuario 
+            se queda guardada la lista del usuario anterior.
+            */
+            setLista({}) 
             setListasCompra(listas);
         } catch (error) {
             lanzarMensaje(`CargarListasCompra: ${error.message}`, tiposDeMensaje.error)
@@ -225,6 +230,7 @@ const ProveedorListaCompra = ({children}) => {
      * @async
      */
     const cargarUsuarios = async() => {
+        if(!esAdmin) return;
         try {
             const usuarios = await traerUsuariosAPI();
             setUsuarios(usuarios);
@@ -277,7 +283,7 @@ const ProveedorListaCompra = ({children}) => {
     }
 
     /**
-     * Función que cambia el estado de `modoAddProductos` el cual, si está activo (true) 
+     * Función que cambia el estado de `modoAddProductos` el cual, si  está activo (true) 
      * es que el usuario puede añadir productos; y podrá ver esos `productosAccesibles`.
      * 
      * @param {Boolean} estadoNuevo 
@@ -328,6 +334,7 @@ const ProveedorListaCompra = ({children}) => {
         modoAddProductos,
         crearListaCompra,
         cargarListaPorID,
+        cargarListasCompra,
         borrarListaPorID,
         añadirProducto,
         actualizarProductoCantidad,

@@ -120,6 +120,8 @@ const ProveedorSesion = ({ children }) => {
         try {
             const data = cerrarSesionAPI();
             navegar('/');
+            //Seteamos el admin a false, para que no se quede con privilegios si cierra sesión.
+            setEsAdmin(false);
             return data;
         } catch (error) {
             lanzarMensaje(`Error al cerrar sesión: ${error.message}`, tiposDeMensaje.error);

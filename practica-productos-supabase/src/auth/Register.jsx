@@ -28,8 +28,8 @@ const Register = () => {
     const [contraseñas, setContraseñas] = useState(plantillaContraseñas);
     const [error, setError] = useState(false);
 
-    const [contraseñaVisible, setContraseñaVisible] = useState(false);
-    const [contraseñaComprobacionVisible, setContraseñaComprobacionVisible] = useState(false);
+    const [contrasenaVisible, setContrasenaVisible] = useState(false); //CONTRASEÑA PRINCIPAL
+    const [contrasenaComprobacionVisible, setContrasenaComprobacionVisible] = useState(false); //CONTRASEÑA DE COMPROBACIÓN
 
 
     /**
@@ -110,7 +110,7 @@ const Register = () => {
 
             <label htmlFor="password">Contraseña: </label>
             <div className='contenedor-input-ojo'>
-                <input type={ contraseñaVisible ? "text" : "password"} name="password" id="password" 
+                <input type={ contrasenaVisible ? "text" : "password"} name="password" id="password" 
                     className={error && 'input-error'}
                     value={contraseñas.password} placeholder='Contraseña'
                     onChange={(evento) => {
@@ -120,25 +120,25 @@ const Register = () => {
                         cambiarEstadoContrasenaRegistro(evento);
                     }}
                 />
-                <img src={contraseñaVisible ? ojoAbierto : ojoTachado}
+                <img src={contrasenaVisible ? ojoAbierto : ojoTachado}
                     className='ojo-contraseña'
-                    onClick={() => setContraseñaVisible(!contraseñaVisible)}
+                    onClick={() => setContrasenaVisible(!contrasenaVisible)}
                     alt="Ojo"
                 />
             </div>
 
             <label htmlFor="password2">Confirmar Contraseña: </label>
             <div className='contenedor-input-ojo'>
-                <input type={contraseñaComprobacionVisible? "text": "password"} name="password2" id="password2" 
+                <input type={contrasenaComprobacionVisible? "text": "password"} name="password2" id="password2" 
                     className={error && 'input-error'}
                     value={contraseñas.password2} placeholder='Confirma tu Contraseña'
                     onChange={(evento) => {
                         cambiarEstadoContrasenaRegistro(evento)
                     }}
                 />
-                <img src={contraseñaComprobacionVisible ? ojoAbierto : ojoTachado}
+                <img src={contrasenaComprobacionVisible ? ojoAbierto : ojoTachado}
                     className='ojo-contraseña'
-                    onClick={() => setContraseñaComprobacionVisible(!contraseñaComprobacionVisible)}
+                    onClick={() => setContrasenaComprobacionVisible(!contrasenaComprobacionVisible)}
                     alt="Ojo"
                 />
             </div>
