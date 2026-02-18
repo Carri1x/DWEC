@@ -111,6 +111,20 @@ const useSesionAPI = () => {
     }
   }
 
+  const traerPerfilUsuarioAPI = async(idUsuario) => {
+    try {
+      const perfil = await peticion(
+        supabaseConexion
+        .from('perfiles')
+        .select('*')
+        .eq('id', idUsuario)
+      )
+      return perfil[0];
+    } catch (error) {
+      
+    }
+  }
+
 
   return {
     cargando,
@@ -119,6 +133,7 @@ const useSesionAPI = () => {
     logearUsuarioAPI,
     cerrarSesionAPI,
     esUsuarioAdminAPI,
+    traerPerfilUsuarioAPI,
   };
 };
 

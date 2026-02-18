@@ -21,6 +21,7 @@ const ProveedorSesion = ({ children }) => {
         logearUsuarioAPI,
         cerrarSesionAPI,
         esUsuarioAdminAPI,
+        traerPerfilUsuarioAPI,
     } = useSesionAPI()
 
     //Datos que se usan como referencia en `datosSesion`, son los datos que tiene que tener por defecto en el formulario.
@@ -33,6 +34,7 @@ const ProveedorSesion = ({ children }) => {
     // `datosSesion` Son los datos que previamente ha insertado el usuario a través de un formulario, para luego usarlo en las funciones `registrar`, `logear`...
     const [datosSesion, setDatosSesion] = useState(datosSesionIniciales); 
     const [usuario, setUsuario] = useState({}); // Es el usuario que se ha recogido desde SUPABASE.
+    const [perfil, setPerfil] = useState({});
     const [sesionIniciada, setSesionIniciada] = useState(false); // Estado BOOLEANO que recoge la información de si la sesión está iniciada o no. DATO: se setea en el useEffect de este proveedor.
     const [esAdmin, setEsAdmin] = useState(false); //Estado BOOLEANO que verifica si es o no un usuario ADMINISTRADOR.
 
@@ -78,6 +80,7 @@ const ProveedorSesion = ({ children }) => {
                 }
             });
             lanzarMensaje(`Verifica la cuenta a través del correo proporcionado: ${datosSesion.email}`, tiposDeMensaje.info);
+            traerPerfilUsuario(usuario.id);
             return datos;
         } catch (error) {
             lanzarMensaje(`Error al registrarse: ${error.message}`, tiposDeMensaje.error);
@@ -102,6 +105,7 @@ const ProveedorSesion = ({ children }) => {
                     emailRedirectTo: "http://localhost:5173/"
                 }
             });
+            traerPerfilUsuario(usuario.id);
             return data;
         } catch (error) {
             lanzarMensaje(`Error al logearse: ${error.message}`, tiposDeMensaje.error);
@@ -146,6 +150,17 @@ const ProveedorSesion = ({ children }) => {
         }
     }
 
+    const traerPerfilUsuario = async(id) => {
+        try {
+            const perfil = await traerPerfilUsuarioAPI(id);
+            setPerfil(perfil);
+            return perfil;
+        } catch (error) {
+            lanzarMensaje(`TraerPerfilUsuario: ${error.message}`, tiposDeMensaje.error);
+        }
+    }
+
+
     /**
      * Este useEffect está controlando con una suscripción a la tabla de AUTH DE SUPABASE, para
      * notificarnos si el usuario tiene la sesión iniciada o no.
@@ -159,10 +174,16 @@ const ProveedorSesion = ({ children }) => {
                         navegar('/listado-productos')
                         setSesionIniciada(true);
                         setUsuario(session.user);
+                        traerPerfilUsuario(session.user.id)
                         comprobarUsuarioAdministrador(session.user.id);
                     } else {
+                        //SI NO HAY SESIÓN DEJAMOS TODOS LOS DATOS Y ESTADOS A LOS INICIALES.
                         navegar('/');
                         setSesionIniciada(false);
+                        setPerfil({});
+                        setUsuario({});
+                        setEsAdmin(false);
+                        setDatosSesion(datosSesionIniciales);
                     }
                 }
             );
@@ -180,6 +201,7 @@ const ProveedorSesion = ({ children }) => {
         cerrarSesion,
         sesionIniciada,
         usuario,
+        perfil,
         limpiarContrasena,
         esAdmin,
     }

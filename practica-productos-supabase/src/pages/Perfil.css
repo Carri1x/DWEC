@@ -1,0 +1,143 @@
+.perfil-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.perfil-card {
+    background: #1a1a2e; /* Fondo oscuro profundo */
+    width: 100%;
+    max-width: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Banner superior */
+.perfil-header {
+    position: relative;
+    height: 150px;
+}
+
+.perfil-banner {
+    height: 100%;
+    background: linear-gradient(135deg, #6e38e0 0%, #ff5e7e 100%);
+    opacity: 0.8;
+}
+
+/* Avatar con efecto de borde y posición elevada */
+.perfil-avatar-wrapper {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.perfil-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid #1a1a2e;
+    object-fit: cover;
+    background-color: #252545;
+}
+
+/* Botón editar foto */
+.btn-editar-foto {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background: #8c52ff;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+.btn-editar-foto:hover {
+    transform: scale(1.1);
+    background: #a370ff;
+}
+
+.btn-editar-foto img {
+    width: 18px;
+    filter: brightness(0) invert(1);
+}
+
+/* Info del perfil */
+.perfil-info {
+    padding: 70px 30px 30px 30px;
+    text-align: center;
+}
+
+.perfil-nombre {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.perfil-username {
+    color: #8c52ff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.perfil-divisor {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+.perfil-bio {
+    text-align: left;
+}
+
+.perfil-bio h3 {
+    color: #aaa;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.perfil-bio p {
+    color: #ddd;
+    line-height: 1.6;
+    font-size: 15px;
+    font-style: italic;
+}
+
+/* Footer con estadísticas */
+.perfil-footer {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-item strong {
+    color: #fff;
+    font-size: 18px;
+}
+
+.stat-item span {
+    color: #777;
+    font-size: 12px;
+}

@@ -82,8 +82,9 @@ const ProveedorListaCompra = ({children}) => {
      * 
      * @async
      * @param {String (UUID)} idLista 
+     * @param {Boolean} setear Boolean que determina si quiero que lo setee en el estado o que me lo devuelva.
      */
-    const cargarListaPorID = async(idLista) =>{
+    const cargarListaPorID = async(idLista, setear = true) =>{
         try {
             // 1. Cargamos la información de la lista.
             let lista = await traerListaPorIdAPI(idLista);
@@ -109,7 +110,11 @@ const ProveedorListaCompra = ({children}) => {
             // 5. Añadimos estos productos a la lista que le corresponde.
             lista = {...lista, productos: [...productos]};
             // 6. Seteamos la lista al estado Lista que se comparte con todos los componentes.
-            setLista(lista);
+            if(setear) {
+                setLista(lista);
+            } else {
+                return lista;
+            }
         } catch (error) {
             lanzarMensaje(`CargarListaPorID: ${error.message}`, tiposDeMensaje.error);
         }

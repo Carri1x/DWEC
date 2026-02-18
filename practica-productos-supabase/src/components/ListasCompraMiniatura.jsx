@@ -15,9 +15,6 @@ const ListasCompraMiniatura = () => {
   } = useContextoListaCompra();
 
   const navegar = useNavigate();
-
-  console.log(listasCompra)
-
   return (
     <div
       className="container-lista-compra"
