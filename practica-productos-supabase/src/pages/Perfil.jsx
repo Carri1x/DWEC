@@ -2,11 +2,13 @@ import './Perfil.css';
 import useContextoSesion from "../hooks/useContextoSesion.js";
 import iconoUsuarioDefault from '../assets/icono-usuario.png';
 import iconoEditar from '../assets/icono-editar.png';
+import iconoCancelar from '../assets/cancelar-rojo.png';
 import useContextoListaCompra from '../hooks/useContextoListaCompra';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Perfil = () => {
-    const { perfil } = useContextoSesion();
+    const { perfil, esAdmin } = useContextoSesion();
 
     const { 
         listasCompra ,
@@ -14,7 +16,22 @@ const Perfil = () => {
         cargarListaPorID,
     } = useContextoListaCompra();
 
+    const navegar = useNavigate();
     const [totalProd, setTotalProd] = useState(0);
+    const [modoEditar, setModoEditar] = useState(false);
+
+    const fromularioInicial = {
+        nombre_completo: `${perfil?.nombre_completo}`,
+        avatar_url: `${perfil?.avatar_url}`,
+        descripcion: `${perfil?.descripcion}`,
+    }
+
+    const [formulario, setFormulario] = useState(fromularioInicial);
+
+    const actualizarEstadoPerfil = (evento) => {
+        const {name, value} = evento.target;
+        
+    }
 
     /**
      * Función que cuenta el total de los productos
@@ -50,6 +67,7 @@ const Perfil = () => {
 
 
     useEffect(() => {
+        if(esAdmin) return;
         if (!listasCompra || !Array.isArray(listasCompra)) {
             cargarListasCompra(perfil.id);
             return;
@@ -71,9 +89,28 @@ const Perfil = () => {
                             src={perfil?.avatar_url ? perfil.avatar_url : iconoUsuarioDefault} 
                             alt="Foto de perfil" 
                         />
-                        <button className="btn-editar-foto">
-                            <img src={iconoEditar} alt="Editar" />
-                        </button>
+                        {modoEditar && 
+                        <>
+                            <input type="text" name="avatar_url" id="avatar_url" placeholder='Url de la foto de perfil'
+                                onChange={(evento) => {
+                                    actualizarEstadoPerfil(evento)
+                                }}
+                            />
+                        </>}
+                        {modoEditar ? 
+                            <img src={iconoCancelar} alt='icono-cancelar' 
+                            onClick={() => {
+                                setModoEditar(false);
+                                setFormulario(fromularioInicial);
+                            }}/>
+                            :
+                            <button className="btn-editar-foto" onClick={() => {
+                                setModoEditar(true);
+                                navegar('editar');
+                            }}>
+                                <img src={iconoEditar} alt="Editar" />
+                            </button>
+                        }    
                     </div>
                 </div>
 
@@ -83,12 +120,27 @@ const Perfil = () => {
                         {perfil?.nombre_completo || "Usuario Anónimo"}
                     </h2>
                     <span className="perfil-username">@{perfil?.nombre_completo?.toLowerCase().replace(/\s/g, '') || "usuario"}</span>
+                    {modoEditar && 
+                        <input type="text" name="nombre_completo" id="nombre_completo" placeholder='Nombre completo' 
+                            onChange={(evento) => {
+                                actualizarEstadoPerfil(evento)
+                            }}
+                        />
+                    }
                     
                     <div className="perfil-divisor"></div>
                     
                     <div className="perfil-bio">
                         <h3>Sobre mí</h3>
                         <p>{perfil?.descripcion ? perfil.descripcion : "Escribe algo increíble..."}</p>
+                        {modoEditar && 
+                            <textarea name="descripcion" id="descripcion"
+                                onChange={(evento) => {
+                                    actualizarEstadoPerfil(evento)
+                                }}
+                            ></textarea> 
+
+                        }
                     </div>
                 </div>
 
