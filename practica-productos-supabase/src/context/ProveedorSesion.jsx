@@ -22,6 +22,7 @@ const ProveedorSesion = ({ children }) => {
         cerrarSesionAPI,
         esUsuarioAdminAPI,
         traerPerfilUsuarioAPI,
+        editarUsuarioAPI,
     } = useSesionAPI()
 
     //Datos que se usan como referencia en `datosSesion`, son los datos que tiene que tener por defecto en el formulario.
@@ -160,6 +161,14 @@ const ProveedorSesion = ({ children }) => {
         }
     }
 
+    const editarUsuario = async(usuarioEditado) =>{
+        try {
+            const data = await editarUsuarioAPI(usuario.id, usuarioEditado);
+            setPerfil(usuarioEditado)
+        } catch (error) {
+            lanzarMensaje(`EditarUsuario: ${error.message}`,tiposDeMensaje.error)
+        }
+    }
 
     /**
      * Este useEffect está controlando con una suscripción a la tabla de AUTH DE SUPABASE, para
@@ -204,6 +213,7 @@ const ProveedorSesion = ({ children }) => {
         perfil,
         limpiarContrasena,
         esAdmin,
+        editarUsuario,
     }
 
     return (

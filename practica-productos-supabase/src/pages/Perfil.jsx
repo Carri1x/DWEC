@@ -5,18 +5,21 @@ import iconoEditar from '../assets/icono-editar.png';
 import iconoCancelar from '../assets/cancelar-rojo.png';
 import useContextoListaCompra from '../hooks/useContextoListaCompra';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const Perfil = () => {
-    const { perfil, esAdmin } = useContextoSesion();
+    const { 
+        perfil,
+        esAdmin,
+        editarUsuario,
+    } = useContextoSesion();
 
     const { 
         listasCompra ,
         cargarListasCompra,
         cargarListaPorID,
+        
     } = useContextoListaCompra();
 
-    const navegar = useNavigate();
     const [totalProd, setTotalProd] = useState(0);
     const [modoEditar, setModoEditar] = useState(false);
 
@@ -30,7 +33,7 @@ const Perfil = () => {
 
     const actualizarEstadoPerfil = (evento) => {
         const {name, value} = evento.target;
-        
+        setFormulario({...formulario, [name]: value});
     }
 
     /**
@@ -53,7 +56,6 @@ const Perfil = () => {
         // 2. Verificamos que la lista tenga productos antes de reducir
             const productosEnLista = Array.isArray(lista.productos) 
                 ? lista.productos.reduce((acumulado, producto) => {
-                    console.log(producto)
                     // 3. Aseguramos que cantidad sea un número (por si viene como string o null)
                     const cantidad = Number(producto.cantidad) || 0;
                     return acumulado + cantidad;
@@ -89,28 +91,34 @@ const Perfil = () => {
                             src={perfil?.avatar_url ? perfil.avatar_url : iconoUsuarioDefault} 
                             alt="Foto de perfil" 
                         />
-                        {modoEditar && 
-                        <>
-                            <input type="text" name="avatar_url" id="avatar_url" placeholder='Url de la foto de perfil'
-                                onChange={(evento) => {
-                                    actualizarEstadoPerfil(evento)
-                                }}
-                            />
-                        </>}
-                        {modoEditar ? 
-                            <img src={iconoCancelar} alt='icono-cancelar' 
-                            onClick={() => {
-                                setModoEditar(false);
-                                setFormulario(fromularioInicial);
-                            }}/>
-                            :
-                            <button className="btn-editar-foto" onClick={() => {
-                                setModoEditar(true);
-                                navegar('editar');
-                            }}>
-                                <img src={iconoEditar} alt="Editar" />
-                            </button>
-                        }    
+                        { //Si no es administrador mostramos el icono de editar y luego sus posteriores inputs para la edición.
+                        !esAdmin && (
+                            <>
+                                {modoEditar ?
+                                    <img src={iconoCancelar} alt='icono-cancelar'
+                                        onClick={() => {
+                                            setModoEditar(false);
+                                            setFormulario(fromularioInicial);
+                                        }} />
+                                    :
+                                    <button className="btn-editar-foto" onClick={() => {
+                                        setModoEditar(true);
+                                    }}>
+                                        <img src={iconoEditar} alt="Editar" />
+                                    </button>
+                                }
+                                {modoEditar &&
+                                    <>
+                                        <input type="text" name="avatar_url" id="avatar_url" placeholder='Url de la foto de perfil'
+                                            value={formulario?.avatar_url|| ""}
+                                            onChange={(evento) => {
+                                                actualizarEstadoPerfil(evento)
+                                            }}
+                                        />
+                                    </>}
+                            </>
+                        )}
+                        
                     </div>
                 </div>
 
@@ -122,6 +130,8 @@ const Perfil = () => {
                     <span className="perfil-username">@{perfil?.nombre_completo?.toLowerCase().replace(/\s/g, '') || "usuario"}</span>
                     {modoEditar && 
                         <input type="text" name="nombre_completo" id="nombre_completo" placeholder='Nombre completo' 
+                            value={formulario?.nombre_completo|| ""}
+                            
                             onChange={(evento) => {
                                 actualizarEstadoPerfil(evento)
                             }}
@@ -129,31 +139,50 @@ const Perfil = () => {
                     }
                     
                     <div className="perfil-divisor"></div>
-                    
-                    <div className="perfil-bio">
-                        <h3>Sobre mí</h3>
-                        <p>{perfil?.descripcion ? perfil.descripcion : "Escribe algo increíble..."}</p>
-                        {modoEditar && 
-                            <textarea name="descripcion" id="descripcion"
-                                onChange={(evento) => {
-                                    actualizarEstadoPerfil(evento)
-                                }}
-                            ></textarea> 
+                    {!esAdmin &&
+                        <div className="perfil-bio">
+                            <h3>Sobre mí</h3>
+                            <p>{perfil?.descripcion ? perfil.descripcion : "Escribe algo increíble..."}</p>
+                            {modoEditar &&
+                                <textarea name="descripcion" id="descripcion" placeholder='Escribe algo increíble...'
+                                    value={formulario?.descripcion || ""}
+                                    onChange={(evento) => {
+                                        actualizarEstadoPerfil(evento)
+                                    }}
+                                ></textarea>
 
+                            }
+                        </div>
+                    }
+
+                    {
+                        modoEditar && 
+                        <button onClick={() => {
+                            editarUsuario(formulario);
+                        }}>
+                            Guardar Cambios
+                        </button>
                         }
-                    </div>
                 </div>
 
                 {/* Footer o Stats (Opcional, para rellenar) */}
                 <div className="perfil-footer">
-                    <div className="stat-item">
-                        <strong>{listasCompra.length}</strong>
-                        <span>Listas</span>
-                    </div>
-                    <div className="stat-item">
-                        <strong>{totalProd}</strong>
-                        <span>Productos</span>
-                    </div>
+                    {esAdmin ? 
+                        <p>
+                            Perfil de administración.
+                        </p> : 
+                        <>
+                            <div className="stat-item">
+                                <strong>{listasCompra.length}</strong>
+                                <span>Listas</span>
+                            </div>
+                            <div className="stat-item">
+                                <strong>{totalProd}</strong>
+                                <span>Productos</span>
+                            </div>
+                        </>
+                    }
+                    
                 </div>
             </div>
         </div>

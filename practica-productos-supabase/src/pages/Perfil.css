@@ -8,7 +8,7 @@
 }
 
 .perfil-card {
-    background: #1a1a2e; /* Fondo oscuro profundo */
+    background: #1a1a2e; /* Tu fondo oscuro original */
     width: 100%;
     max-width: 500px;
     border-radius: 20px;
@@ -29,12 +29,15 @@
     opacity: 0.8;
 }
 
-/* Avatar con efecto de borde y posición elevada */
+/* Avatar */
 .perfil-avatar-wrapper {
     position: absolute;
     bottom: -50px;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .perfil-avatar {
@@ -46,8 +49,30 @@
     background-color: #252545;
 }
 
-/* Botón editar foto */
-.btn-editar-foto {
+/* Estilos para el Modo Edición (Nuevos y ajustados) */
+.edit-input-dark {
+    background: #252545;
+    border: 1px solid #8c52ff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Input de la URL de imagen (específico para que no flote raro) */
+#avatar_url {
+    width: 180px;
+    font-size: 11px;
+    padding: 5px;
+    margin-top: 55px; /* Empuja el input debajo de la foto */
+}
+
+/* Botón editar y cancelar foto */
+.btn-editar-foto, .btn-cancelar-foto {
     position: absolute;
     right: 5px;
     bottom: 5px;
@@ -62,22 +87,30 @@
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     transition: transform 0.2s;
+    z-index: 10;
 }
 
-.btn-editar-foto:hover {
-    transform: scale(1.1);
-    background: #a370ff;
+/* El icono de cancelar lo ponemos en rojo pero con tu estilo */
+img[alt='icono-cancelar'] {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    z-index: 10;
 }
 
-.btn-editar-foto img {
-    width: 18px;
-    filter: brightness(0) invert(1);
-}
+.btn-editar-foto:hover { transform: scale(1.1); background: #a370ff; }
+.btn-editar-foto img { width: 18px; filter: brightness(0) invert(1); }
 
 /* Info del perfil */
 .perfil-info {
-    padding: 70px 30px 30px 30px;
+    padding: 80px 30px 30px 30px; /* Aumentado un poco para dar aire */
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .perfil-nombre {
@@ -93,6 +126,7 @@
 }
 
 .perfil-divisor {
+    width: 100%;
     height: 1px;
     background: rgba(255, 255, 255, 0.1);
     margin: 20px 0;
@@ -100,6 +134,7 @@
 
 .perfil-bio {
     text-align: left;
+    width: 100%;
 }
 
 .perfil-bio h3 {
@@ -115,6 +150,13 @@
     line-height: 1.6;
     font-size: 15px;
     font-style: italic;
+}
+
+/* Textarea para la Bio en modo edición */
+textarea#descripcion {
+    min-height: 80px;
+    resize: none;
+    font-family: inherit;
 }
 
 /* Footer con estadísticas */

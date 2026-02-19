@@ -125,6 +125,21 @@ const useSesionAPI = () => {
     }
   }
 
+  const editarUsuarioAPI = async(idUsuario, usuarioEditado) => {
+    setMensajeCargando(`Editando usuario...`);
+    try {
+      const data = await peticion(
+        supabaseConexion
+        .from('perfiles')
+        .update(usuarioEditado)
+        .eq('id', idUsuario)
+      )
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 
   return {
     cargando,
@@ -134,6 +149,7 @@ const useSesionAPI = () => {
     cerrarSesionAPI,
     esUsuarioAdminAPI,
     traerPerfilUsuarioAPI,
+    editarUsuarioAPI
   };
 };
 

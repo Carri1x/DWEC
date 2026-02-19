@@ -337,9 +337,6 @@ const useListaCompraAPI = () => {
         }
     }
 
-    
-    
-    
 
     return {
         cargando,

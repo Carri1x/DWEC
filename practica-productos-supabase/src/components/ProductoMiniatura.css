@@ -14,6 +14,8 @@
   transition: border-color var(--transition), background var(--transition);
 }
 
+
+
 .container-producto-miniatura:hover {
   border-color: var(--border-light);
   background: var(--bg-card-hover);

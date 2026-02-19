@@ -1,0 +1,16 @@
+.container-usuario-miniatura {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+  gap: 1rem;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.container-usuario-miniatura img {
+    width: 40px;
+    height: 40px;
+}

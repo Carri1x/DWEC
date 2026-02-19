@@ -7,7 +7,6 @@ const ListadoUsuariosMiniatura = () => {
 
     const {
         usuarios,
-        eliminarUsuario,
     } = useContextoListaCompra();
 
     const navegar = useNavigate();
@@ -21,13 +20,6 @@ const ListadoUsuariosMiniatura = () => {
                     const idPropietario = evento.target.closest('.container-usuario-miniatura').id;
                     navegar(`/lista-compra/usuario/${idPropietario}`);  
                     return;                  
-                }
-                //Si el TARGET está dentro de .container-usuario-miniatura y ES LA PAPELERA, 
-                // ELIMINAREMOS AL USUARIO.
-                if(evento.target.closest('.container-usuario-miniatura') && evento.target.classList.contains('papelera')) {
-                    const idUsuario = evento.target.closest('.container-usuario-miniatura').id;
-                    alert("Porque entra en borrar usuario??")
-                    //await eliminarUsuario(idUsuario)
                 }
             }}
         >

@@ -150,7 +150,7 @@ const ProveedorListaCompra = ({children}) => {
         try {
             const data = await borrarListaAPI(idLista);
             cargarListasCompra();
-            lanzarMensaje(`La lista '${lista.nombre} ha sido borrada.'`)
+            lanzarMensaje(`La lista ha sido borrada.'`)
         } catch (error) {
             lanzarMensaje(`BorrarLista: ${error.message}`,tiposDeMensaje.error);
         }
@@ -227,6 +227,40 @@ const ProveedorListaCompra = ({children}) => {
         }
     }
 
+
+    /**
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE: 
+     * 
+     * CABE RECALCAR QUE NO HE HECHO OTRO PROVEEDOR POR PETICIÓN TUYA (JUAN CARLOS),
+     * 
+     * YO ESTABA HACIENO UN PROVEEDOR Y ME COMENTASTE QUE NO HACÍA FALTA QUE LO HICIERA TODO EN ESTE <ProveedorListaCompra />.
+     * 
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * IMPORTANTE:
+     * 
+     */
+
+
     /**
      * Función que carga todos los usuarios de la aplicación.
      * IMPORTANTE:
@@ -265,6 +299,7 @@ const ProveedorListaCompra = ({children}) => {
             lanzarMensaje(`CargarUsuarioYListas: ${error.message}`, tiposDeMensaje.error);
         }
     }
+
     
     //------------------------------------APARTADO FUNCIONALIDADES PRODUCTOS ACCESIBLES EN LISTA COMPRA----------------------------
 
